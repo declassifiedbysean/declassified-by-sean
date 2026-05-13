@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Record Forge: Legal Proving-Ground</title>
+
+    <style>
+        :root {
+            --bg-main: #080b12;
+            --bg-panel: #111827;
+            --bg-panel-soft: #172033;
+            --bg-card: #0f172a;
+            --border-soft: rgba(148, 163, 184, 0.25);
+            --border-strong: rgba(96, 165, 250, 0.7);
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --text-soft: #cbd5e1;
+            --blue: #60a5fa;
+            --cyan: #22d3ee;
+            --gold: #facc15;
+            --green: #34d399;
+            --red: #fb7185;
+            --purple: #c084fc;
+            --shadow: rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: radial-gradient(circle at top left, rgba(96, 165, 250, 0.1), transparent 40%),
+                        radial-gradient(circle at bottom right, rgba(192, 132, 252, 0.08), transparent 40%),
+                        var(--bg-main);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: min(1200px, 95%);
+            margin: 0 auto;
+            padding: 20px 0;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+        }
+
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+        }
+
+        /* Top Bar */
+        .top-bar {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
+            margin-bottom: 10px;
+        }
+
+        .brand h1 { margin: 0; font-size: 1.8rem; color: var(--cyan); letter-spacing: 1px; }
+        .brand p { margin: 5px 0 0; color: var(--text-muted); font-size: 0.9rem; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .stat-box { text-align: center; }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-muted); }
+        .stat-value { font-size: 1.4rem; font-weight: bold; color: var(--gold); }
+
+        /* Tokens */
+        .token-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+            padding: 4px 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+        .token-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 5px var(--cyan);
+        }
+        .token-dot.empty {
+            background: #334155;
+            box-shadow: none;
+        }
+        .token-text {
+            font-size: 0.75rem;
+            color: var(--text-soft);
+            font-family: monospace;
+        }
+
+        /* Main Game Area */
+        .main-col { display: flex; flex-direction: column; gap: 20px; }
+
+        .card {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-soft);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .challenge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid var(--border-soft); padding-bottom: 10px; }
+        .challenge-title { font-size: 1.4rem; color: var(--blue); }
+        .reward-badge { background: rgba(34, 211, 238, 0.1); border: 1px solid var(--cyan); color: var(--cyan); padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; }
+
+        .scenario-box {
+            background: var(--bg-panel-soft);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--purple);
+            font-style: italic;
+            line-height: 1.5;
+        }
+
+        /* Task Sections */
+        .task-section { margin-bottom: 25px; }
+        .task-label { display: block; margin-bottom: 10px; font-weight: bold; color: var(--text-soft); text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+
+        .classification-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            color: var(--text-main);
+            padding: 10px;
+            border-radius: 6px;
+            outline: none;
+            font-size: 0.95rem;
+        }
+        select:focus, input:focus { border-color: var(--blue); }
+
+        .pattern-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
+        .pattern-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s;
+            color: var(--text-soft);
+        }
+        .pattern-btn:hover { background: var(--bg-panel-soft); }
+        .pattern-btn.selected { border-color: var(--cyan); background: rgba(34, 211, 238, 0.05); color: var(--cyan); }
+        .pattern-name { font-weight: bold; display: block; }
+        .pattern-desc { font-size: 0.75rem; color: var(--text-muted); display: block; margin-top: 4px; }
+
+        .submit-btn {
+            background: linear-gradient(to right, #2563eb, #1d4ed8);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.1s;
+        }
+        .submit-btn:active { transform: scale(0.98); }
+
+        /* Sidebar */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+
+        .codex-search { margin-bottom: 15px; }
+        .codex-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .codex-entry {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .codex-entry:hover { border-color: var(--blue); }
+        .codex-entry h4 { margin: 0 0 5px; font-size: 0.95rem; color: var(--blue); }
+        .codex-cite { font-size: 0.75rem; color: var(--text-muted); }
+        .codex-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+        .tag { font-size: 0.65rem; background: rgba(148, 163, 184, 0.1); padding: 2px 6px; border-radius: 4px; color: var(--text-muted); }
+
+        /* Seal of Record */
+        .seal-container {
+            text-align: center;
+            padding: 20px;
+            background: radial-gradient(circle, rgba(96, 165, 250, 0.05), transparent);
+        }
+        .seal-visual {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 10px;
+            border: 4px solid var(--border-soft);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            transition: all 0.5s ease;
+            position: relative;
+        }
+        .seal-visual::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 2px dashed var(--border-soft);
+            border-radius: 50%;
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .seal-visual.formed { border-color: var(--blue); color: var(--blue); box-shadow: 0 0 15px rgba(96, 165, 250, 0.3); }
+        .seal-visual.bonded { border-color: var(--purple); color: var(--purple); box-shadow: 0 0 20px rgba(192, 132, 252, 0.4); }
+        .seal-visual.hardened { border-color: var(--cyan); color: var(--cyan); box-shadow: 0 0 25px rgba(34, 211, 238, 0.5); }
+        .seal-visual.master { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 30px rgba(250, 204, 21, 0.6); animation: pulse 2s infinite; }
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 30px rgba(250, 204, 21, 0.6); }
+            50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(250, 204, 21, 0.8); }
+            100% { transform: scale(1); box-shadow: 0 0 30px rgba(250, 204, 21, 0.6); }
+        }
+
+        /* Docket Log */
+        .docket-log {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.85rem;
+            max-height: 300px;
+            overflow-y: auto;
+            background: #05070a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-soft);
+        }
+        .docket-entry { margin-bottom: 12px; border-bottom: 1px dashed #333; padding-bottom: 8px; }
+        .docket-meta { color: var(--text-muted); margin-bottom: 4px; }
+        .docket-res.success { color: var(--green); }
+        .docket-res.fail { color: var(--red); }
+
+        /* Toggle */
+        .toggle-container { display: flex; align-items: center; gap: 10px; margin-top: 10px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #334155; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--cyan); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+        .modal {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-strong);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Section VI — Law Identification */
+        .s6-locked {
+            opacity: 0.32;
+            pointer-events: none;
+            transition: opacity 0.25s;
+        }
+        .s6-law-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-soft);
+            padding: 12px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.18s;
+            color: var(--text-soft);
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .s6-law-btn:hover { background: var(--bg-panel-soft); border-color: #d4af37; }
+        .s6-law-btn.selected {
+            border-color: #d4af37;
+            background: rgba(212, 175, 55, 0.06);
+            color: #d4af37;
+        }
+        .s6-law-btn.correct {
+            border-color: var(--green);
+            background: rgba(52, 211, 153, 0.07);
+            color: var(--green);
+            pointer-events: none;
+        }
+        .s6-law-btn.wrong {
+            border-color: var(--red);
+            background: rgba(251, 113, 133, 0.05);
+            color: var(--red);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .s6-law-name { font-weight: bold; display: block; font-size: 0.9rem; }
+        .s6-law-cite { font-size: 0.72rem; color: var(--text-muted); display: block; margin-top: 3px; font-style: italic; }
+        .s6-law-desc { font-size: 0.78rem; color: var(--text-muted); display: block; margin-top: 5px; line-height: 1.4; }
+        .s6-explanation-box {
+            background: var(--bg-panel-soft);
+            border-left: 4px solid #d4af37;
+            border-radius: 0 6px 6px 0;
+            padding: 14px 16px;
+            margin-top: 16px;
+            font-size: 0.87rem;
+            line-height: 1.55;
+            color: var(--text-soft);
+        }
+        .s6-explanation-box strong { color: #d4af37; }
+        .s6-bone-honest {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--green);
+            border-top: 1px solid rgba(255,255,255,0.06);
+            padding-top: 8px;
+        }
+        .s6-progress-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            padding: 6px 10px;
+            background: rgba(212,175,55,0.04);
+            border: 1px solid rgba(212,175,55,0.12);
+            border-radius: 5px;
+        }
+        .s6-score-display { color: #d4af37; font-weight: bold; }
+
+        /* Utils */
+        .haines-text { color: var(--green); font-style: normal; }
+        .hidden { display: none; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+    </style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678"
+     crossorigin="anonymous"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <header class="top-bar">
+        <div class="brand">
+            <h1>RECORD FORGE</h1>
+            <p>Tactical Legal Proving-Ground Simulator</p>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="hainesToggle">
+                    <span class="slider"></span>
+                </label>
+                <span class="stat-label">Haines Shield: <span id="hainesStatus">OFF</span></span>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-label">Rank</div>
+                <div id="rankVal" class="stat-value" style="font-size: 1rem; color: var(--cyan);">Unfiled Apprentice</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Score</div>
+                <div id="scoreVal" class="stat-value">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Streak</div>
+                <div id="streakVal" class="stat-value">0</div>
+                <div id="multVal" style="font-size: 0.7rem; color: var(--green);">×1.0</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Game -->
+    <main class="main-col">
+        <div id="challengeCard" class="card">
+            <div class="challenge-header">
+                <span id="challengeNum" class="stat-label">Challenge #1</span>
+                <div id="challengeReward" class="reward-badge">---</div>
+            </div>
+            <h2 id="challengeTitle" class="challenge-title">Loading Challenge...</h2>
+            <div id="challengeScenario" class="scenario-box">...</div>
+
+            <div class="task-section">
+                <span class="task-label">I. Authority Classification</span>
+                <div class="classification-grid">
+                    <div>
+                        <label class="stat-label">Type</label>
+                        <select id="taskType">
+                            <option value="">-- Select Type --</option>
+                            <option value="Statute">Statute</option>
+                            <option value="Case Law">Case Law</option>
+                            <option value="Rule">Court Rule</option>
+                            <option value="Constitutional">Constitutional</option>
+                            <option value="Administrative">Administrative</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="stat-label">Category</label>
+                        <select id="taskCategory">
+                            <option value="">-- Select Category --</option>
+                            <option value="Substantive">Substantive</option>
+                            <option value="Procedural">Procedural</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="stat-label">Weight</label>
+                        <select id="taskWeight">
+                            <option value="">-- Select Weight --</option>
+                            <option value="Mandatory/Binding">Mandatory / Binding</option>
+                            <option value="Persuasive">Persuasive</option>
+                            <option value="Informative">Informative</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="stat-label">Authority Source</label>
+                        <input type="text" id="taskSource" placeholder="Title or Citation...">
+                    </div>
+                </div>
+            </div>
+
+            <div class="task-section">
+                <span class="task-label">II. Pattern Match</span>
+                <div id="patternList" class="pattern-options">
+                    <!-- Patterns injected here -->
+                </div>
+            </div>
+
+            <div class="task-section">
+                <span class="task-label">III. Codex Receipt</span>
+                <textarea id="taskReceipt" rows="3" placeholder="Paste the exact text from the Codex to seal the record..."></textarea>
+            </div>
+
+            <button id="submitBtn" class="submit-btn">Seal the Record</button>
+        </div>
+
+        <div id="completionCard" class="card hidden">
+            <div style="text-align:center; padding: 40px 0;">
+                <h2 style="color: var(--gold); font-size: 2.5rem;">CODEX MASTERED</h2>
+                <p style="font-size: 1.2rem;">All current challenges have been filed and hardened.</p>
+                <p id="finalScore" style="color: var(--cyan); font-weight: bold;"></p>
+                <button onclick="resetGame()" class="submit-btn" style="width: auto; padding: 10px 40px;">Restart Simulation</button>
+            </div>
+        </div>
+
+        <!-- SECTION VI: Law Identification -->
+        <div id="section6Card" class="card">
+            <div class="challenge-header">
+                <span id="s6Num" class="stat-label" style="color:#d4af37;">Section VI — Hypo #1</span>
+                <div class="reward-badge" style="border-color:#d4af37; color:#d4af37; background:rgba(212,175,55,0.06);">Identify the Law</div>
+            </div>
+            <h2 class="challenge-title" id="s6Title" style="color:#d4af37;">Loading...</h2>
+
+            <div class="s6-progress-row">
+                <span>Hypo <span id="s6HypoNum">1</span> of 10</span>
+                <span>Section VI Score: <span class="s6-score-display" id="s6ScoreDisp">0</span> / <span id="s6MaxDisp">0</span> pts</span>
+            </div>
+
+            <div id="s6Scenario" class="scenario-box" style="border-left-color:#d4af37;"></div>
+
+            <!-- Step I: Authority Type -->
+            <div class="task-section">
+                <span class="task-label">I. Authority Type</span>
+                <div id="s6TypeList" class="pattern-options"></div>
+            </div>
+
+            <!-- Step II: Legal Pattern (locked until I) -->
+            <div class="task-section s6-locked" id="s6PatternSection">
+                <span class="task-label">II. Legal Pattern</span>
+                <div id="s6PatternList" class="pattern-options"></div>
+            </div>
+
+            <!-- Step III: Identify the Law (locked until II) -->
+            <div class="task-section s6-locked" id="s6LawSection">
+                <span class="task-label">III. Identify the Law</span>
+                <div id="s6LawList"></div>
+            </div>
+
+            <div id="s6ExplanationBox" class="s6-explanation-box hidden"></div>
+
+            <button id="s6SubmitBtn" class="submit-btn" style="background:linear-gradient(to right,#92400e,#78350f);">
+                Identify the Law
+            </button>
+            <button id="s6NextBtn" class="submit-btn hidden" style="background:var(--bg-panel-soft); border:1px solid #d4af37; color:#d4af37; margin-top:8px;">
+                Next Hypo →
+            </button>
+
+            <div id="s6CompleteMsg" class="hidden" style="text-align:center; padding:30px 0;">
+                <h3 style="color:#d4af37; font-size:1.8rem; margin-bottom:8px;">Section VI Filed</h3>
+                <p style="color:var(--text-muted); margin-bottom:6px;">All hypotheticals identified.</p>
+                <p id="s6FinalLine" style="color:var(--cyan); font-weight:bold; font-size:1.1rem; margin-bottom:20px;"></p>
+                <button onclick="s6Reset()" class="submit-btn" style="width:auto;padding:10px 32px;font-size:0.9rem;">Restart Section VI</button>
+            </div>
+        </div>
+
+        <div id="aiHintSection" class="card">
+            <span class="task-label">AI Tactical Support</span>
+            <p style="font-size: 0.85rem; color: var(--text-muted);">Request a hint from the AI legal strategist based on the current scenario.</p>
+            <button id="aiHintBtn" class="submit-btn" style="background: linear-gradient(to right, var(--purple), #7c3aed); font-size: 0.9rem; padding: 10px;">Request Tactical Hint</button>
+            <div id="aiHintResult" class="scenario-box hidden" style="margin-top: 15px; border-left-color: var(--cyan); font-style: normal; font-size: 0.9rem;"></div>
+        </div>
+
+        <div class="card">
+            <span class="task-label">Docket Log</span>
+            <div id="docketLog" class="docket-log">
+                <div class="docket-entry" style="border:none; color: #555;">No entries filed yet.</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="card seal-container">
+            <span class="task-label">Seal of Record</span>
+            <div id="sealVisual" class="seal-visual">Unformed</div>
+            <div id="sealStatus" style="font-size: 0.8rem; color: var(--text-muted);">Awaiting filing...</div>
+        </div>
+
+        <div class="card">
+            <span class="task-label">Statute/Caselaw Codex</span>
+            <div class="codex-search">
+                <input type="text" id="codexSearch" placeholder="Search title, cite, tags...">
+                <div id="tokenDisplay" class="token-container">
+                    <!-- Tokens will be injected here -->
+                </div>
+            </div>
+            <div id="codexList" class="codex-list">
+                <!-- Codex entries injected here -->
+            </div>
+        </div>
+
+        <div class="card" style="font-size: 0.75rem; color: var(--text-muted); line-height: 1.4;">
+            <p><strong>Disclaimer:</strong> This is a record-building exercise, not legal advice. Designed for educational simulation of pro se litigation tactical patterns.</p>
+        </div>
+    </aside>
+</div>
+
+<!-- Modal -->
+<div id="feedbackOverlay" class="overlay">
+    <div id="feedbackModal" class="modal">
+        <h2 id="feedbackTitle">Title</h2>
+        <div id="feedbackBody" style="margin: 20px 0; line-height: 1.5;">Body</div>
+        <div id="aiExplanationArea" class="hidden" style="margin-bottom: 20px; text-align: left;">
+            <span class="task-label">Strategist's Analysis</span>
+            <div id="aiExplanationText" class="scenario-box" style="font-size: 0.85rem; border-left-color: var(--red); font-style: normal;"></div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <button id="aiExplainBtn" class="submit-btn hidden" style="background: var(--bg-panel-soft); border: 1px solid var(--purple); font-size: 0.9rem;">Explain My Error</button>
+            <button id="feedbackClose" class="submit-btn">Continue</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- DATA ---
+    const CODEX = [
+        {
+            id: "frcp-12b6",
+            title: "Federal Rule of Civil Procedure 12(b)(6)",
+            citation: "Fed. R. Civ. P. 12(b)(6)",
+            year: "1937",
+            authorityType: "Rule",
+            authorityWeight: "Mandatory/Binding",
+            courtLevel: "Federal District",
+            category: "Procedural",
+            tags: ["dismiss", "failure to state a claim", "merits"],
+            receiptText: "Failure to state a claim upon which relief can be granted.",
+            boneHonestTranslation: "They say you didn't explain your legal problem well enough to win, even if everything you said is true.",
+            useWhen: "When an opponent tries to kill your case before it starts.",
+            trapWarnings: "Avoid arguing facts here; only argue if the law supports the claim."
+        },
+        {
+            id: "haines-v-kerner",
+            title: "Haines v. Kerner",
+            citation: "404 U.S. 519",
+            year: "1972",
+            authorityType: "Case Law",
+            authorityWeight: "Mandatory/Binding",
+            courtLevel: "U.S. Supreme Court",
+            category: "Substantive",
+            tags: ["pro se", "liberal construction", "due process"],
+            receiptText: "Allegations of the pro se complaint, however inartfully pleaded, are held to less stringent standards than formal pleadings drafted by lawyers.",
+            boneHonestTranslation: "The court has to be fair to people without lawyers and look for the point of your filing even if you don't use fancy words.",
+            useWhen: "When the clerk or judge tries to reject your filing for minor typos or format issues.",
+            trapWarnings: "Does not excuse missing mandatory deadlines or lack of jurisdiction."
+        },
+        {
+            id: "court-order-signed",
+            title: "Signed Court Order Requirement",
+            citation: "Standard Local Rule / 28 U.S.C. § 1291",
+            year: "N/A",
+            authorityType: "Rule",
+            authorityWeight: "Mandatory/Binding",
+            courtLevel: "General",
+            category: "Procedural",
+            tags: ["signature", "clerk", "order", "finality"],
+            receiptText: "An order is not effective until it is reduced to writing, signed by the judge, and entered on the docket by the clerk.",
+            boneHonestTranslation: "A piece of paper isn't a real court order unless a judge signed it and the clerk put it on the official list.",
+            useWhen: "When the other side sends you a 'Notice' that looks like an order but is just a bluff.",
+            trapWarnings: "Minute orders might be valid in some courts even without a formal long-form document."
+        }
+    ];
+
+    const PATTERNS = [
+        {
+            id: "circular-sentry",
+            name: "Circular Sentry",
+            definition: "Using the rule to justify itself.",
+            boneHonest: "Saying 'I'm right because I'm the one who says I'm right.'",
+            example: "The court denies the motion because the court has the power to deny the motion.",
+            counterMove: "Point out the lack of external authority or constitutional basis."
+        },
+        {
+            id: "silent-waiver",
+            name: "Silent Waiver",
+            definition: "Treating imperfect wording as surrender.",
+            boneHonest: "Pretending you gave up your rights just because you didn't use a specific magic word.",
+            example: "Since the plaintiff didn't cite Rule X, they have waived their right to Y.",
+            counterMove: "Apply Haines v. Kerner liberal construction."
+        },
+        {
+            id: "boilerplate-blitz",
+            name: "Boilerplate Blitz",
+            definition: "Template language without substance.",
+            boneHonest: "Copy-pasting 10 pages of legal fluff that doesn't actually talk about your specific case.",
+            example: "A 15-page motion that only cites general standards but never mentions your facts.",
+            counterMove: "Demand specific findings of fact and conclusions of law."
+        },
+        {
+            id: "ghost-gatekeeper",
+            name: "Ghost Gatekeeper",
+            definition: "Asserting power without a source.",
+            boneHonest: "Acting like they have authority to stop you without showing where the law gives them that power.",
+            example: "The clerk rejects the filing 'per office policy' but can't show a written rule.",
+            counterMove: "Challenge the 'unwritten' rule as a violation of due process."
+        },
+        {
+            id: "red-tape-trap",
+            name: "Red-Tape Trap",
+            definition: "Using minor defects to avoid substance.",
+            boneHonest: "Focusing on a missing staple or wrong font size to avoid talking about the real issue.",
+            example: "Motion to Strike because the margin was 0.9 inches instead of 1.0.",
+            counterMove: "Argue 'Substance over Form'."
+        },
+        {
+            id: "formalist-faux-pas",
+            name: "Formalist Faux-Pas",
+            definition: "Treating official-looking format as authority.",
+            boneHonest: "Tricking you into thinking a paper is a court order just because it has a fancy header.",
+            example: "Opposing counsel sends a 'PROPOSED ORDER' but titles it 'ORDER' to scare you.",
+            counterMove: "Verify the docket entry and signature."
+        }
+    ];
+
+    const CHALLENGES = [
+        {
+            id: "jump",
+            title: "The Jurisdictional Jump",
+            scenario: "A court says it has inherent power to dismiss your filing without a hearing, but the notice does not identify a rule, statute, order, or standard.",
+            correctAuthority: "Federal Rule of Civil Procedure 12(b)(6)",
+            correctType: "Rule",
+            correctCategory: "Procedural",
+            correctWeight: "Mandatory/Binding",
+            correctPattern: "ghost-gatekeeper",
+            correctReceipt: "Failure to state a claim upon which relief can be granted.",
+            reward: "Gatekeeper Key"
+        },
+        {
+            id: "tiger",
+            title: "The Paper Tiger",
+            scenario: "An opposing party sends a document titled NOTICE OF ORDER. It uses court-like formatting but has no judge signature, no clerk entry, and no docket number.",
+            correctAuthority: "Signed Court Order Requirement",
+            correctType: "Rule",
+            correctCategory: "Procedural",
+            correctWeight: "Mandatory/Binding",
+            correctPattern: "formalist-faux-pas",
+            correctReceipt: "An order is not effective until it is reduced to writing, signed by the judge, and entered on the docket by the clerk.",
+            reward: "Paper Tiger Tamer"
+        },
+        {
+            id: "bar",
+            title: "The Silent Bar",
+            scenario: "You filed a motion asking the court to review a denial. The clerk refuses to accept it because the caption contains a typo, even though the case number and requested relief are clear.",
+            correctAuthority: "Haines v. Kerner",
+            correctType: "Case Law",
+            correctCategory: "Substantive",
+            correctWeight: "Mandatory/Binding",
+            correctPattern: "red-tape-trap",
+            correctReceipt: "Allegations of the pro se complaint, however inartfully pleaded, are held to less stringent standards than formal pleadings drafted by lawyers.",
+            reward: "Haines Shield"
+        }
+    ];
+
+    const RANKS = [
+        "Unfiled Apprentice",
+        "Archive Recruit",
+        "Motion-Ready Scout",
+        "Receipt Queen",
+        "Codex Hunter",
+        "Statute Commander",
+        "Master of the Record"
+    ];
+
+    // --- STATE ---
+    let state = {
+        score: 0,
+        currentChallengeIdx: 0,
+        streak: 0,
+        bestStreak: 0,
+        multiplier: 1.0,
+        hainesMode: false,
+        docket: [],
+        completed: [],
+        tokens: 10,
+        maxTokens: 10,
+        lastSearchTime: 0,
+        searchDensity: 0
+    };
+
+    // --- INITIALIZATION ---
+    window.addEventListener('DOMContentLoaded', () => {
+        loadProgress();
+        renderPatterns();
+        renderCodex();
+        updateUI();
+        setupEventListeners();
+    });
+
+    function setupEventListeners() {
+        document.getElementById('hainesToggle').addEventListener('change', (e) => {
+            state.hainesMode = e.target.checked;
+            updateUI();
+            saveProgress();
+        });
+
+        document.getElementById('codexSearch').addEventListener('input', (e) => {
+            renderCodex(e.target.value, true);
+        });
+
+        // Token Regeneration
+        setInterval(() => {
+            if (state.tokens < state.maxTokens) {
+                state.tokens = Math.min(state.maxTokens, state.tokens + 1);
+                updateTokenUI();
+            }
+            // Decay density over time
+            state.searchDensity = Math.max(0, state.searchDensity - 0.2);
+            updateTokenUI();
+        }, 10000); // Regenerate 1 token every 10s and decay density
+
+        document.getElementById('submitBtn').addEventListener('click', submitChallenge);
+        
+        document.getElementById('aiHintBtn').addEventListener('click', () => {
+            const ch = CHALLENGES[state.currentChallengeIdx];
+            if (!ch) return;
+            
+            const btn = document.getElementById('aiHintBtn');
+            const resultDiv = document.getElementById('aiHintResult');
+            
+            btn.disabled = true;
+            btn.innerText = "Consulting AI...";
+            resultDiv.classList.add('hidden');
+            
+            const prompt = `You are a legal strategist assisting a pro se litigant. 
+            Scenario: ${ch.scenario}
+            Provide a short, 1-2 sentence hint about which legal rule or pattern applies here. 
+            Do not give the answer directly, but guide them toward the right authority from this list: 
+            ${CODEX.map(c => c.title).join(', ')}.`;
+
+            if (window.AndroidBridge) {
+                window.AndroidBridge.getAIHint(prompt);
+            } else {
+                setTimeout(() => {
+                    onAIHintReceived("AI Bridge not found. (Simulation Mode)");
+                }, 1000);
+            }
+        });
+
+        document.getElementById('feedbackClose').addEventListener('click', () => {
+            document.getElementById('feedbackOverlay').style.display = 'none';
+            document.getElementById('aiExplanationArea').classList.add('hidden');
+            document.getElementById('aiExplainBtn').classList.add('hidden');
+            if (state.currentChallengeIdx >= CHALLENGES.length) {
+                showCompletion();
+            } else {
+                renderChallenge();
+            }
+        });
+
+        document.getElementById('aiExplainBtn').addEventListener('click', () => {
+            const ch = CHALLENGES[state.currentChallengeIdx];
+            const btn = document.getElementById('aiExplainBtn');
+            btn.disabled = true;
+            btn.innerText = "Consulting...";
+            
+            // Collect user's wrong answers for context
+            const type = document.getElementById('taskType').value;
+            const cat = document.getElementById('taskCategory').value;
+            const weight = document.getElementById('taskWeight').value;
+            const source = document.getElementById('taskSource').value;
+            const pattern = PATTERNS.find(p => p.id === state.selectedPattern)?.name || "Unknown";
+            const receipt = document.getElementById('taskReceipt').value;
+
+            const prompt = `The user failed a legal challenge in the "Record Forge" simulator.
+            Scenario: ${ch.scenario}
+            User's answer:
+            - Type: ${type} (Expected: ${ch.correctType})
+            - Category: ${cat} (Expected: ${ch.correctCategory})
+            - Weight: ${weight} (Expected: ${ch.correctWeight})
+            - Source: ${source} (Expected: ${ch.correctAuthority})
+            - Pattern: ${pattern} (Expected: ${PATTERNS.find(p => p.id === ch.correctPattern).name})
+            
+            Briefly explain WHY the user's choices (especially the pattern and authority) were incorrect for this scenario. 
+            Be concise (2-3 sentences). Use a tactical, strategist-like tone.`;
+
+            if (window.AndroidBridge) {
+                window.AndroidBridge.explainError(prompt);
+            } else {
+                setTimeout(() => onAIExplanationReceived("AI Bridge not found. (Simulation Mode)"), 1000);
+            }
+        });
+    }
+
+    // --- CORE LOGIC ---
+    function renderChallenge() {
+        if (state.currentChallengeIdx >= CHALLENGES.length) {
+            showCompletion();
+            return;
+        }
+
+        const ch = CHALLENGES[state.currentChallengeIdx];
+        document.getElementById('challengeNum').innerText = `Challenge #${state.currentChallengeIdx + 1}`;
+        document.getElementById('challengeTitle').innerText = ch.title;
+        document.getElementById('challengeScenario').innerText = ch.scenario;
+        document.getElementById('challengeReward').innerText = ch.reward;
+
+        // Reset fields
+        document.getElementById('taskType').value = "";
+        document.getElementById('taskCategory').value = "";
+        document.getElementById('taskWeight').value = "";
+        document.getElementById('taskSource').value = "";
+        document.getElementById('taskReceipt').value = "";
+        
+        document.querySelectorAll('.pattern-btn').forEach(b => b.classList.remove('selected'));
+        state.selectedPattern = null;
+
+        updateSeal('Unformed');
+    }
+
+    function renderPatterns() {
+        const container = document.getElementById('patternList');
+        container.innerHTML = '';
+        PATTERNS.forEach(p => {
+            const btn = document.createElement('div');
+            btn.className = 'pattern-btn';
+            btn.innerHTML = `
+                <span class="pattern-name">${p.name}</span>
+                <span class="pattern-desc">${p.definition}</span>
+            `;
+            btn.onclick = () => {
+                document.querySelectorAll('.pattern-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                state.selectedPattern = p.id;
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    function renderCodex(search = "", isUserInitiated = false) {
+        const container = document.getElementById('codexList');
+        const lowerSearch = search.toLowerCase();
+
+        // Token System Logic
+        if (isUserInitiated && search.length > 0) {
+            const now = Date.now();
+            const timeDiff = (now - state.lastSearchTime) / 1000; // in seconds
+            state.lastSearchTime = now;
+
+            // Density: Higher if searches are frequent
+            // If less than 2 seconds between searches, increase density
+            if (timeDiff < 2) {
+                state.searchDensity = Math.min(5, state.searchDensity + 1);
+            } else {
+                state.searchDensity = Math.max(0, state.searchDensity - 1);
+            }
+
+            // Cost: base 1 + density floor
+            const cost = 1 + Math.floor(state.searchDensity);
+            
+            if (state.tokens >= cost) {
+                state.tokens -= cost;
+            } else {
+                container.innerHTML = `<div class="docket-entry fail" style="text-align:center; padding: 20px;">
+                    ACCESS DENIED: Search density too high.<br>Insufficient Search Tokens.
+                </div>`;
+                updateTokenUI();
+                return;
+            }
+        }
+
+        container.innerHTML = '';
+        
+        const filtered = CODEX.filter(c => 
+            c.title.toLowerCase().includes(lowerSearch) ||
+            c.citation.toLowerCase().includes(lowerSearch) ||
+            c.tags.some(t => t.toLowerCase().includes(lowerSearch)) ||
+            c.receiptText.toLowerCase().includes(lowerSearch) ||
+            c.boneHonestTranslation.toLowerCase().includes(lowerSearch)
+        );
+
+        if (filtered.length === 0 && search.length > 0) {
+            container.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-muted);">No results found in Codex.</div>';
+        }
+
+        filtered.forEach(c => {
+            const entry = document.createElement('div');
+            entry.className = 'codex-entry';
+            const bodyText = state.hainesMode ? 
+                `<p class="haines-text"><strong>Translation:</strong> ${c.boneHonestTranslation}</p>` :
+                `<p style="font-size:0.8rem;">${c.receiptText}</p>`;
+
+            entry.innerHTML = `
+                <h4>${c.title}</h4>
+                <div class="codex-cite">${c.citation} (${c.year})</div>
+                <div class="codex-tags">
+                    ${c.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                    <span class="tag" style="background:rgba(34,211,238,0.1); color:var(--cyan);">${c.authorityType}</span>
+                </div>
+                ${bodyText}
+            `;
+            entry.onclick = () => {
+                // Accuracy Bonus: Selecting a result grants tokens
+                state.tokens = Math.min(state.maxTokens, state.tokens + 2);
+                state.searchDensity = Math.max(0, state.searchDensity - 0.5); // Reward for finding a match
+                
+                document.getElementById('taskSource').value = c.title;
+                document.getElementById('taskReceipt').value = c.receiptText;
+                updateTokenUI();
+            };
+            container.appendChild(entry);
+        });
+
+        updateTokenUI();
+    }
+
+    function updateTokenUI() {
+        const display = document.getElementById('tokenDisplay');
+        if (!display) return;
+        
+        let dots = '';
+        for (let i = 0; i < state.maxTokens; i++) {
+            dots += `<div class="token-dot ${i < state.tokens ? '' : 'empty'}"></div>`;
+        }
+        
+        const densityLabel = state.searchDensity > 2 ? ' <span style="color:var(--red);">[HIGH DENSITY]</span>' : '';
+        display.innerHTML = `
+            ${dots}
+            <span class="token-text">${state.tokens}/${state.maxTokens} Tokens${densityLabel}</span>
+        `;
+    }
+
+    function submitChallenge() {
+        const ch = CHALLENGES[state.currentChallengeIdx];
+        const type = document.getElementById('taskType').value;
+        const cat = document.getElementById('taskCategory').value;
+        const weight = document.getElementById('taskWeight').value;
+        const source = document.getElementById('taskSource').value;
+        const pattern = state.selectedPattern;
+        const receipt = document.getElementById('taskReceipt').value.trim().toLowerCase();
+
+        if (!type || !cat || !weight || !source || !pattern || !receipt) {
+            alert("Record incomplete. All tasks must be performed to seal the record.");
+            return;
+        }
+
+        let points = 100;
+        let errors = [];
+
+        // Validate
+        if (type !== ch.correctType) errors.push(`Classification Error: Expected ${ch.correctType}.`);
+        if (cat !== ch.correctCategory) errors.push(`Category Error: Expected ${ch.correctCategory}.`);
+        if (weight !== ch.correctWeight) errors.push(`Weight Error: Expected ${ch.correctWeight}.`);
+        if (!source.toLowerCase().includes(ch.correctAuthority.toLowerCase())) errors.push(`Source Error: Expected ${ch.correctAuthority}.`);
+        if (pattern !== ch.correctPattern) errors.push(`Pattern Error: Expected ${PATTERNS.find(p => p.id === ch.correctPattern).name}.`);
+        
+        // Receipt validation (forgiving)
+        const cleanReceipt = receipt.replace(/[^\w\s]/gi, '').replace(/\s+/g, ' ');
+        const cleanCorrect = ch.correctReceipt.toLowerCase().replace(/[^\w\s]/gi, '').replace(/\s+/g, ' ');
+        
+        if (cleanReceipt !== cleanCorrect) {
+            errors.push("Receipt Validation Failed: Exact transcript required.");
+        } else {
+            points += 50; // Bonus for correct receipt
+        }
+
+        const isSuccess = errors.length === 0;
+        
+        if (isSuccess) {
+            const earned = Math.round(points * state.multiplier);
+            state.score += earned;
+            state.streak++;
+            updateMultiplier();
+            state.bestStreak = Math.max(state.bestStreak, state.streak);
+            
+            showFeedback("RECORD SEALED", `Successfully identified the <strong>${ch.title}</strong>.<br><br>Reward Obtained: <strong>${ch.reward}</strong><br>Points: ${earned} (Mult: ${state.multiplier.toFixed(2)}x)`, true);
+            
+            addToDocket(ch.title, ch.correctAuthority, PATTERNS.find(p => p.id === ch.correctPattern).name, earned, "filed");
+            state.currentChallengeIdx++;
+            updateSeal('Master');
+        } else {
+            state.streak = 0;
+            state.multiplier = 1.0;
+            showFeedback("RECORD DEFECTIVE", `Errors found in the record:<br><br><ul>${errors.map(e => `<li>${e}</li>`).join('')}</ul>Correction needed.`, false);
+            document.getElementById('aiExplainBtn').classList.remove('hidden');
+            addToDocket(ch.title, "N/A", "N/A", 0, "correction needed");
+        }
+
+        updateUI();
+        saveProgress();
+    }
+
+    function updateMultiplier() {
+        if (state.streak < 3) {
+            state.multiplier = 1.0;
+        } else {
+            state.multiplier = 1.25 + ((state.streak - 3) * 0.10);
+            if (state.multiplier > 2.5) state.multiplier = 2.5;
+        }
+    }
+
+    function updateUI() {
+        document.getElementById('scoreVal').innerText = state.score;
+        document.getElementById('streakVal').innerText = state.streak;
+        document.getElementById('multVal').innerText = `×${state.multiplier.toFixed(2)}`;
+        document.getElementById('hainesStatus').innerText = state.hainesMode ? "ON" : "OFF";
+        document.getElementById('hainesStatus').style.color = state.hainesMode ? "var(--green)" : "var(--text-muted)";
+        
+        // Rank
+        let rank = RANKS[0];
+        if (state.score > 200) rank = RANKS[1];
+        if (state.score > 500) rank = RANKS[2];
+        if (state.score > 1000) rank = RANKS[3];
+        if (state.score > 2000) rank = RANKS[4];
+        if (state.score > 4000) rank = RANKS[5];
+        if (state.currentChallengeIdx >= CHALLENGES.length && state.score > 300) rank = RANKS[6];
+        document.getElementById('rankVal').innerText = rank;
+
+        renderCodex(document.getElementById('codexSearch').value, false);
+        updateTokenUI();
+        
+        if (state.currentChallengeIdx < CHALLENGES.length) {
+            renderChallenge();
+        } else {
+            showCompletion();
+        }
+    }
+
+    function addToDocket(title, auth, pattern, pts, res) {
+        const d = new Date();
+        const timestamp = `${d.getHours()}:${d.getMinutes().toString().padStart(2, '0')}:${d.getSeconds().toString().padStart(2, '0')}`;
+        const entry = { timestamp, title, auth, pattern, pts, res };
+        state.docket.unshift(entry);
+        renderDocket();
+    }
+
+    function renderDocket() {
+        const log = document.getElementById('docketLog');
+        if (state.docket.length === 0) {
+            log.innerHTML = '<div class="docket-entry" style="border:none; color: #555;">No entries filed yet.</div>';
+            return;
+        }
+        log.innerHTML = state.docket.map(e => `
+            <div class="docket-entry">
+                <div class="docket-meta">[${e.timestamp}] EVENT: ${e.title}</div>
+                <div>AUTH: ${e.auth} | PATTERN: ${e.pattern}</div>
+                <div class="docket-res ${e.res === 'filed' ? 'success' : 'fail'}">RESULT: ${e.res.toUpperCase()} (+${e.pts} pts)</div>
+            </div>
+        `).join('');
+    }
+
+    function updateSeal(level) {
+        const s = document.getElementById('sealVisual');
+        const st = document.getElementById('sealStatus');
+        s.className = 'seal-visual';
+        
+        if (level === 'Unformed') {
+            s.innerText = 'Unformed';
+            st.innerText = 'Awaiting filing...';
+        } else if (level === 'Receipt') {
+            s.classList.add('formed');
+            s.innerText = 'Filed';
+            st.innerText = 'Receipt verified.';
+        } else if (level === 'Master') {
+            s.classList.add('master');
+            s.innerText = 'Master';
+            st.innerText = 'Record Hardened.';
+        }
+    }
+
+    function showFeedback(title, body, isSuccess) {
+        const overlay = document.getElementById('feedbackOverlay');
+        const t = document.getElementById('feedbackTitle');
+        const b = document.getElementById('feedbackBody');
+        
+        t.innerText = title;
+        t.style.color = isSuccess ? 'var(--green)' : 'var(--red)';
+        b.innerHTML = body;
+        overlay.style.display = 'flex';
+    }
+
+    function showCompletion() {
+        document.getElementById('challengeCard').classList.add('hidden');
+        document.getElementById('aiHintSection').classList.add('hidden');
+        document.getElementById('completionCard').classList.remove('hidden');
+        document.getElementById('finalScore').innerText = `Final Record Score: ${state.score}`;
+    }
+
+    function onAIHintReceived(hint) {
+        const btn = document.getElementById('aiHintBtn');
+        const resultDiv = document.getElementById('aiHintResult');
+        
+        btn.disabled = false;
+        btn.innerText = "Request Tactical Hint";
+        resultDiv.innerText = hint;
+        resultDiv.classList.remove('hidden');
+    }
+
+    function onAIExplanationReceived(explanation) {
+        const btn = document.getElementById('aiExplainBtn');
+        const area = document.getElementById('aiExplanationArea');
+        const text = document.getElementById('aiExplanationText');
+        
+        btn.disabled = false;
+        btn.innerText = "Explain My Error";
+        btn.classList.add('hidden'); // Hide after request
+        text.innerText = explanation;
+        area.classList.remove('hidden');
+    }
+
+    function resetGame() {
+        if (!confirm("Reset all persistent progress?")) return;
+        state = {
+            score: 0,
+            currentChallengeIdx: 0,
+            streak: 0,
+            bestStreak: 0,
+            multiplier: 1.0,
+            hainesMode: false,
+            docket: [],
+            completed: [],
+            tokens: 10,
+            maxTokens: 10,
+            lastSearchTime: 0,
+            searchDensity: 0
+        };
+        localStorage.removeItem('recordForgeProgress');
+        document.getElementById('completionCard').classList.add('hidden');
+        document.getElementById('challengeCard').classList.remove('hidden');
+        document.getElementById('aiHintSection').classList.remove('hidden');
+        document.getElementById('aiHintResult').classList.add('hidden');
+        updateUI();
+        renderDocket();
+    }
+
+    // ─── SECTION VI ────────────────────────────────────────────────────
+
+    const AUTHORITY_TYPES = [
+        { id: 'Statute',        label: 'Statute',         desc: 'Enacted federal or state law.' },
+        { id: 'Case Law',       label: 'Case Law',        desc: 'Binding judicial precedent.' },
+        { id: 'Constitutional', label: 'Constitutional',  desc: 'Provision of the U.S. Constitution.' },
+        { id: 'Administrative', label: 'Administrative',  desc: 'Agency regulation or guidance.' },
+        { id: 'Rule',           label: 'Court Rule',      desc: 'Federal or local court rule.' },
+    ];
+
+    const LAW_HYPOS = [
+        {
+            id:'h01', title:'The Retaliatory Closure',
+            scenario:'After filing six consumer complaints against a bank with a federal protection agency, a customer receives a written acknowledgment from the bank assigning case numbers to each complaint. Eight days later, the bank closes the customer\'s account without explanation and provides no written notice identifying any reason for the closure.',
+            correctType:'Statute', correctPattern:'ghost-gatekeeper',
+            correctLaw:'ecoa-ret',
+            laws:[
+                { id:'ecoa-ret',  name:'ECOA — 15 U.S.C. § 1691(a)(3)', cite:'Equal Credit Opportunity Act — Retaliation Prohibition', desc:'Prohibits adverse action against a customer for exercising any right under the Consumer Credit Protection Act.' },
+                { id:'frcp12b6',  name:'Fed. R. Civ. P. 12(b)(6)',      cite:'Failure to State a Claim',                               desc:'Allows dismissal of a complaint for failure to state a claim upon which relief can be granted.' },
+                { id:'ada-iii',   name:'ADA Title III — 42 U.S.C. § 12181', cite:'Americans with Disabilities Act — Public Accommodations', desc:'Prohibits disability discrimination at places of public accommodation.' },
+                { id:'haines',    name:'Haines v. Kerner, 404 U.S. 519', cite:'U.S. Supreme Court — Pro Se Liberal Construction',      desc:'Pro se pleadings are held to less stringent standards than formal pleadings drafted by lawyers.' },
+            ],
+            explanation:'The bank\'s action hits two ECOA tripwires. First, § 1691(a)(3) bars adverse action against any person for exercising a right under the Consumer Credit Protection Act — filing CFPB complaints is protected activity. Second, the absence of any written reason implicates § 1691(d)\'s notice requirement. The temporal proximity (8 days from acknowledgment to closure) is the retaliation inference. Ghost Gatekeeper: the bank acted with apparent authority but produced no stated legal basis.',
+            boneHonest:'They closed your account because you complained. That\'s the law saying they can\'t do that.',
+        },
+        {
+            id:'h02', title:'The Invisible Option',
+            scenario:'A national bank\'s digital account-opening form requires every customer to select an employment classification. Available options: Employed, Self-Employed, Unemployed, Retired, Student. A customer receiving Social Security Disability Insurance — a federal benefit program — has no accurate option. A bank employee instructs the customer to select Unemployed.',
+            correctType:'Statute', correctPattern:'red-tape-trap',
+            correctLaw:'ada-screen',
+            laws:[
+                { id:'ada-screen', name:'ADA Title III — 42 U.S.C. § 12182(b)(2)(A)(i)', cite:'Screen-Out Rule — Eligibility Criteria',               desc:'Prohibits eligibility criteria that screen out or tend to screen out individuals with disabilities from the full and equal enjoyment of goods and services.' },
+                { id:'frcp41b',    name:'Fed. R. Civ. P. 41(b)',                          cite:'Dismissal for Failure to Prosecute',                      desc:'Authorizes dismissal where a plaintiff fails to prosecute or comply with court orders.' },
+                { id:'haines',     name:'Haines v. Kerner, 404 U.S. 519',                cite:'Pro Se Liberal Construction',                            desc:'Pro se pleadings held to less stringent standards than formal pleadings drafted by lawyers.' },
+                { id:'ecoa-d',     name:'ECOA — 15 U.S.C. § 1691(d)',                    cite:'Adverse Action Notice Requirement',                       desc:'Requires written notice of adverse action stating specific reasons within 30 days.' },
+            ],
+            explanation:'A closed dropdown that excludes an accurate classification for SSDI recipients is an "eligibility criterion" under 28 C.F.R. § 36.301(a) that screens out disabled customers from accurately completing the onboarding process. Banks are "public accommodations" under § 12181(7)(F). Employment classification is not among the mandatory Customer Identification Program data elements under 31 C.F.R. § 1020.220, so the bank cannot demonstrate necessity. Red-Tape Trap: a form technicality becomes the barrier that excludes the protected class.',
+            boneHonest:'The form has no box for "disabled," so disabled people are forced to lie about themselves just to open an account.',
+        },
+        {
+            id:'h03', title:'The 80-Day Silence',
+            scenario:'On Day 1 of a federal civil case, a pro se plaintiff with a documented disability files an emergency motion for electronic filing access as a disability accommodation. Eighty days pass with no ruling. The plaintiff continues filing paper documents and communicating with the clerk\'s office throughout. The magistrate judge then recommends dismissal for want of prosecution, citing the plaintiff\'s limited filing activity.',
+            correctType:'Rule', correctPattern:'circular-sentry',
+            correctLaw:'frcp41b',
+            laws:[
+                { id:'frcp41b',  name:'Fed. R. Civ. P. 41(b) — Schafer Abuse-of-Discretion Standard', cite:'Schafer v. City of Defiance Police Dep\'t, 529 F.3d 731 (6th Cir. 2008)', desc:'Dismissal for want of prosecution requires the Schafer four-factor analysis; reliance on a pending court motion is not willful disregard.' },
+                { id:'ada-ii',   name:'ADA Title II — 42 U.S.C. § 12132',                            cite:'Public Entities — Disability Discrimination',                              desc:'Prohibits disability discrimination by state and local government public entities.' },
+                { id:'ecoa',     name:'ECOA — 15 U.S.C. § 1691',                                    cite:'Equal Credit Opportunity Act',                                              desc:'Prohibits discrimination in credit transactions based on protected characteristics.' },
+                { id:'frcp12b6', name:'Fed. R. Civ. P. 12(b)(6)',                                   cite:'Failure to State a Claim',                                                 desc:'Allows dismissal for failure to state a claim upon which relief can be granted.' },
+            ],
+            explanation:'The Sixth Circuit\'s Schafer four-factor test controls Rule 41(b) dismissals: (1) willfulness/bad faith, (2) prejudice to adversary, (3) prior warning, (4) consideration of lesser sanctions. Under Wu v. T.W. Wang, Inc., 420 F.3d 641 (6th Cir. 2005), relying on a pending court motion is not willful disregard. No prejudice (defendants haven\'t appeared), no warning, and no consideration of the obvious lesser sanction — ruling on the accommodation motion — means all four factors weigh against dismissal. Circular Sentry: the court\'s own non-ruling produced the very inaction now used to justify dismissal.',
+            boneHonest:'The court\'s silence caused the delays the court then used as grounds to dismiss. That\'s the four-factor test working in your favor.',
+        },
+        {
+            id:'h04', title:'The Unwritten Wall',
+            scenario:'A pro se plaintiff submits an emergency motion. Two days later, the clerk\'s office returns all documents with a handwritten note stating the filing does not meet "standard formatting requirements." The published Local Rules contain no formatting requirement the filing violated. When pressed, the clerk points to an internal office practice not reflected in any published rule, standing order, or statute.',
+            correctType:'Case Law', correctPattern:'ghost-gatekeeper',
+            correctLaw:'haines-2071',
+            laws:[
+                { id:'haines-2071', name:'Haines v. Kerner + 28 U.S.C. § 2071',  cite:'404 U.S. 519 (1972) + Local Rule Consistency Requirement', desc:'Pro se filings receive liberal construction; local rules must be consistent with Acts of Congress and cannot be enforced as unwritten office practices.' },
+                { id:'frcp12b6',    name:'Fed. R. Civ. P. 12(b)(6)',             cite:'Failure to State a Claim',                                  desc:'Allows dismissal for failure to state a claim upon which relief can be granted.' },
+                { id:'ecoa-ret',    name:'ECOA — 15 U.S.C. § 1691(a)(3)',        cite:'Retaliation Prohibition',                                   desc:'Prohibits adverse action for exercising rights under the Consumer Credit Protection Act.' },
+                { id:'frcp41b',     name:'Fed. R. Civ. P. 41(b)',                cite:'Failure to Prosecute',                                       desc:'Authorizes dismissal where a plaintiff fails to prosecute or comply with court orders.' },
+            ],
+            explanation:'Two authorities converge. Haines v. Kerner requires liberal construction of pro se filings — not rejection for technical defects not required by any published rule. 28 U.S.C. § 2071(a) requires local rules to be "consistent with Acts of Congress" and to be publicly promulgated; an unwritten office practice has no statutory force. The Supreme Court in Frazier v. Heebe, 482 U.S. 641 (1987) invalidated local rules inconsistent with the principles of right and justice. Ghost Gatekeeper: the clerk exercises power without producing any written source for it.',
+            boneHonest:'An unwritten office policy isn\'t a rule. Even if it were, it would have to comply with federal law — which Haines v. Kerner represents.',
+        },
+        {
+            id:'h05', title:'The Silent Notice',
+            scenario:'A creditor closes a customer\'s account. Thirty-five days later, the customer receives this letter: "Your account has been closed effective [date]. Thank you for your business." The letter identifies no reason for the closure and provides no information about the customer\'s right to know why the action was taken.',
+            correctType:'Statute', correctPattern:'boilerplate-blitz',
+            correctLaw:'ecoa-d3',
+            laws:[
+                { id:'ecoa-d3',  name:'ECOA — 15 U.S.C. § 1691(d)(3) + 12 C.F.R. § 1002.9', cite:'Adverse Action Notice — Specific Reasons Required + Regulation B', desc:'Adverse action notice must state specific reasons for the action, or inform the applicant of their right to request a statement of reasons, within 30 days.' },
+                { id:'ada-iii',  name:'ADA Title III — 42 U.S.C. § 12182',                   cite:'Public Accommodations — Disability Discrimination',               desc:'Prohibits disability discrimination at places of public accommodation.' },
+                { id:'frcp65',   name:'Fed. R. Civ. P. 65',                                  cite:'Injunctions and Restraining Orders',                              desc:'Governs the issuance of temporary restraining orders and preliminary injunctions.' },
+                { id:'haines',   name:'Haines v. Kerner, 404 U.S. 519',                     cite:'Pro Se Liberal Construction',                                    desc:'Pro se pleadings held to less stringent standards than formal pleadings drafted by lawyers.' },
+            ],
+            explanation:'The ECOA notice regime under § 1691(d) imposes two independent requirements: (1) written notice within 30 days; (2) specific reasons stated, or disclosure of the right to request them. Regulation B, 12 C.F.R. § 1002.9, implements both. This letter fails both: it arrives on day 35 (untimely) and contains no reasons and no disclosure. The Seventh Circuit in Treadway v. Gateway Chevrolet, 362 F.3d 971 (2004), held notices must be truthful and specific. Boilerplate Blitz: a two-sentence thank-you note is substituted for the substantive notice the statute requires.',
+            boneHonest:'They have to tell you WHY within 30 days, or at least tell you that you can ask. "Thank you for your business" is not that.',
+        },
+        {
+            id:'h06', title:'The Meaningful Hearing',
+            scenario:'A disabled pro se plaintiff files a formal accommodation request in federal court on Day 1 of the litigation. The court acknowledges receipt but issues no ruling. Months later, without addressing the pending accommodation request, the court recommends dismissal for want of prosecution. The plaintiff argues the sequence denied them any real ability to participate in the proceedings.',
+            correctType:'Constitutional', correctPattern:'silent-waiver',
+            correctLaw:'5th-due-process',
+            laws:[
+                { id:'5th-due-process', name:'Fifth Amendment Due Process — Boddie v. Connecticut',  cite:'401 U.S. 371 (1971) + Bounds v. Smith, 430 U.S. 817 (1977)', desc:'Due process requires a meaningful opportunity to be heard; government actors cannot erect barriers that constructively foreclose access to judicial remedies.' },
+                { id:'ada-ii',          name:'ADA Title II — 42 U.S.C. § 12132',                    cite:'Disability Discrimination by Public Entities',               desc:'Prohibits discrimination by state and local government public entities — does not apply to federal courts.' },
+                { id:'ecoa',            name:'ECOA — 15 U.S.C. § 1691',                             cite:'Equal Credit Opportunity Act',                               desc:'Prohibits discrimination in credit transactions based on protected characteristics.' },
+                { id:'frcp12b1',        name:'Fed. R. Civ. P. 12(b)(1)',                            cite:'Lack of Subject Matter Jurisdiction',                        desc:'Allows dismissal where the court lacks jurisdiction over the subject matter of the action.' },
+            ],
+            explanation:'Critical trap: ADA Title II reaches state and local "public entities" only — federal courts are not covered, as confirmed after Tennessee v. Lane, 541 U.S. 509 (2004). The correct framework is the Fifth Amendment Due Process Clause, which applies to federal actors. Boddie v. Connecticut recognized the right to a "meaningful opportunity to be heard." Bounds v. Smith established "the fundamental constitutional right of access to the courts." When the court\'s own machinery produces the conduct later characterized as failure to prosecute, dismissal violates this access-to-courts principle. Silent Waiver: the plaintiff\'s accommodation-dependent inaction is treated as surrender of the right to prosecute.',
+            boneHonest:'ADA Title II is for state courts and local government — not federal courts. The Fifth Amendment is the right tool here.',
+        },
+        {
+            id:'h07', title:'The Documentation Demand',
+            scenario:'A customer with an SSA-adjudicated disability contacts a bank requesting a modification to the bank\'s digital-only account application process. The bank representative responds: "We can\'t modify the form. You need to provide a physician\'s letter confirming your disability first, then we will evaluate whether anything is possible." No accommodation is offered while the documentation demand is pending.',
+            correctType:'Statute', correctPattern:'red-tape-trap',
+            correctLaw:'ada-mod',
+            laws:[
+                { id:'ada-mod',  name:'ADA Title III — 42 U.S.C. § 12182(b)(2)(A)(ii)', cite:'Reasonable Modification Requirement',          desc:'Requires modification of policies, practices, or procedures necessary to afford individuals with disabilities full and equal enjoyment of goods and services, unless it would fundamentally alter the nature of those goods and services.' },
+                { id:'ecoa-ret', name:'ECOA — 15 U.S.C. § 1691(a)(3)',                  cite:'Retaliation Prohibition',                       desc:'Prohibits adverse action for exercising consumer rights.' },
+                { id:'frcp12b6', name:'Fed. R. Civ. P. 12(b)(6)',                       cite:'Failure to State a Claim',                      desc:'Allows dismissal for failure to state a claim upon which relief can be granted.' },
+                { id:'court-ord',name:'Signed Court Order Requirement',                 cite:'Standard Local Rule / 28 U.S.C. § 1291',        desc:'An order is not effective until reduced to writing, signed by the judge, and entered on the docket.' },
+            ],
+            explanation:'The reasonable modification provision of ADA Title III, § 12182(b)(2)(A)(ii), requires covered entities to modify policies when necessary to afford equal access — unless the modification would fundamentally alter the nature of the services. Adding a "Disabled/SSDI" option to a classification dropdown does not fundamentally alter banking services. A documentation demand that suspends all accommodation consideration pending physician confirmation may itself violate the interactive-process obligation, particularly where the disability is already adjudicated by SSA. Red-Tape Trap: a documentation requirement is interposed as a barrier before any accommodation discussion can begin.',
+            boneHonest:'Requiring a doctor\'s note before even talking about an accommodation is a way of using paperwork to avoid the legal obligation.',
+        },
+        {
+            id:'h08', title:'The 36-Day Delay',
+            scenario:'A creditor takes adverse action on a customer\'s account on January 10. No communication of any kind is sent to the customer until February 15 — thirty-six days later. The letter that arrives reads: "Your account has been adjusted per our account agreement." No reason is provided. No information about rights is included.',
+            correctType:'Statute', correctPattern:'boilerplate-blitz',
+            correctLaw:'ecoa-d2',
+            laws:[
+                { id:'ecoa-d2',  name:'ECOA — 15 U.S.C. § 1691(d)(2) + 12 C.F.R. § 1002.9', cite:'Adverse Action Notice — 30-Day Timing Requirement', desc:'Written notice of adverse action must be provided within 30 days of the adverse action; separate from the specific-reasons requirement.' },
+                { id:'ada-iii',  name:'ADA Title III — 42 U.S.C. § 12182',                   cite:'Public Accommodations Disability Discrimination',   desc:'Prohibits disability discrimination at places of public accommodation.' },
+                { id:'frcp12b6', name:'Fed. R. Civ. P. 12(b)(6)',                            cite:'Failure to State a Claim',                          desc:'Allows dismissal for failure to state a claim upon which relief can be granted.' },
+                { id:'haines',   name:'Haines v. Kerner, 404 U.S. 519',                     cite:'Pro Se Liberal Construction',                       desc:'Pro se pleadings held to less stringent standards than lawyers\' pleadings.' },
+            ],
+            explanation:'This hypo isolates the timing prong of the ECOA notice regime. Section 1691(d)(2) and Regulation B both require notification within 30 days of the adverse action decision. February 15 is day 36 — a clear violation of the timing requirement independent of whether the content of the notice was adequate (it was not, but that is a separate § 1691(d)(3) defect). These are two distinct statutory violations from one sequence. Boilerplate Blitz: a generic account-agreement reference is substituted for the substantive, timely notice the statute mandates.',
+            boneHonest:'Two separate violations: it arrived too late (day 36), and it said nothing (no reasons, no rights). Fixing one doesn\'t fix the other.',
+        },
+        {
+            id:'h09', title:'The Phantom Order',
+            scenario:'During a pending civil case, opposing counsel mails a document titled "COURT ORDER — Production of Records Required" printed on court-formatted letterhead. It demands the plaintiff produce all financial records within 10 days under threat of sanctions. The document bears no judge\'s signature, reflects no docket number corresponding to any filed entry, and carries no clerk\'s stamp.',
+            correctType:'Rule', correctPattern:'formalist-faux-pas',
+            correctLaw:'court-ord',
+            laws:[
+                { id:'court-ord', name:'Signed Court Order Requirement',       cite:'Standard Local Rule / 28 U.S.C. § 1291',       desc:'An order is not effective until it is reduced to writing, signed by the judge, and entered on the docket by the clerk.' },
+                { id:'frcp12b6',  name:'Fed. R. Civ. P. 12(b)(6)',            cite:'Failure to State a Claim',                     desc:'Allows dismissal for failure to state a claim upon which relief can be granted.' },
+                { id:'haines',    name:'Haines v. Kerner, 404 U.S. 519',      cite:'Pro Se Liberal Construction',                  desc:'Pro se pleadings held to less stringent standards than formal pleadings drafted by lawyers.' },
+                { id:'ecoa',      name:'ECOA — 15 U.S.C. § 1691',            cite:'Equal Credit Opportunity Act',                  desc:'Prohibits discrimination in credit transactions based on protected characteristics.' },
+            ],
+            explanation:'No judge signature + no docket entry = no court order, regardless of how official the paper looks. The Signed Court Order Requirement reflects a foundational principle of judicial authority: a command only has the force of a court order when a judicial officer has actually exercised jurisdiction over the matter and the clerk has entered the result. Opposing counsel producing a formatted "ORDER" that has never been filed, signed, or docketed is precisely the maneuver Formalist Faux-Pas describes — official-looking format substituted for actual authority.',
+            boneHonest:'A fancy header doesn\'t make a document a real court order. No signature, no docket entry, no order. Don\'t comply.',
+        },
+        {
+            id:'h10', title:'The Unnamed Dismissal',
+            scenario:'A pro se plaintiff files a complaint in federal court alleging violations of federal consumer protection statutes. The defendant files a one-sentence motion: "Plaintiff\'s complaint fails to adequately articulate a legally cognizable basis for relief and should be dismissed." No rule is cited. No element of the claim is identified as deficient. No case law is referenced. The motion consists only of that sentence.',
+            correctType:'Rule', correctPattern:'boilerplate-blitz',
+            correctLaw:'frcp12b6',
+            laws:[
+                { id:'frcp12b6',  name:'Fed. R. Civ. P. 12(b)(6)',                cite:'Failure to State a Claim Upon Which Relief Can Be Granted', desc:'The rule the defendant is attempting to invoke — but failed to cite — as the basis for dismissal. Requires identifying which element of the claim is insufficient.' },
+                { id:'frcp41b',   name:'Fed. R. Civ. P. 41(b)',                   cite:'Dismissal for Failure to Prosecute',                        desc:'Authorizes dismissal where a plaintiff fails to prosecute the action or comply with court orders.' },
+                { id:'court-ord', name:'Signed Court Order Requirement',          cite:'Standard Local Rule / 28 U.S.C. § 1291',                    desc:'An order is not effective until reduced to writing, signed by the judge, and entered on the docket.' },
+                { id:'ecoa-d',    name:'ECOA — 15 U.S.C. § 1691(d)',              cite:'Adverse Action Notice Requirement',                          desc:'Requires written notice of adverse action stating specific reasons within 30 days.' },
+            ],
+            explanation:'The defendant is attempting a Rule 12(b)(6) motion — the rule for dismissal based on inadequate pleading — but has failed to cite it, failed to identify which element of any claim is deficient, and failed to produce any legal standard for the court to apply. This matters because a proper 12(b)(6) motion requires identifying the specific pleading defect under Twombly/Iqbal. A one-sentence assertion of "inadequate pleading" with no supporting analysis is the textbook Boilerplate Blitz — template language without substance, substituting the conclusion for the required argument.',
+            boneHonest:'They said your case is bad but didn\'t say why. Rule 12(b)(6) requires them to actually point at what\'s wrong.',
+        },
+    ];
+
+    let s6 = {
+        idx: 0,
+        selType: null,
+        selPattern: null,
+        selLaw: null,
+        answered: false,
+        score: 0,
+        maxScore: 0,
+    };
+
+    function s6Init() {
+        s6 = { idx:0, selType:null, selPattern:null, selLaw:null, answered:false, score:0, maxScore:0 };
+        document.getElementById('s6CompleteMsg').classList.add('hidden');
+        document.getElementById('section6Card').querySelectorAll('.task-section, button#s6SubmitBtn, button#s6NextBtn').forEach(el => el.classList.remove('hidden'));
+        s6Render();
+    }
+
+    function s6Render() {
+        const h = LAW_HYPOS[s6.idx];
+        s6.selType = null;
+        s6.selPattern = null;
+        s6.selLaw = null;
+        s6.answered = false;
+
+        document.getElementById('s6Num').innerText = `Section VI — Hypo #${s6.idx + 1}`;
+        document.getElementById('s6HypoNum').innerText = s6.idx + 1;
+        document.getElementById('s6Title').innerText = h.title;
+        document.getElementById('s6Scenario').innerText = h.scenario;
+        document.getElementById('s6ScoreDisp').innerText = s6.score;
+        document.getElementById('s6MaxDisp').innerText = s6.maxScore;
+        document.getElementById('s6ExplanationBox').classList.add('hidden');
+        document.getElementById('s6ExplanationBox').innerHTML = '';
+        document.getElementById('s6NextBtn').classList.add('hidden');
+        document.getElementById('s6CompleteMsg').classList.add('hidden');
+
+        // Submit button reset
+        const sub = document.getElementById('s6SubmitBtn');
+        sub.disabled = true;
+        sub.classList.remove('hidden');
+        sub.style.opacity = '0.4';
+        sub.style.cursor = 'not-allowed';
+        sub.style.background = 'linear-gradient(to right, #92400e, #78350f)';
+
+        // Lock Steps II and III
+        document.getElementById('s6PatternSection').classList.add('s6-locked');
+        document.getElementById('s6LawSection').classList.add('s6-locked');
+
+        // Render Type buttons
+        const typeList = document.getElementById('s6TypeList');
+        typeList.innerHTML = '';
+        AUTHORITY_TYPES.forEach(t => {
+            const btn = document.createElement('div');
+            btn.className = 'pattern-btn';
+            btn.innerHTML = `<span class="pattern-name">${t.label}</span><span class="pattern-desc">${t.desc}</span>`;
+            btn.onclick = () => {
+                document.querySelectorAll('#s6TypeList .pattern-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                s6.selType = t.id;
+                document.getElementById('s6PatternSection').classList.remove('s6-locked');
+                s6CheckReady();
+            };
+            typeList.appendChild(btn);
+        });
+
+        // Render Pattern buttons (same PATTERNS data)
+        const patList = document.getElementById('s6PatternList');
+        patList.innerHTML = '';
+        PATTERNS.forEach(p => {
+            const btn = document.createElement('div');
+            btn.className = 'pattern-btn';
+            btn.innerHTML = `<span class="pattern-name">${p.name}</span><span class="pattern-desc">${p.definition}</span>`;
+            btn.onclick = () => {
+                document.querySelectorAll('#s6PatternList .pattern-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                s6.selPattern = p.id;
+                document.getElementById('s6LawSection').classList.remove('s6-locked');
+                s6CheckReady();
+            };
+            patList.appendChild(btn);
+        });
+
+        // Render Law option buttons
+        const lawList = document.getElementById('s6LawList');
+        lawList.innerHTML = '';
+        h.laws.forEach(l => {
+            const btn = document.createElement('button');
+            btn.className = 's6-law-btn';
+            btn.dataset.id = l.id;
+            btn.innerHTML = `
+                <span class="s6-law-name">${l.name}</span>
+                <span class="s6-law-cite">${l.cite}</span>
+                <span class="s6-law-desc">${l.desc}</span>
+            `;
+            btn.onclick = () => {
+                document.querySelectorAll('.s6-law-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                s6.selLaw = l.id;
+                s6CheckReady();
+            };
+            lawList.appendChild(btn);
+        });
+    }
+
+    function s6CheckReady() {
+        const ready = s6.selType && s6.selPattern && s6.selLaw;
+        const sub = document.getElementById('s6SubmitBtn');
+        sub.disabled = !ready;
+        sub.style.opacity = ready ? '1' : '0.4';
+        sub.style.cursor = ready ? 'pointer' : 'not-allowed';
+        if (ready) sub.style.background = 'linear-gradient(to right, #d97706, #b45309)';
+    }
+
+    function s6Submit() {
+        const h = LAW_HYPOS[s6.idx];
+        s6.answered = true;
+        s6.maxScore += 145;
+
+        const typeOk    = s6.selType    === h.correctType;
+        const patOk     = s6.selPattern === h.correctPattern;
+        const lawOk     = s6.selLaw     === h.correctLaw;
+        const earned    = (lawOk ? 100 : 0) + (patOk ? 25 : 0) + (typeOk ? 20 : 0);
+        s6.score += earned;
+
+        // Style law buttons
+        document.querySelectorAll('.s6-law-btn').forEach(btn => {
+            btn.onclick = null;
+            if (btn.dataset.id === h.correctLaw)        btn.classList.add('correct');
+            else if (btn.dataset.id === s6.selLaw)      btn.classList.add('wrong');
+        });
+        // Lock all type + pattern buttons
+        document.querySelectorAll('#s6TypeList .pattern-btn, #s6PatternList .pattern-btn').forEach(b => {
+            b.style.pointerEvents = 'none';
+            if ((b.innerText.includes(h.correctType) && b.innerText.startsWith(h.correctType.split(' ')[0])) ||
+                (b.innerText.includes(PATTERNS.find(p=>p.id===h.correctPattern)?.name||'__'))) {
+                b.style.borderColor = 'var(--green)';
+            }
+        });
+
+        // Explanation
+        const expBox = document.getElementById('s6ExplanationBox');
+        expBox.classList.remove('hidden');
+        expBox.innerHTML = `
+            <strong>${lawOk ? '✓ CORRECT' : '✗ INCORRECT'} — ${h.laws.find(l=>l.id===h.correctLaw).name}</strong>
+            &nbsp;<span style="font-size:0.8rem; color:${earned>0?'var(--green)':'var(--red)'}; font-family:monospace;">+${earned} pts</span>
+            <p style="margin-top:10px;">${h.explanation}</p>
+            ${state.hainesMode ? `<span class="s6-bone">🔍 ${h.boneHonest}</span>` : ''}
+            <div style="margin-top:10px; font-size:0.75rem; color:var(--text-muted); border-top:1px solid rgba(255,255,255,0.06); padding-top:8px;">
+                Type: ${typeOk?'✓':'✗'} ${h.correctType} &nbsp;|&nbsp; Pattern: ${patOk?'✓':'✗'} ${PATTERNS.find(p=>p.id===h.correctPattern)?.name} &nbsp;|&nbsp; Law: ${lawOk?'✓':'✗'}
+            </div>
+        `;
+
+        // Update scores + docket
+        document.getElementById('s6ScoreDisp').innerText = s6.score;
+        document.getElementById('s6MaxDisp').innerText   = s6.maxScore;
+        if (lawOk) {
+            state.score += earned;
+            state.streak++;
+            updateMultiplier();
+            state.bestStreak = Math.max(state.bestStreak, state.streak);
+        } else {
+            state.streak = 0;
+            state.multiplier = 1.0;
+        }
+        addToDocket(`S6: ${h.title}`, h.laws.find(l=>l.id===h.correctLaw).cite, PATTERNS.find(p=>p.id===h.correctPattern)?.name, earned, lawOk ? 'filed' : 'correction needed');
+        updateUI();
+        saveProgress();
+
+        // Toggle buttons
+        document.getElementById('s6SubmitBtn').classList.add('hidden');
+        const next = document.getElementById('s6NextBtn');
+        next.classList.remove('hidden');
+        next.innerText = s6.idx + 1 < LAW_HYPOS.length ? 'Next Hypo →' : 'View Final Score →';
+    }
+
+    function s6Next() {
+        s6.idx++;
+        if (s6.idx >= LAW_HYPOS.length) {
+            document.getElementById('s6SubmitBtn').classList.add('hidden');
+            document.getElementById('s6NextBtn').classList.add('hidden');
+            document.getElementById('s6ExplanationBox').classList.add('hidden');
+            document.getElementById('s6Scenario').innerText = '';
+            document.getElementById('s6Title').innerText = '';
+            ['s6TypeList','s6PatternList','s6LawList'].forEach(id => { const el=document.getElementById(id); if(el) el.innerHTML=''; });
+            document.getElementById('s6PatternSection').classList.remove('s6-locked');
+            document.getElementById('s6LawSection').classList.remove('s6-locked');
+            document.getElementById('s6CompleteMsg').classList.remove('hidden');
+            const pct = Math.round(s6.score/s6.maxScore*100);
+            document.getElementById('s6FinalLine').innerText = `${s6.score} / ${s6.maxScore} pts (${pct}%) — ${LAW_HYPOS.filter((_,i)=>i<s6.idx).length} hypos filed`;
+        } else {
+            s6Render();
+        }
+    }
+
+    function s6Reset() {
+        s6Init();
+    }
+
+    // Hook submit and next buttons
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('s6SubmitBtn').addEventListener('click', s6Submit);
+        document.getElementById('s6NextBtn').addEventListener('click', s6Next);
+        s6Init();
+    });
+
+    // --- PERSISTENCE ---
+    function saveProgress() {
+        localStorage.setItem('recordForgeProgress', JSON.stringify(state));
+    }
+
+    function loadProgress() {
+        const saved = localStorage.getItem('recordForgeProgress');
+        if (saved) {
+            const loadedState = JSON.parse(saved);
+            state = { ...state, ...loadedState };
+            renderDocket();
+        }
+    }
+</script>
+
+</body>
+</html>

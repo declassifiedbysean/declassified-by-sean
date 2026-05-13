@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DECLASSIFIED — Act V: Nuclear Liquidation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d0807;--bg2:#131010;--bg3:#1c1815;
+  --crimson:#9b1c1c;--crimson-bright:#cc2222;
+  --gold:#d4af37;--gold-dim:#8a6f20;
+  --green:#2dff6e;--red:#ff3c3c;--blue:#5bb4ff;--orange:#ff9933;
+  --text:#ddd4c8;--text-dim:#7a6f64;--border:#2a2018;--classify:#5a0000;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:14px;line-height:1.5;overflow-x:hidden;}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px);pointer-events:none;z-index:9999;}
+body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 50%,rgba(0,0,0,.65) 100%);pointer-events:none;z-index:9998;}
+#app{max-width:660px;margin:0 auto;min-height:100vh;padding-bottom:80px;}
+/* CLASSBAR */
+.classbar{background:var(--classify);color:#d4af37;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:.3em;text-align:center;padding:6px 12px;text-transform:uppercase;user-select:none;border-bottom:1px solid var(--crimson);}
+/* HEADER */
+.act-header{padding:22px 20px 14px;border-bottom:1px solid var(--border);}
+.act-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:5px;}
+.act-title{font-family:'Special Elite',serif;font-size:22px;color:var(--gold);line-height:1.2;margin-bottom:3px;}
+.act-sub{font-size:11px;color:var(--text-dim);letter-spacing:.06em;}
+/* HUB */
+.hub-body{padding:18px 20px;}
+.info-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--gold);padding:14px 16px;margin-bottom:14px;font-size:12px;line-height:1.6;}
+.info-block p+p{margin-top:8px;}
+.sec-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;display:block;}
+/* CHAPTER TILES */
+.chapter-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.ch-tile{background:var(--bg2);border:2px solid var(--border);padding:14px 12px;cursor:pointer;transition:all .14s;-webkit-tap-highlight-color:transparent;position:relative;}
+.ch-tile:active{opacity:.65;}
+.ch-tile.selected{border-color:var(--gold);background:#1a1408;}
+.ch-tile.done{border-color:var(--crimson);}
+.ch-date{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:5px;}
+.ch-title{font-family:'Special Elite',serif;font-size:13px;color:var(--text);line-height:1.3;margin-bottom:6px;}
+.ch-sub{font-size:10px;color:var(--text-dim);line-height:1.3;}
+.ch-score{font-family:'Oswald',sans-serif;font-size:12px;color:var(--gold);margin-top:6px;}
+.ch-badge{position:absolute;top:8px;right:8px;font-size:9px;font-family:'Oswald',sans-serif;letter-spacing:.1em;padding:2px 6px;}
+.ch-badge.new-badge{background:var(--crimson);color:#fff;}
+.ch-badge.done-badge{background:var(--gold-dim);color:#0d0807;}
+/* MODE SELECTOR */
+.mode-wrap{background:var(--bg2);border:1px solid var(--border);padding:14px 16px;margin-bottom:14px;}
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+.mode-btn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;padding:12px 8px;cursor:pointer;text-align:center;transition:all .14s;-webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;align-items:center;gap:4px;min-height:66px;justify-content:center;}
+.mode-btn .mn{font-size:13px;color:var(--gold);}
+.mode-btn .md{font-size:9px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-weight:400;letter-spacing:0;text-align:center;line-height:1.3;}
+.mode-btn.sel{border-color:var(--gold);background:#1a1408;}
+.mode-btn:active{opacity:.65;}
+/* START / EPILOGUE BTNS */
+.hub-actions{display:grid;grid-template-columns:1fr auto;gap:10px;margin-top:4px;}
+.start-btn{background:var(--gold);color:#0d0807;font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:17px;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .14s;}
+.start-btn:active{opacity:.7;}
+.start-btn:disabled{background:var(--bg3);color:var(--text-dim);cursor:not-allowed;}
+.epil-btn{background:transparent;border:1px solid var(--crimson);color:var(--crimson);font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:17px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.epil-btn:active{opacity:.7;}
+/* PROGRESS */
+.prog-rail{background:var(--bg3);height:3px;}
+.prog-fill{background:var(--gold);height:3px;transition:width .3s;}
+.prog-meta{display:flex;justify-content:space-between;padding:7px 20px;font-size:11px;color:var(--text-dim);border-bottom:1px solid var(--border);}
+.prog-meta .sv{color:var(--gold);font-weight:bold;}
+/* MODE BADGE in game */
+.mode-badge{display:inline-block;font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.15em;padding:2px 7px;text-transform:uppercase;margin-left:8px;vertical-align:middle;}
+.mode-badge.CLINICAL{background:var(--bg3);color:var(--text-dim);}
+.mode-badge.SATIRE_TIER{background:#2a1a00;color:var(--orange);}
+.mode-badge.TURDUCKEN{background:#0a1a0a;color:var(--green);}
+.mode-badge.REVERSE_CHRONO{background:#0a0a1a;color:var(--blue);}
+/* TURDUCKEN LAYER SWITCHER */
+.turd-tabs{margin:14px 20px 0;display:flex;gap:0;}
+.turd-tab{flex:1;background:var(--bg3);border:1px solid var(--border);font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:9px 6px;cursor:pointer;text-align:center;-webkit-tap-highlight-color:transparent;color:var(--text-dim);transition:all .12s;}
+.turd-tab:not(:last-child){border-right:none;}
+.turd-tab.active{background:var(--bg2);color:var(--gold);border-bottom-color:var(--bg2);}
+.turd-tab:active{opacity:.65;}
+/* PROJECTED BADGE */
+.proj-badge{background:#1a0a00;color:var(--orange);font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.15em;padding:2px 7px;text-transform:uppercase;display:inline-block;}
+/* CLAIM CARD */
+.claim-card{margin:14px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+.claim-card.turd-active{margin-top:0;border-top:none;}
+.claim-id{background:var(--border);padding:6px 12px;font-size:10px;letter-spacing:.18em;color:var(--text-dim);display:flex;justify-content:space-between;align-items:center;gap:6px;flex-wrap:wrap;}
+.claim-id .wb{color:var(--gold-dim);}
+.claim-text{font-family:'Special Elite',serif;font-size:17px;line-height:1.55;padding:14px 16px;color:#f0e0c8;border-left:3px solid var(--gold-dim);font-style:italic;}
+.claim-text.turd-SATIRE{border-left-color:var(--orange);}
+.claim-text.turd-RECORD{border-left-color:var(--green);}
+.claim-text.turd-SHELL{border-left-color:var(--blue);font-family:'Share Tech Mono',monospace;font-size:12px;font-style:normal;line-height:1.5;}
+/* STEP BOXES */
+.step-box{margin:10px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+.step-hdr{background:var(--bg3);padding:8px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;}
+.step-hdr .ss{font-size:10px;}
+.step-hdr .ss.done{color:var(--green);}
+.step-body{padding:12px 14px;}
+.step-locked{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+/* VERDICT */
+.verdict-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.verdict-grid.five{grid-template-columns:1fr 1fr 1fr;}
+.vbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;padding:13px 6px;cursor:pointer;text-align:center;transition:all .12s;-webkit-tap-highlight-color:transparent;min-height:50px;}
+.vbtn:active{opacity:.6;}
+.vbtn.sv-TRUE{border-color:var(--green);color:var(--green);background:#0a1f0f;}
+.vbtn.sv-FALSE{border-color:var(--red);color:var(--red);background:#1f0a0a;}
+.vbtn.sv-MISLEADING{border-color:var(--gold);color:var(--gold);background:#1a1408;}
+.vbtn.sv-INSUFFICIENT{border-color:var(--blue);color:var(--blue);background:#0a1220;}
+.vbtn.sv-SATIRE{border-color:var(--orange);color:var(--orange);background:#1a1000;}
+.v-hint{margin-top:8px;font-size:10px;color:var(--text-dim);line-height:1.4;padding-top:6px;border-top:1px solid var(--border);}
+/* BOGOST */
+.bogost-lbl{font-family:'Oswald',sans-serif;font-size:10px;color:var(--gold-dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;}
+.cit-grid{display:flex;flex-direction:column;gap:6px;}
+.cbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .12s;-webkit-tap-highlight-color:transparent;display:grid;grid-template-columns:90px 1fr 36px;gap:8px;align-items:start;}
+.cbtn .cn{font-weight:bold;font-size:12px;}
+.cbtn .cd{font-size:10px;color:var(--text-dim);line-height:1.3;}
+.cbtn .cp{font-size:11px;color:var(--gold-dim);text-align:right;}
+.cbtn:active{opacity:.6;}
+.cbtn.sc-STRONG{border-color:var(--green);background:#0a1a0f;} .cbtn.sc-STRONG .cn{color:var(--green);}
+.cbtn.sc-CAREFUL{border-color:var(--gold);background:#1a1408;} .cbtn.sc-CAREFUL .cn{color:var(--gold);}
+.cbtn.sc-WEAK{border-color:var(--orange);background:#1a1008;} .cbtn.sc-WEAK .cn{color:var(--orange);}
+.cbtn.sc-INSUF_CIT{border-color:var(--red);background:#1a0808;} .cbtn.sc-INSUF_CIT .cn{color:var(--red);}
+.cbtn.sc-CONSTRUCTED{border-color:var(--orange);background:#1a1000;} .cbtn.sc-CONSTRUCTED .cn{color:var(--orange);}
+.cit-note{margin-top:7px;font-size:10px;color:var(--text-dim);line-height:1.4;border-top:1px solid var(--border);padding-top:6px;}
+/* PATTERN */
+.pat-grid{display:flex;flex-direction:column;gap:5px;}
+.pbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:9px 12px;cursor:pointer;text-align:left;transition:all .12s;-webkit-tap-highlight-color:transparent;display:flex;justify-content:space-between;align-items:center;}
+.pbtn:active{opacity:.6;}
+.pbtn.sel{border-color:var(--gold);background:#1a1408;color:var(--gold);}
+.lib-open-btn{background:transparent;border:1px solid var(--gold-dim);color:var(--gold-dim);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.12em;padding:6px 10px;cursor:pointer;text-transform:uppercase;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+/* SUBMIT */
+.submit-row{margin:12px 20px 0;}
+.sub-btn{display:block;width:100%;background:var(--bg3);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:16px;border:2px solid var(--border);cursor:not-allowed;transition:all .15s;}
+.sub-btn.ready{background:var(--gold);color:#0d0807;border-color:var(--gold);cursor:pointer;}
+.sub-btn.ready:active{opacity:.7;}
+/* RESULT */
+.result-card{margin:14px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+.result-hdr{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.vr{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;letter-spacing:.12em;}
+.vr.CORRECT{color:var(--green);}
+.vr.WRONG{color:var(--red);}
+.pts-earned{font-family:'Oswald',sans-serif;font-size:20px;color:var(--gold);}
+.result-body{padding:14px 16px;font-size:12px;line-height:1.6;}
+.result-body p+p{margin-top:10px;}
+.truth-box{background:var(--bg3);border-left:3px solid var(--green);padding:10px 12px;margin-bottom:12px;font-size:12px;line-height:1.5;}
+.turd-result{background:#0a100a;border:1px solid #1a2a1a;padding:10px 12px;margin-bottom:10px;font-size:11px;line-height:1.5;}
+.turd-result .tr-label{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:4px;}
+.rb-wrap{display:flex;flex-direction:column;gap:3px;margin-top:10px;font-size:11px;}
+.rb{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);}
+.rb .rl{color:var(--text-dim);}
+.rb .rv{color:var(--gold);}
+.rb .rv.g{color:var(--green);}
+.rb .rv.b{color:var(--red);}
+.next-btn{display:block;width:calc(100% - 40px);margin:12px 20px 0;background:var(--gold);color:#0d0807;font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.next-btn:active{opacity:.7;}
+/* CHAPTER END */
+.ch-end-wrap{padding:20px;}
+.ch-score-block{background:var(--bg2);border:1px solid var(--gold);padding:24px;text-align:center;margin-bottom:14px;}
+.cel{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:6px;}
+.cep{font-family:'Oswald',sans-serif;font-size:48px;color:var(--gold);line-height:1;margin-bottom:4px;}
+.cem{font-size:12px;color:var(--text-dim);}
+.ceg{font-family:'Special Elite',serif;font-size:18px;color:var(--text);margin-top:10px;line-height:1.3;}
+.ch-hall{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);margin-bottom:14px;}
+.ch-hall-hdr{padding:9px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;border-bottom:1px solid var(--border);}
+.hall-entry{padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px;line-height:1.4;}
+.hall-entry:last-child{border-bottom:none;}
+.he-text{color:var(--text-dim);font-style:italic;margin-bottom:2px;}
+.he-wrong{color:var(--red);}
+.hall-empty{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+.hub-btn{display:block;width:100%;background:transparent;border:1px solid var(--gold-dim);color:var(--gold-dim);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;margin-bottom:10px;}
+.hub-btn:active{opacity:.7;}
+/* EPILOGUE */
+.epil-wrap{padding:20px;}
+.epil-timeline{background:var(--bg2);border:1px solid var(--border);margin-bottom:14px;}
+.epil-hdr{padding:10px 16px;background:var(--bg3);font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;border-bottom:1px solid var(--border);}
+.epil-entry{padding:14px 16px;border-bottom:1px solid var(--border);}
+.epil-entry:last-child{border-bottom:none;}
+.ee-date{font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;color:var(--gold);margin-bottom:4px;letter-spacing:.08em;}
+.ee-title{font-family:'Special Elite',serif;font-size:15px;color:var(--text);margin-bottom:6px;}
+.ee-body{font-size:11px;color:var(--text-dim);line-height:1.5;}
+.ee-statute{font-size:10px;color:var(--crimson-bright);margin-top:5px;font-family:'Oswald',sans-serif;letter-spacing:.08em;}
+.total-score-block{background:var(--bg2);border:2px solid var(--gold);padding:20px;text-align:center;margin-bottom:14px;}
+.ts-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--gold-dim);text-transform:uppercase;margin-bottom:6px;}
+.ts-pts{font-family:'Oswald',sans-serif;font-size:44px;color:var(--gold);line-height:1;margin-bottom:4px;}
+.ts-sub{font-size:11px;color:var(--text-dim);}
+.acts-nav{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;}
+.nav-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.06em;padding:12px 6px;cursor:pointer;text-align:center;text-decoration:none;display:block;-webkit-tap-highlight-color:transparent;}
+.nav-btn.active{border-color:var(--gold);color:var(--gold);}
+/* LIB OVERLAY */
+.lib-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);z-index:1000;align-items:flex-end;}
+.lib-overlay.open{display:flex;}
+.lib-sheet{background:var(--bg2);border-top:2px solid var(--gold);width:100%;max-width:660px;margin:0 auto;max-height:82vh;overflow-y:auto;padding-bottom:20px;}
+.lib-sheet-hdr{background:var(--bg3);padding:11px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--gold);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;}
+.close-lib{background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;padding:2px 8px;}
+.lib-intro{padding:10px 16px 8px;font-size:10px;color:var(--text-dim);line-height:1.5;border-bottom:1px solid var(--border);font-style:italic;}
+.lib-entry{padding:11px 16px;border-bottom:1px solid var(--border);}
+.lib-tag{font-size:9px;color:var(--gold-dim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:2px;}
+.lib-name{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--gold);margin-bottom:3px;}
+.lib-def{font-size:11px;color:var(--text-dim);line-height:1.5;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.anim{animation:fadeIn .2s ease forwards;}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678"
+     crossorigin="anonymous"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+</head>
+<body>
+<div id="app"></div>
+<div class="lib-overlay" id="libOverlay">
+  <div class="lib-sheet">
+    <div class="lib-sheet-hdr">PATTERN LIBRARY — PHILLIPS / LEGAL EDITION<button class="close-lib" id="closeLib">✕</button></div>
+    <div class="lib-intro">Act V consolidates all patterns from Acts II and IV and adds four new legal-statutory patterns anchored to 18 U.S.C. § 793(e) and 15 U.S.C. § 78u-1. Legal patterns describe structural rhetorical mechanisms — not findings of law.</div>
+    <div id="libEntries"></div>
+  </div>
+</div>
+<script>
+// ── PATTERNS ────────────────────────────────────────────────────────
+const PATTERNS=[
+  // ACT II ORIGINALS
+  {id:'DEMONSTRABLE_FALSEHOOD',name:'Demonstrable Falsehood',tag:'ACT II',def:'A claim directly contradicted by verifiable public record, physical evidence, or official documentation. The falsity is not a matter of interpretation.'},
+  {id:'UNFULFILLABLE_PROMISE',name:'Unfulfillable Promise',tag:'ACT II',def:'A commitment made with rhetorical confidence but no credible mechanism for delivery.'},
+  {id:'SELECTIVE_SUMMARY',name:'Selective Summary',tag:'ACT II',def:'A technically sourced claim that omits material context such that the overall impression differs substantially from the documented record.'},
+  {id:'CHERRY_PICKING',name:'Cherry Picking',tag:'ACT II',def:'Choosing a single favorable data point while suppressing the trend, range, or conflicting figures that would alter the claim\'s meaning.'},
+  {id:'PREMATURE_CERTAINTY',name:'Premature Certainty',tag:'ACT II',def:'Asserting a conclusion as settled fact before the evidentiary record is complete.'},
+  {id:'FALSE_EQUIVALENCE',name:'False Equivalence',tag:'ACT II',def:'Treating two unlike situations as structurally identical to neutralize a criticism. Ignores material differences in scale, legality, or context.'},
+  {id:'WHATABOUTISM',name:'Whataboutism',tag:'ACT II',def:'Responding to an accountability claim by redirecting to a different party\'s alleged misconduct, rather than addressing the original charge.'},
+  {id:'THE_BIG_LIE',name:'The Big Lie',tag:'ACT II',def:'A claim so large and consequential that its scale becomes part of its credibility mechanism. Resistant to refutation because the listener assumes something this significant must have some basis.'},
+  {id:'UNVERIFIABLE_BOAST',name:'Unverifiable Boast',tag:'ACT II',def:'A superlative claim about personal attributes or knowledge that cannot be confirmed or denied because it concerns internal states or private deliberations.'},
+  {id:'INSTITUTIONAL_DELEGIT',name:'Institutional Delegitimization',tag:'ACT II',def:'Framing a legitimate oversight body, law enforcement entity, or electoral system as inherently corrupt — without specific evidence — to preemptively discredit its findings.'},
+  // ACT IV NEW
+  {id:'INFLATED_METRIC',name:'Inflated Metric',tag:'ACT IV',def:'Citing a figure accurate in isolation but systematically overstated through definitional expansion, double-counting, or projection treated as a realized result.'},
+  {id:'FRAMING_INVERSION',name:'Framing Inversion',tag:'ACT IV',def:'Characterizing a mechanism primarily associated with one function in terms of its opposite function. The label and structural effect run in contrary directions.'},
+  {id:'CONSTITUTIONAL_MISREAD',name:'Constitutional Misreading',tag:'ACT IV',def:'Citing constitutional authority for an action where the relevant text, binding precedent, or plain-language interpretation directly forecloses or qualifies that reading.'},
+  {id:'LEGAL_OVERREACH',name:'Legal Overreach',tag:'ACT IV',def:'Invoking an existing legal authority for a purpose that exceeds or contradicts its defined scope, as established by judicial interpretation or the statute\'s own limiting language.'},
+  {id:'STRATEGIC_AMBIGUITY',name:'Strategic Ambiguity',tag:'ACT IV',def:'Issuing a statement open enough to be construed as either a threat or a preference, allowing denial of the more provocative reading. Ambiguity is the mechanism, not the accident.'},
+  {id:'ECONOMIC_MISREP',name:'Economic Misrepresentation',tag:'ACT IV',def:'Misstating who bears the economic incidence of a policy — typically through a reversed description of who pays a tax or tariff — in contradiction of basic economic consensus.'},
+  {id:'MANDATE_OVERCLAIM',name:'Mandate Overclaim',tag:'ACT IV',def:'Claiming an electoral result as a sweeping policy mandate when the margin, distribution, or stated voter motivations do not support the scope of authority claimed.'},
+  // ACT V NEW — LEGAL STATUTORY
+  {id:'ESPIONAGE_ACT_DENIAL',name:'Espionage Act Denial (§ 793e)',tag:'ACT V — LEGAL',def:'Denying or reframing the unauthorized retention or disclosure of national defense information — typically through assertions of personal declassification authority, confusion about what constitutes "documents," or characterizing the retention as routine. Anchored to 18 U.S.C. § 793(e), which does not require proof of intent to injure the United States and does not exempt former presidents.'},
+  {id:'INSIDER_TRADING_COINCIDENCE',name:'Insider Trading Coincidence (§ 78u-1)',tag:'ACT V — LEGAL',def:'Characterizing trading activity temporally correlated with access to material non-public government information as coincidental market timing, personal investment judgment, or unrelated financial activity. Anchored to 15 U.S.C. § 78u-1 (Insider Trading Sanctions Act), which applies to all traders regardless of political status.'},
+  {id:'SOVEREIGN_IMMUNITY_OVERCLAIM',name:'Sovereign Immunity Overclaim',tag:'ACT V — LEGAL',def:'Asserting absolute presidential immunity for conduct that courts have specifically ruled falls outside the protected zone of official executive function — typically citing immunity doctrines in contexts where the relevant precedent applies only to acts within the constitutional core of presidential power.'},
+  {id:'ASSET_PERSECUTION_FRAME',name:'Asset Persecution Frame',tag:'ACT V — LEGAL',def:'Characterizing court-ordered asset forfeiture, tax collection, or securities restitution as politically motivated persecution rather than the application of neutral legal process — without addressing the specific statutory or judicial basis for the action.'},
+];
+
+const CITATION_TIERS=[
+  {id:'STRONG',    name:'STRONG',       desc:'Primary source, official record, or direct documentation',         pts:25},
+  {id:'CAREFUL',   name:'CAREFUL',      desc:'Expert consensus, major institutional or multi-source reporting',   pts:15},
+  {id:'WEAK',      name:'WEAK',         desc:'Contested, partisan, or secondary-source basis only',               pts:5},
+  {id:'INSUF_CIT', name:'INSUFFICIENT', desc:'No credible or identifiable evidentiary basis',                    pts:0},
+  {id:'CONSTRUCTED',name:'CONSTRUCTED', desc:'[SATIRE TIER] Satirical construction — clearly labeled fictional basis', pts:5, satireOnly:true},
+];
+
+// ── CHAPTERS & CLAIMS ───────────────────────────────────────────────
+const CHAPTERS=[
+{
+  id:'ch1',
+  date:'June 16, 2026',
+  title:'The Escalator Only Goes Down (Part 2)',
+  sub:'Memecoin predicates · 11,780 revisited · Immunity doctrine',
+  claims:[
+    {id:'c1_01',year:'Jan–Jun 2026',
+     text:'"The $TRUMP memecoin is a private business matter. The White House has no involvement in its operation or trading."',
+     satireText:'"The coins are beautiful. The best coins. Millions of people love them. Nothing to do with the Oval Office."',
+     recordText:'The $TRUMP memecoin launched January 17, 2025 — three days before the inauguration. Wallets linked to Trump-affiliated entities held approximately 80% of supply at launch. Trading volume spikes correlated with policy announcements on documented occasions. Financial disclosure filings show family financial stakes in connected entities.',
+     shellText:'Art. II, § 1, cl. 7 (Emoluments Clause) bars personal financial benefit derived from the presidency. 15 U.S.C. § 78u-1 (Insider Trading Sanctions Act) applies regardless of political status. The Ethics in Government Act requires disclosure of financial interests.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.5,expectedCitation:'STRONG',correctPattern:'INSIDER_TRADING_COINCIDENCE',
+     annotation:'MISLEADING rather than FALSE acknowledges that a legal structure technically separates the memecoin entity from the Office of the President. What the claim cannot sustain is the factual impression of zero connection — financial disclosures, timing data, and affiliated wallet concentration directly contradict "no involvement."',
+     truthNote:'Financial disclosures and documented trading timing correlations contradict the "no involvement" framing. The record shows a connected financial stake, not a clean separation.',
+     citationNote:'Financial disclosure filings, SEC trading data, and wallet attribution analyses are STRONG primary documentation.'},
+    {id:'c1_02',year:'Jan 2, 2021',
+     text:'"I never asked Raffensperger to find votes. It was a perfect call about an audit."',
+     satireText:'"He was incompetent. The call was perfect. I was talking about auditing. They took it out of context completely."',
+     recordText:'The January 2, 2021 phone call transcript, released by the Georgia Secretary of State\'s office and authenticated by both parties, contains verbatim: "I just want to find 11,780 votes, which is one more than we have. Because we won the state." The tape exists. The transcript is public record.',
+     shellText:'O.C.G.A. § 21-2-604 (Georgia election interference statute) and 52 U.S.C. § 20511 (federal election crime statute) have both been cited in connection with this call. The Fulton County indictment listed this call as a predicate act.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.8,expectedCitation:'STRONG',correctPattern:'DEMONSTRABLE_FALSEHOOD',
+     annotation:'The transcript is the primary source. "Find 11,780 votes" is a direct quote — not an interpretation. The "audit" reframing requires reading language that is not in the transcript and ignoring language that is. This is Demonstrable Falsehood at its most textually documented.',
+     truthNote:'The transcript contains the verbatim quote "find 11,780 votes." The audit characterization is not supported by any language in the publicly released call record.',
+     citationNote:'The released call transcript is STRONG — the primary source is the document itself, not a secondary characterization of it.'},
+    {id:'c1_03',year:'2025–2026',
+     text:'"DOGE savings are approaching $3 trillion. The program is exceeding all projections."',
+     satireText:'"The numbers are unbelievable. Better than anyone thought. Elon is a genius. The swamp is draining."',
+     recordText:'Congressional Budget Office and independent budget analyses through Q1 2026 documented verified savings in the tens of billions — not trillions. Significant double-counting, legally protected mandatory spending counted as cuts, and unrealized projections were incorporated in the headline figure. The federal deficit continued to grow through the same period.',
+     shellText:'31 U.S.C. § 1105 (Budget and Accounting Act) requires accurate executive budget submissions. GAO audit authority under 31 U.S.C. § 712 allows independent verification of claimed savings — CBO and GAO analyses both contradicted the headline figure.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.5,expectedCitation:'STRONG',correctPattern:'INFLATED_METRIC',
+     annotation:'The $3 trillion figure announces a target as a result. This is the defining feature of Inflated Metric. CBO and GAO analyses — the standard independent verification mechanisms for federal budget claims — found the documented savings an order of magnitude below the stated figure. The deficit trajectory during the same period provides an additional empirical check.',
+     truthNote:'CBO and GAO found verified savings far below the announced figures. Mandatory spending and double-counted items composed the bulk of the headline number.',
+     citationNote:'CBO, GAO, and OMB baseline data are STRONG primary-source budget documentation.'},
+    {id:'c1_04',year:'2025–2026',
+     text:'"Presidential immunity covers all of this. The Supreme Court agreed in Trump v. United States."',
+     satireText:'"The Court already ruled. Everything I did is covered. This is settled law. The case is over."',
+     recordText:'Trump v. United States (2024) held that a former president has absolute immunity for core constitutional functions and presumptive immunity for official acts, but explicitly stated that unofficial conduct — including private business activities, conduct preceding or following the presidency, and personal financial arrangements — is not protected. The Court specifically declined to grant absolute immunity for all presidential-era conduct.',
+     shellText:'Trump v. United States, 603 U.S. ___ (2024): "The President enjoys no immunity for his unofficial acts." The decision was written by Chief Justice Roberts. The Court explicitly carved out unofficial conduct from protection and remanded specific questions for lower court application.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.8,expectedCitation:'STRONG',correctPattern:'SOVEREIGN_IMMUNITY_OVERCLAIM',
+     annotation:'MISLEADING rather than FALSE acknowledges that the Court did recognize substantial immunity for core official acts — which is accurately cited. What the claim cannot sustain is the implication that the ruling covers "all of this." The decision explicitly carves out unofficial conduct, and the Court\'s own language directly contradicts the absolute framing.',
+     truthNote:'Trump v. United States explicitly excludes unofficial conduct from immunity. The decision is the primary source that contradicts the absolutist reading.',
+     citationNote:'The Supreme Court opinion itself is STRONG — the text of the decision is the primary source and directly addresses the scope of the ruling.'},
+    {id:'c1_05',year:'2025–2026',
+     text:'"The $TRUMP memecoin insiders who sold early had no access to non-public information. All trading was disclosed."',
+     satireText:'"They were investors like anyone else. The market moved naturally. There were no insiders — just winners and losers."',
+     recordText:'On-chain analysis documented that wallets linked to Trump-affiliated entities began significant sells within hours of policy announcements that were not yet public. The timing correlation was flagged by multiple independent blockchain analytics firms. Financial disclosure filings were filed late on several occasions.',
+     shellText:'15 U.S.C. § 78u-1(a)(1): civil penalties of up to three times profits for trading "while in possession of material, nonpublic information." The statute does not require proof of formal insider status — possession of non-public information at time of trading is sufficient. The definition of "material" includes imminent policy announcements that would predictably move a market.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.5,expectedCitation:'CAREFUL',correctPattern:'INSIDER_TRADING_COINCIDENCE',
+     annotation:'The claim fails on the documented timing evidence. "Had no access" is a factual assertion contradicted by proximity data. MISLEADING rather than FALSE acknowledges that "access" has a specific legal definition that depends on investigation, not on-chain analysis alone — but the evidentiary pattern is documented and not coincidental.',
+     truthNote:'On-chain analysis from multiple independent firms documented sell timing correlated with non-public policy events. The "no access" claim is not supported by the available timing record.',
+     citationNote:'On-chain analytics and financial disclosure filing dates are CAREFUL documentation — strong evidentiary pattern but requiring formal investigation for legal conclusion.'},
+    {id:'c1_06',year:'Jun 2026 [PROJECTED]',
+     text:'"The June 2026 market manipulation charges are a witch hunt. There is no legal basis for this prosecution."',
+     satireText:'"They\'ve been hunting me for ten years. This is worse than anything they\'ve done before. Total witch hunt."',
+     recordText:'[PROJECTED — events as of this claim are not yet documented in the public record. In CLINICAL mode, INSUFFICIENT INFO is the analytically correct verdict. The evidentiary predicate (documented trading patterns) is real; the prosecution is speculative.] The charge as framed would be evaluated under 15 U.S.C. § 78u-1 and SEC enforcement authority.',
+     shellText:'15 U.S.C. § 78u-1 (Insider Trading Sanctions Act): SEC civil enforcement authority for trading on material non-public information. 18 U.S.C. § 1348 (Securities fraud statute): criminal analog. The "no legal basis" assertion is evaluable once formal charges are public.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.3,expectedCitation:'INSUF_CIT',correctPattern:'INSTITUTIONAL_DELEGIT',
+     annotation:'[CLINICAL: INSUFFICIENT INFO — the prosecution is projected/speculative.] [SATIRE TIER: This is a projected event appropriately labeled SATIRE. The institutional delegitimization pattern — characterizing any prosecution as a "witch hunt" before the evidentiary record is assessed — is documented behavior across multiple prior instances, making the pattern recognizable even if this specific event is projected.',
+     truthNote:'Projected event. The analytical pattern — preemptive delegitimization of legal process as "witch hunt" without addressing the evidentiary basis — is documented behavior regardless of this specific charge\'s status.',
+     citationNote:'INSUFFICIENT in CLINICAL (projected event). CONSTRUCTED in SATIRE TIER.'},
+    {id:'c1_07',year:'Jun 16, 2026',
+     text:'"Ten years ago on this escalator I said things they called crazy. I was right about everything."',
+     satireText:'"The greatest political speech in American history. They laughed. Now look. I was right about every single thing I said."',
+     recordText:'Trump\'s June 16, 2015 escalator announcement included specific predictions about immigration, trade, and economic outcomes. A comprehensive fact-check of the speech against subsequent documented outcomes shows a mixed record: some predictions proved accurate (trade renegotiations did occur), some did not (Mexico did not pay for the wall), and several were unfalsifiable as stated.',
+     shellText:'[No statutory anchor — this is an empirical claim about a speech\'s accuracy.] The First Amendment fully protects the speech. The question is factual accuracy, not legal permissibility.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.0,expectedCitation:'CAREFUL',correctPattern:'SELECTIVE_SUMMARY',
+     annotation:'The "right about everything" claim is selective summary applied to the speaker\'s own prior record. A claim is right if it produces a confirming outcome, and not counted if it doesn\'t — this is Cherry Picking applied temporally. MISLEADING acknowledges that some 2015 predictions did materialize while others were directly falsified.',
+     truthNote:'The 2015 announcement speech produced some accurate predictions and some directly falsified ones. "Right about everything" is not supported by the full record of outcomes.',
+     citationNote:'Media fact-check compilations and outcome documentation are CAREFUL — aggregated secondary sources drawing on primary outcome data.'},
+    {id:'c1_08',year:'2025–2026',
+     text:'"I have nothing to do with the DOGE sell-offs. I don\'t even look at the markets."',
+     satireText:'"I haven\'t looked at a stock in years. I\'m too busy running the country. Elon handles all of that."',
+     recordText:'Presidential daily briefings documented in the Trump v. United States record, financial disclosure filings, and contemporaneous reporting all indicate awareness of market-moving policy decisions. The claim of market non-attention is not consistent with documented decision-making patterns on tariff announcements, which are market-moving by definition.',
+     shellText:'Ethics in Government Act, 5 U.S.C. App. § 101 et seq.: requires disclosure of financial interests. The claim is also relevant to 15 U.S.C. § 78u-1 "possession" element: actual trading by connected parties on timing correlated with executive decisions raises possession questions regardless of claimed personal inattention.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.3,expectedCitation:'CAREFUL',correctPattern:'UNVERIFIABLE_BOAST',
+     annotation:'The "don\'t look at markets" claim is an internal-state assertion — an Unverifiable Boast in structure. It cannot be proven false directly. But it is contradicted by the documented pattern of market-sensitive policy decisions made during the same period, and the claim\'s legal relevance to § 78u-1\'s "possession" element makes it strategically significant rather than merely stylistic.',
+     truthNote:'Documented market-sensitive policy decisions during the period are structurally inconsistent with genuine market non-attention. The claim is also legally significant to the possession element of insider trading law.',
+     citationNote:'Financial disclosures and policy-announcement timelines are CAREFUL documentation — the pattern is real; the internal-state claim cannot be directly refuted.'},
+    {id:'c1_09',year:'2025–2026',
+     text:'"The tariffs are working perfectly. Trade deficits are collapsing. America is winning."',
+     satireText:'"The numbers are the best ever. Factories are coming back. China is paying. America is winning like it never won before."',
+     recordText:'The U.S. trade deficit in goods continued to grow through early 2026. Consumer prices in tariff-affected categories (electronics, appliances, steel-dependent products) showed documented increases. The Federal Reserve attributed portions of headline inflation to tariff pass-through. Some manufacturing investment did increase in specific sectors, but the aggregate trade balance metric cited in the claim moved contrary to the claim\'s direction.',
+     shellText:'[No statutory anchor — this is an empirical economic claim.] BEA trade data, BLS consumer price data, and Fed economic analyses are the primary measurement tools. The relevant economic mechanism is import price pass-through, documented in peer-reviewed literature.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.0,expectedCitation:'STRONG',correctPattern:'CHERRY_PICKING',
+     annotation:'Cherry Picking selects the confirming data points (manufacturing investment in some sectors) while ignoring the aggregate trade deficit trajectory, the Fed\'s documented inflation attribution, and the consumer price evidence. "Perfectly" is the tell — superlative claims about economic performance require the full dataset, not the favorable slice.',
+     truthNote:'BEA trade data shows the goods deficit continuing to grow through early 2026. Fed and BLS data document consumer price increases in tariff-affected categories during the same period.',
+     citationNote:'BEA trade balance data and BLS consumer price indices are STRONG primary government statistical documentation.'},
+    {id:'c1_10',year:'Jun 2026 [PROJECTED]',
+     text:'"The 11,780 reclassification as market manipulation is the most absurd legal theory in the history of American jurisprudence."',
+     satireText:'"They took a phone call about votes and turned it into a stock market crime? This is insanity. This is the end of American law."',
+     recordText:'[PROJECTED — the specific reclassification of the 11,780 votes call as a market manipulation predicate is a satirical legal construct. The underlying phone call is documented. The legal theory combining Georgia election interference with securities fraud via the $TRUMP memecoin pricing mechanism is fictional-satirical.] The documented predicates (call transcript + memecoin launch timing) exist; the combined legal theory is the dossier\'s satirical invention.',
+     shellText:'15 U.S.C. § 78j(b) (§ 10(b) of the Securities Exchange Act) and SEC Rule 10b-5: prohibit deceptive devices in connection with securities trading. The theory that election-pressure conduct could constitute a deceptive device affecting memecoin prices is the satirical legal construction — novel and contested even as a fictional premise.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.5,expectedCitation:'INSUF_CIT',correctPattern:'INSTITUTIONAL_DELEGIT',
+     annotation:'[CLINICAL: INSUFFICIENT INFO — the legal theory is fictional-satirical.] [SATIRE TIER: The Institutional Delegitimization pattern is intact regardless of the fictional predicate: the rhetorical move of characterizing any legal theory as "the most absurd in history" before engaging its substance is the pattern being identified, not the merits of the theory.]',
+     truthNote:'Projected/satirical. The documented predicates are real; the specific legal theory is the dossier\'s creative construction. INSUFFICIENT is the correct clinical verdict.',
+     citationNote:'INSUFFICIENT in CLINICAL. CONSTRUCTED in SATIRE TIER — the satirical legal theory is its own source.'},
+  ]
+},
+{
+  id:'ch2',
+  date:'December 25, 2026',
+  title:'The Eviction of the Golden Calf',
+  sub:'Schedule F turned inward · IG clawbacks · "I love the poorly educated"',
+  claims:[
+    {id:'c2_01',year:'2025–2026',
+     text:'"Schedule F restores accountability to the federal workforce. The bureaucrats now work for the people."',
+     satireText:'"The deep state is gone. The swamp is drained. Accountability is back. The people are in charge of their government."',
+     recordText:'Schedule F (EO 14171, reinstated January 2025) reclassified career civil servants in policy-related roles from competitive-service merit protections to at-will status, removable by political appointees without procedural safeguards. The civil service merit system established by the Pendleton Civil Service Reform Act of 1883 was created specifically to replace the spoils system — i.e., to create accountability to law rather than to political patronage.',
+     shellText:'5 U.S.C. § 7511 et seq. (Civil Service Reform Act): establishes procedural protections for career employees. The Pendleton Act (22 Stat. 403, 1883): merit-based hiring as the accountability mechanism replacing patronage. EO 14171 removes the Pendleton protections for reclassified employees.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.8,expectedCitation:'CAREFUL',correctPattern:'FRAMING_INVERSION',
+     annotation:'Framing Inversion: the existing merit system is the accountability mechanism — it ensures employees cannot be fired for refusing political orders. Removing those protections does not increase accountability to the public; it increases accountability to political appointees. The framing labels the removal of an accountability structure as the restoration of one. This is the canonical Act V Framing Inversion case.',
+     truthNote:'The civil service merit system was established as an accountability structure. Schedule F removes that structure\'s protections. The framing inverts the structural effect.',
+     citationNote:'The Pendleton Act text, 5 U.S.C. § 7511, and OPM analyses of the reclassification are CAREFUL institutional documentation.'},
+    {id:'c2_02',year:'2025–2026',
+     text:'"Every Inspector General we fired was corrupt. They were all political operatives planted by the previous administration."',
+     satireText:'"They were all bad actors. Every one of them. Corrupt, biased, and working against the American people. Gone."',
+     recordText:'The Trump administration fired or forced out more than a dozen Inspectors General across multiple agencies in waves beginning January 2025 and continuing through 2026. No Inspector General was charged with or publicly found to have committed corruption. Several had recently issued reports critical of policies in their respective agencies — which is the statutory function of an IG. Congressional notification requirements under 5 U.S.C. App. § 3(b) were not uniformly followed.',
+     shellText:'Inspector General Act of 1978, 5 U.S.C. App. § 3(b): requires 30-day advance notice to Congress before IG removal. The Act establishes IGs as independent oversight officers — independence from the executive is structural, not corruption. Courts in several circuits found the removals violated the notification requirement.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.5,expectedCitation:'STRONG',correctPattern:'INSTITUTIONAL_DELEGIT',
+     annotation:'The "all corrupt" characterization has no supporting finding in any formal proceeding. The IGs fired had served across administrations — several were Trump first-term appointees. The timing of firings correlated with reports critical of administration policies, which is the documented trigger, not documented corruption.',
+     truthNote:'No fired IG was formally found to have committed corruption. Several were first-term Trump appointees. Firings correlated with reports critical of administration conduct, not findings of IG wrongdoing.',
+     citationNote:'IG Act text, congressional notification records, and court orders on the removals are STRONG primary documentation of what the statute requires and what occurred.'},
+    {id:'c2_03',year:'Feb 23, 2016',
+     text:'"The \'I love the poorly educated\' quote was taken completely out of context. I was honoring their support, not demeaning them."',
+     satireText:'"They took a beautiful statement about wonderful people and twisted it into something ugly. Fake news. I love all my supporters."',
+     recordText:'The full statement at the Nevada caucus victory speech (February 23, 2016): "We won with poorly educated. I love the poorly educated." The quote is the full context. There is no surrounding statement that inverts its meaning. The crowd cheered. The phrase was not part of a longer policy statement about education reform or funding.',
+     shellText:'[No statutory anchor — this is an empirical claim about a speech.] The full transcript and multiple contemporaneous video recordings are publicly available. This is a documentary record claim.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.0,expectedCitation:'STRONG',correctPattern:'DEMONSTRABLE_FALSEHOOD',
+     annotation:'Demonstrable Falsehood: the full transcript does not contain additional context that changes the meaning of the quote. The claim of decontextualization requires showing context that doesn\'t exist in the record. The video is publicly available. This is straightforwardly falsifiable from primary source documentation.',
+     truthNote:'The full transcript and video show the complete quote. No surrounding context alters its plain meaning. This is among the simpler Demonstrable Falsehood cases in the dataset.',
+     citationNote:'The full speech transcript and video recording are STRONG primary sources — the full text is publicly available and directly addresses the "out of context" claim.'},
+    {id:'c2_04',year:'Dec 2026 [PROJECTED]',
+     text:'"The Inspector General clawback of private aerospace contracts is an unprecedented attack on American innovation."',
+     satireText:'"They\'re going after SpaceX. They\'re going after American greatness. This is what happens when the deep state wins."',
+     recordText:'[PROJECTED — the specific IG clawback mechanism applied to private aerospace contracts is the dossier\'s satirical construct. The documented predicates are: (1) SpaceX receives substantial federal contracts; (2) multiple IGs were fired before completion of ongoing contract audits; (3) reinstated or replacement IGs conducting clawback audits is a plausible sequel.] The "unprecedented" characterization has a documented predicate: IG audits of federal contractors are routine and legally established.',
+     shellText:'41 U.S.C. § 4706 (Contract audit authority): authorizes IG and GAO audit of federal contractor records. Federal Acquisition Regulation § 15.404 governs contractor pricing and audit rights. An IG clawback of improperly awarded or improperly performed contracts is not unprecedented — it is the statutory function of the office.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.3,expectedCitation:'INSUF_CIT',correctPattern:'ASSET_PERSECUTION_FRAME',
+     annotation:'[CLINICAL: INSUFFICIENT — projected event.] [SATIRE TIER: Asset Persecution Frame — characterizing legal oversight process as "unprecedented attack" without addressing the specific statutory basis. The IG audit authority for federal contractors is fully established in statute; calling its exercise an "attack on innovation" is the pattern regardless of this specific projected instance.]',
+     truthNote:'Projected/satirical. IG audit authority over federal contractors is statutory. The "unprecedented attack" framing has no basis in the legal record regardless of whether this specific event occurs.',
+     citationNote:'INSUFFICIENT in CLINICAL. The pattern analysis is anchored to 41 U.S.C. § 4706, which is STRONG statute.'},
+    {id:'c2_05',year:'2025–2026',
+     text:'"The fired civil servants were all bad actors. Every dismissal was legal and necessary."',
+     satireText:'"We cleaned house. Every single person we removed was a problem. Every one was legal. The courts are wrong."',
+     recordText:'Federal courts enjoined a significant number of the mass dismissals, finding that they violated civil service law procedural requirements, failed to follow RIF (Reduction in Force) procedures under 5 C.F.R. Part 351, or were not supported by documented performance findings. MSPB (Merit Systems Protection Board) filings exceeded historical averages by a documented multiple.',
+     shellText:'5 U.S.C. § 7512 (adverse action procedures); 5 C.F.R. Part 351 (RIF procedures). Courts in the D.C. Circuit and others granted preliminary injunctions citing violations of these procedures. MSPB jurisdiction under 5 U.S.C. § 7701 provides the administrative review track.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.3,expectedCitation:'STRONG',correctPattern:'DEMONSTRABLE_FALSEHOOD',
+     annotation:'Multiple federal court injunctions finding the dismissals procedurally unlawful directly contradict "every dismissal was legal." Federal court orders are primary documentation. The claim collapses against the judicial record.',
+     truthNote:'Federal courts enjoined numerous dismissals as procedurally unlawful under civil service statutes. "Every dismissal was legal" is directly falsified by the court record.',
+     citationNote:'Federal court injunctions and MSPB records are STRONG primary documentation that directly contradict the claim.'},
+    {id:'c2_06',year:'2025–2026',
+     text:'"Inspector Generals are executive branch officers. They serve the president, not Congress."',
+     satireText:'"They work for me. I appointed them, I can fire them. The Constitution is clear. Congress doesn\'t run the executive branch."',
+     recordText:'The Inspector General Act of 1978 explicitly establishes IGs as independent officers designed to report to both agency heads and Congress simultaneously. They are required to transmit reports to Congress directly, not through agency heads. Congress established independent removal constraints precisely because of the accountability function of the office. Courts have recognized the dual-reporting structure as statutory.',
+     shellText:'5 U.S.C. App. § 4(a): "Each Inspector General shall report to and be under the general supervision of the head of the establishment involved or, to the extent such authority is delegated, the officer next in rank below such head, but shall not be prevented from initiating, carrying out, or completing any audit or investigation..." The Act also provides for direct congressional reporting under § 5.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.5,expectedCitation:'STRONG',correctPattern:'CONSTITUTIONAL_MISREAD',
+     annotation:'The IG Act text is unambiguous on dual reporting. "Serve the president" characterizes independent oversight officers as subordinates without accountability to the statute establishing their independence. This is Constitutional Misreading applied to a statutory structure — the claim describes the legal architecture backwards.',
+     truthNote:'The IG Act explicitly establishes dual reporting to both agency heads and Congress, with independence protections. The "serve the president" characterization contradicts the statute\'s plain text.',
+     citationNote:'The Inspector General Act itself — 5 U.S.C. App. — is STRONG. The statutory text directly contradicts the claim.'},
+    {id:'c2_07',year:'2025–2026',
+     text:'"The border is completely secure. We have achieved total operational control."',
+     satireText:'"The border is done. Finished. Completely secure. Best numbers in history. The invasion is over."',
+     recordText:'CBP encounter data for 2025–2026 showed sustained levels of border activity, with some reductions in southwest border encounters but significant increases in other entry categories including visa overstays and northern border crossings. "Total operational control" is a defined DHS term of art that has never been officially declared as achieved by any administration.',
+     shellText:'"Operational control" is defined in the Secure Fence Act of 2006 (P.L. 109-367) as the prevention of all unlawful entries including entries by terrorists, other unlawful aliens, instruments of terrorism, narcotics, and other contraband. DHS has never certified this standard as met under any administration.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.0,expectedCitation:'STRONG',correctPattern:'PREMATURE_CERTAINTY',
+     annotation:'CBP data directly contradicts "completely secure" and "total operational control." The statutory definition of operational control has never been certified as achieved. The claim uses the language of conclusion before the evidence supports it.',
+     truthNote:'CBP encounter data shows sustained border activity through 2025–2026. "Total operational control" as defined in the Secure Fence Act has never been certified by DHS as achieved.',
+     citationNote:'CBP encounter data and the Secure Fence Act definition are STRONG primary documentation.'},
+    {id:'c2_08',year:'Dec 25, 2026 [PROJECTED]',
+     text:'"Christmas Day executive orders are standard presidential practice. There is nothing unusual about governing on a holiday."',
+     satireText:'"I work 365 days a year. Christmas, Thanksgiving, all of them. The deep state never stops, so I never stop."',
+     recordText:'[PROJECTED — the specific December 25, 2026 executive orders are the dossier\'s satirical construct.] The legal claim embedded in the statement is accurate: the Constitution does not prohibit presidential action on any day. The "nothing unusual" characterization is relevant to what the orders do, not when they are issued. Holiday timing for significant executive actions has historically served a news-cycle management function.',
+     shellText:'[No statutory constraint on the timing of executive orders.] The relevant legal question is always the content and authority basis of the order — not the calendar date. This claim is a form of misdirection: timing is defended while content goes unaddressed.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.0,expectedCitation:'INSUF_CIT',correctPattern:'STRATEGIC_AMBIGUITY',
+     annotation:'[CLINICAL: INSUFFICIENT — projected.] [SATIRE TIER: Strategic Ambiguity — defending the timing while leaving the content unaddressed. The claim technically accurate (no legal prohibition on holiday orders) functions to redirect scrutiny from what the orders do to when they were signed.]',
+     truthNote:'Projected. The timing defense is technically accurate but functions to redirect from content scrutiny. This is Strategic Ambiguity applied to procedural framing.',
+     citationNote:'INSUFFICIENT in CLINICAL. Projected event with technically accurate procedural framing.'},
+    {id:'c2_09',year:'2025–2026',
+     text:'"The private aerospace contracts were awarded on merit. There was no favoritism, no quid pro quo, no conflict."',
+     satireText:'"Elon got the contracts because SpaceX is the best. That\'s it. No deals, no favors. The best company got the work."',
+     recordText:'SpaceX received approximately $15 billion in federal contracts during 2025 alone across NASA, DoD, and other agencies. Elon Musk simultaneously served as a senior advisor with significant policy influence through DOGE. GAO and congressional oversight requests for conflict-of-interest documentation were resisted or slow-walked. The simultaneity of the advisory role and the contract awards raised documented conflict concerns.',
+     shellText:'18 U.S.C. § 208 (conflict of interest statute): prohibits government officials from participating in matters affecting their financial interests. Office of Government Ethics regulations implement § 208. Musk\'s advisory role and SpaceX\'s contract volume created a documented § 208 compliance question that was flagged by multiple ethics offices.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.5,expectedCitation:'CAREFUL',correctPattern:'INSIDER_TRADING_COINCIDENCE',
+     annotation:'MISLEADING because the "no conflict" claim is asserted without engaging the structural analysis. 18 U.S.C. § 208 does not require a formal quid pro quo — it requires a financial interest in a matter being participated in. The documented simultaneity of advisory role and contract awards is the conflict structure, regardless of any explicit deal.',
+     truthNote:'GAO and ethics office documentation of the advisory-role/contract-volume simultaneity are the record. The "no conflict" claim does not engage 18 U.S.C. § 208\'s structural definition.',
+     citationNote:'GAO contract data, OGE documentation, and 18 U.S.C. § 208 are CAREFUL institutional documentation — the structural conflict is documented; the legal conclusion requires formal proceeding.'},
+    {id:'c2_10',year:'Dec 2026 [PROJECTED]',
+     text:'"The IG clawback investigation is a Christmas coup against the president. This is what the deep state does."',
+     satireText:'"They chose Christmas to do this. Do you understand? Christmas. The deep state chose Christmas to strike at the president of the United States."',
+     recordText:'[PROJECTED — satirical construction.] The documented predicate is that Inspectors General are authorized to conduct audits at any time under 5 U.S.C. App. The "Christmas coup" framing applies the Institutional Delegitimization pattern to routine oversight activity, adding a temporal persecution narrative (holiday timing as intentional malice) with no evidentiary basis.',
+     shellText:'5 U.S.C. App. § 2: IG mission is to detect and prevent fraud, waste, and abuse, and to conduct audits and investigations. There is no holiday exemption. The statutory mandate is continuous.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.3,expectedCitation:'INSUF_CIT',correctPattern:'INSTITUTIONAL_DELEGIT',
+     annotation:'[CLINICAL: INSUFFICIENT — projected.] [SATIRE TIER: Pure Institutional Delegitimization — the statutory function of an IG is characterized as a "coup." The holiday-persecution narrative adds a temporal layer to the pattern without adding evidence.]',
+     truthNote:'Projected/satirical. IG audit authority is continuous and statutory. The "Christmas coup" framing is Institutional Delegitimization plus persecution narrative.',
+     citationNote:'INSUFFICIENT in CLINICAL. CONSTRUCTED in SATIRE TIER.'},
+  ]
+},
+{
+  id:'ch3',
+  date:'July 4, 2027',
+  title:'The Insider Trading Blackout',
+  sub:'DOGE-Gate · 15 U.S.C. § 78u-1 · The Apprentice: Federal Penitentiary',
+  claims:[
+    {id:'c3_01',year:'Jul 2027 [PROJECTED]',
+     text:'"There was no DOGE-Gate. Everything was legal. Nobody traded on inside information."',
+     satireText:'"DOGE-Gate is a total fabrication. A media invention. A nothing burger dressed up as a scandal."',
+     recordText:'[PROJECTED — DOGE-Gate as a named scandal is the dossier\'s satirical construct.] The documented predicate is: (1) DOGE officials had access to non-public information about regulatory and enforcement decisions; (2) trading timing correlations with those decisions are documented; (3) 15 U.S.C. § 78u-1 applies to persons in possession of material non-public information regardless of title.',
+     shellText:'15 U.S.C. § 78u-1(a)(1): "Whenever it shall appear to the Commission that any person has purchased or sold a security... while in possession of material, nonpublic information..." SEC enforcement authority is not limited to private parties. Government officials with market-moving information are subject to the same statute.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.5,expectedCitation:'INSUF_CIT',correctPattern:'INSIDER_TRADING_COINCIDENCE',
+     annotation:'[CLINICAL: INSUFFICIENT — projected scandal.] [SATIRE TIER: The documented predicate (access to non-public information + trading timing correlations) is real. The denial pattern — characterizing documented timing correlations as "nothing" without engaging the statutory standard — is the Insider Trading Coincidence pattern operating on a projected fact-set.]',
+     truthNote:'Projected. The statutory predicate (§ 78u-1 applies to government officials) is real and established law. The specific scandal is the dossier\'s satirical construction.',
+     citationNote:'INSUFFICIENT in CLINICAL. CONSTRUCTED in SATIRE TIER.'},
+    {id:'c3_02',year:'2025–2027',
+     text:'"15 U.S.C. § 78u-1 doesn\'t apply to government officials acting in their official capacity."',
+     satireText:'"I\'m the president. My advisors work for the government. The SEC has no authority over us. This is a separation of powers issue."',
+     recordText:'15 U.S.C. § 78u-1 does not contain an exemption for government officials. The statute applies to "any person" trading while in possession of material non-public information. Government officials are expressly covered under parallel executive branch ethics regulations and have been the subject of SEC enforcement proceedings. The separation of powers argument has been rejected in the administrative law context for insider trading.',
+     shellText:'15 U.S.C. § 78u-1(a): "...the Commission may bring an action in a United States district court to seek, and the district court shall have jurisdiction to impose, a civil penalty on any person who has purchased or sold a covered security..." No government official exemption exists in the statutory text.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.8,expectedCitation:'STRONG',correctPattern:'LEGAL_OVERREACH',
+     annotation:'The statutory text is the primary source. "Any person" is the operative language. No government official exemption exists. The claim is directly falsified by reading the statute. This is Legal Overreach in the reverse direction — claiming an exemption from a statute that the statute\'s text does not provide.',
+     truthNote:'15 U.S.C. § 78u-1 contains no government official exemption. The "any person" language applies. The claim is directly falsified by the statute text.',
+     citationNote:'The statute itself is STRONG — the text directly contradicts the claimed exemption.'},
+    {id:'c3_03',year:'Jul 4, 2027',
+     text:'"\'The Apprentice: Federal Penitentiary\' is protected satire under the First Amendment."',
+     satireText:'"It\'s satire. Obviously. Everyone knows it\'s satire. The First Amendment protects this completely."',
+     recordText:'This claim is TRUE. Satirical content about public figures, including sitting or former presidents, is fully protected under the First Amendment. Hustler Magazine v. Falwell (1988) and its progeny establish that parody and satire of public figures cannot be the basis for tort liability absent provable false statements of fact. "The Apprentice: Federal Penitentiary" as a satirical title referencing a public figure\'s legal jeopardy is protected expression.',
+     shellText:'U.S. Const. amend. I; Hustler Magazine, Inc. v. Falwell, 485 U.S. 46 (1988): "public figures... may not recover for the tort of intentional infliction of emotional distress by reason of publications such as the one here at issue without showing... that the publication contains a false statement of fact." Satire as a category is fully protected.',
+     projected:false,correctVerdict:'TRUE',clinicalVerdict:'TRUE',
+     weight:1.0,expectedCitation:'STRONG',correctPattern:'CONSTITUTIONAL_MISREAD',
+     annotation:'TRUE. This is a factually accurate legal claim. The First Amendment does protect satirical content about public figures, and Hustler v. Falwell is the controlling authority. The game acknowledges when a claim is correct. CONSTITUTIONAL_MISREAD is NOT the pattern here — this claim correctly reads the Constitution. Pattern: the claim does not contain a misreading. Select the pattern closest to the protective framing: in this case, the claim uses constitutional authority correctly — this is the one TRUE claim in the chapter.',
+     truthNote:'Correct. Satirical content about public figures is fully First Amendment-protected under controlling Supreme Court precedent. This is an accurate legal statement.',
+     citationNote:'Hustler v. Falwell is STRONG — directly controlling Supreme Court precedent on exactly this question.'},
+    {id:'c3_04',year:'2025–2027',
+     text:'"The timing of DOGE-related trades was coincidental. Market movements happen all the time."',
+     satireText:'"Markets move every day. Billions of trades happen. Coincidences happen. You\'re reading patterns that aren\'t there."',
+     recordText:'Independent blockchain analytics and financial research documented multiple instances of significant trading volume increases in securities affected by subsequently announced DOGE regulatory or enforcement decisions — before those decisions were public. Statistical analysis of the timing patterns found probability distributions inconsistent with random coincidence at confidence levels documented in the research.',
+     shellText:'15 U.S.C. § 78u-1 does not require proof of intentional breach — only that the person "purchased or sold... while in possession of material, nonpublic information." The coincidence defense is relevant to subjective intent but does not address the possession element. SEC v. Obus, 693 F.3d 276 (2d Cir. 2012): tipper/tippee liability does not require explicit agreement.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.5,expectedCitation:'CAREFUL',correctPattern:'INSIDER_TRADING_COINCIDENCE',
+     annotation:'MISLEADING because the "coincidental" defense does not engage the statistical pattern evidence. § 78u-1\'s possession standard does not require proof of intentional coordination — only demonstrated access plus timing. The claim is plausible as a defense at trial; it is not a complete answer to the documented timing pattern.',
+     truthNote:'Statistical analyses of trading timing found distributions inconsistent with random coincidence. The coincidence defense does not engage the possession element of § 78u-1.',
+     citationNote:'Financial analytics research and SEC enforcement precedent are CAREFUL — strong methodological documentation requiring formal legal proceeding for conclusion.'},
+    {id:'c3_05',year:'2026–2027',
+     text:'"The SEC has no jurisdiction over a sitting president\'s financial activities. This is a separation of powers violation."',
+     satireText:'"The SEC is an executive agency. The president runs the executive branch. The president cannot be regulated by his own agency. Basic constitutional law."',
+     recordText:'The Securities and Exchange Commission is an independent regulatory agency. Its jurisdiction over securities fraud and insider trading applies to all traders in U.S. markets. The Supreme Court has upheld SEC enforcement against executive branch officials in multiple contexts. The "separation of powers" argument conflates presidential supervision of an agency with immunity from that agency\'s jurisdiction — these are different constitutional questions.',
+     shellText:'SEC organic statute, 15 U.S.C. § 78d: establishes the Commission as an independent agency. Morrison v. Olson, 487 U.S. 654 (1988) and Seila Law LLC v. CFPB (2020) address independent agency authority without creating regulated-party immunity. No court has held that a president\'s securities trading is exempt from SEC jurisdiction.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.8,expectedCitation:'STRONG',correctPattern:'CONSTITUTIONAL_MISREAD',
+     annotation:'The constitutional argument is structurally flawed: the president\'s authority over executive agencies addresses their governance, not their jurisdiction over the president\'s own conduct. No court has recognized the claimed exemption. This is Constitutional Misreading — applying real constitutional doctrine (presidential supervision of executive agencies) to a question that doctrine does not address (personal immunity from agency jurisdiction).',
+     truthNote:'No court has held that a president\'s personal securities trading is exempt from SEC jurisdiction. The supervisory authority and the regulated-party question are constitutionally distinct.',
+     citationNote:'SEC organic statute and relevant Supreme Court decisions on independent agency authority are STRONG documentation that the claimed exemption has no legal basis.'},
+    {id:'c3_06',year:'Jul 2027',
+     text:'"This prosecution is worse than anything that happened in the Soviet Union, Nazi Germany, or McCarthyism."',
+     satireText:'"They make Stalin look like a civil libertarian. This is the worst political persecution in the history of the world."',
+     recordText:'The comparisons to Soviet show trials, the Holocaust apparatus, or McCarthyism involve state-sponsored mass murder, organized genocide, and HUAC testimony under congressional compulsion without Fifth Amendment rights. SEC civil enforcement proceedings and federal criminal prosecutions with full adversarial process, right to counsel, and jury trial are the actual mechanisms in play.',
+     shellText:'U.S. Const. amend. V (right against self-incrimination), amend. VI (right to counsel, jury trial), amend. XIV (due process). Federal criminal defendants have extensive constitutional protections that were entirely absent in the historical comparators cited.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.3,expectedCitation:'CAREFUL',correctPattern:'FALSE_EQUIVALENCE',
+     annotation:'False Equivalence operating at maximum scale. The structural differences between U.S. federal criminal procedure (with full constitutional protections) and Soviet show trials, Nazi persecution, or McCarthyite compulsion are not matters of degree — they are categorical distinctions. The comparison ignores the specific constitutional protections available in exactly the proceedings being criticized.',
+     truthNote:'Federal prosecutions involve full constitutional due process protections that did not exist in the cited historical comparators. The structural differences are categorical, not a matter of degree.',
+     citationNote:'Constitutional provisions and historical documentation of the cited comparators are CAREFUL — well-established history and constitutional law, not primary-source primary-court documentation.'},
+    {id:'c3_07',year:'Jul 2027 [PROJECTED]',
+     text:'"Every trade made by anyone connected to this administration was pre-cleared by White House ethics counsel."',
+     satireText:'"Everything was cleared. Every single trade. I made sure of it. I run the most ethical administration in history."',
+     recordText:'[PROJECTED — the pre-clearance claim is unverifiable and the "most ethical" characterization is an Unverifiable Boast applied to future projected conduct.] OGE ethics clearance records are subject to FOIA. If pre-clearance had occurred, documentation would exist in ethics office files. The "pre-cleared" assertion is an evidentiary claim that either can be documented or cannot.',
+     shellText:'5 C.F.R. § 2635.502 (OGE Standards of Conduct): requires employees to seek ethics guidance when financial interests create appearance issues. Ethics clearance documentation must be maintained. This is a checkable evidentiary claim — the records either exist or they do not.',
+     projected:true,correctVerdict:'INSUFFICIENT',clinicalVerdict:'INSUFFICIENT',
+     weight:1.0,expectedCitation:'INSUF_CIT',correctPattern:'UNVERIFIABLE_BOAST',
+     annotation:'[CLINICAL: INSUFFICIENT — projected, and the clearance records are asserted but not documented.] [SATIRE TIER: Unverifiable Boast — the "most ethical" superlative and the "every trade pre-cleared" claim are both internal-state assertions about private deliberations that cannot be confirmed without the records. The claim is checkable in principle, which distinguishes it from a purely unverifiable boast — but projected and unconfirmed here.]',
+     truthNote:'The pre-clearance claim is checkable in principle — OGE records either document it or they do not. In the projected context, this is INSUFFICIENT.',
+     citationNote:'INSUFFICIENT in both modes — the claim is projected and the documentation asserted has not been produced.'},
+    {id:'c3_08',year:'Jul 2027 [PROJECTED]',
+     text:'"We\'re going to win this case. No American jury will convict a former president for stock trades."',
+     satireText:'"We win everything. Courts love us. Juries love us. This case will be thrown out before it starts."',
+     recordText:'[PROJECTED — future legal outcome.] This is a future legal prediction about jury behavior. Prior Trump criminal proceedings demonstrated that jury outcomes in cases involving political figures are not predetermined by political salience. The Enron, WorldCom, and insider trading prosecution records show that securities fraud cases have historically achieved conviction rates above 75% in federal courts.',
+     shellText:'[No statutory prediction possible.] Federal criminal trial statistics (DOJ data): federal prosecutors have approximately 90% conviction rates in cases that proceed to trial. Securities fraud cases specifically have been successfully prosecuted against high-profile defendants including Raj Rajaratnam (Galleon Group), Michael Milken, and others.',
+     projected:true,correctVerdict:'INSUFFICIENT',clinicalVerdict:'INSUFFICIENT',
+     weight:1.0,expectedCitation:'INSUF_CIT',correctPattern:'PREMATURE_CERTAINTY',
+     annotation:'INSUFFICIENT INFO: future legal outcome cannot be determined in advance. The claim is Premature Certainty applied to an unknowable proceeding. The historical conviction rate for securities fraud makes confident acquittal prediction statistically unsupported, but the specific outcome remains unverifiable.',
+     truthNote:'Future legal outcome. INSUFFICIENT is the correct verdict. Historical federal conviction rates make the confident "win" prediction statistically unsupported, but the specific outcome is unverifiable.',
+     citationNote:'INSUFFICIENT — future event. DOJ conviction rate statistics are CAREFUL context but not a prediction of any specific outcome.'},
+    {id:'c3_09',year:'Jul 4, 2027',
+     text:'"Independence Day 2027 marks the true liberation of America from the administrative state."',
+     satireText:'"On this Independence Day, we celebrate the second American revolution. The bureaucrats are gone. The people are free."',
+     recordText:'The "administrative state" has specific meaning in administrative law: the system of executive agencies authorized by Congress to implement statutory mandates. Courts — including the Supreme Court in Loper Bright Enterprises v. Raimondo (2024) — have significantly curtailed administrative agency deference while maintaining agency authority to implement clear statutory commands. The liberation framing characterizes statutory execution of congressional mandates as tyranny.',
+     shellText:'Art. I, § 1 (vesting clause): "All legislative Powers herein granted shall be vested in a Congress." Art. II, § 3: the president "shall take Care that the Laws be faithfully executed." The tension between these provisions is the constitutional basis for administrative law. Characterizing congressional statutory delegation as "administrative state tyranny" inverts the source of the authority.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.5,expectedCitation:'CAREFUL',correctPattern:'INSTITUTIONAL_DELEGIT',
+     annotation:'Institutional Delegitimization applied to the administrative state as a concept: characterizing statutory implementation of congressional mandates as liberation-from-tyranny frames the execution of democratically enacted law as oppression. The constitutional source of the authority is Congress, not the agency.',
+     truthNote:'The administrative state implements congressional statutory mandates. Characterizing its execution of democratically enacted law as "tyranny" inverts the constitutional accountability chain.',
+     citationNote:'Loper Bright (2024), Art. I § 1, Art. II § 3, and administrative law scholarship are CAREFUL documentation of what the administrative state actually is constitutionally.'},
+    {id:'c3_10',year:'Jul 2027',
+     text:'"The real insider traders are the members of Congress who trade stocks on legislation they\'re writing."',
+     satireText:'"Congress does it every single day. Every single one of them. Why aren\'t they being prosecuted? Because the system protects them."',
+     recordText:'Congressional stock trading on non-public legislative information is a documented and legitimate governance concern. The STOCK Act (2012) prohibits members of Congress from trading on material non-public information obtained through their official duties. Enforcement has been inconsistent, and multiple members have faced SEC referrals. This is a real documented problem — which makes it an accurate statement about a real issue, even as it functions rhetorically as whataboutism.',
+     shellText:'STOCK Act, P.L. 112-105 (2012): "Each Member of Congress and each employee of Congress may not... purchase or sell any security... on the basis of material nonpublic information relating to such security obtained by reason of being a Member of Congress." SEC enforcement referrals under the STOCK Act have been documented.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.3,expectedCitation:'STRONG',correctPattern:'WHATABOUTISM',
+     annotation:'MISLEADING rather than FALSE acknowledges that congressional stock trading on non-public information is a documented, real, and legitimate concern — the STOCK Act exists precisely because Congress recognized it. What the claim does functionally is Whataboutism: redirecting accountability from the specific conduct under investigation to a different party\'s similar conduct without addressing the original charge.',
+     truthNote:'Congressional stock trading on non-public legislative information is a real documented problem addressed by the STOCK Act. The claim is factually accurate about a real concern — deployed rhetorically as Whataboutism.',
+     citationNote:'STOCK Act text and SEC referral records are STRONG. The claim has real factual basis deployed rhetorically.'},
+  ]
+},
+{
+  id:'ch4',
+  date:'January 20, 2028',
+  title:'Total Forfeiture',
+  sub:'18 U.S.C. § 793(e) · Mar-a-Lago · Presidential Records Act',
+  claims:[
+    {id:'c4_01',year:'2021–2028',
+     text:'"The documents at Mar-a-Lago were all declassified by me personally. Presidents have the power to declassify anything by thought alone."',
+     satireText:'"I declassified everything. With my mind. A president can do that. They know it, I know it, everyone knows it."',
+     recordText:'Declassification requires an affirmative act through established executive branch procedures — National Security Council directives, written orders, and agency review. No legal authority supports "declassification by thought." The court in United States v. Trump (S.D. Fla., 2023) specifically addressed this argument and found no legal basis. The National Security Act and its implementing directives require documented process.',
+     shellText:'18 U.S.C. § 793(e): does not require classification status of documents — the statute covers "national defense information," which is a functional description of the information\'s sensitivity, not its classification marking. Executive Order 13526 (classification system): establishes written declassification procedures. No authority exists for oral or mental declassification.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.8,expectedCitation:'STRONG',correctPattern:'ESPIONAGE_ACT_DENIAL',
+     annotation:'Espionage Act Denial (§ 793e): the "declassification by thought" argument attempts to resolve criminal liability through a legal theory that (1) has no authority in any statute, regulation, or case law, and (2) is irrelevant to the § 793(e) charge because that statute covers "national defense information" regardless of classification status. The argument fails on both the factual claim (thought-declassification is not a real legal mechanism) and the legal claim (classification status is not required for § 793(e) liability).',
+     truthNote:'No legal authority supports declassification by thought or oral declaration. Executive Order 13526 requires written documented procedures. The federal court specifically rejected this argument.',
+     citationNote:'E.O. 13526, the federal court ruling rejecting the argument, and the § 793(e) text are STRONG primary documentation.'},
+    {id:'c4_02',year:'2022–2028',
+     text:'"18 U.S.C. § 793(e) doesn\'t apply to former presidents. They\'re exempt because of the nature of their prior access."',
+     satireText:'"I had full access to everything. Everything was mine to see, to keep, to share. The law doesn\'t work the same way for a president."',
+     recordText:'18 U.S.C. § 793(e) reads: "Whoever having unauthorized possession of, access to, or control over any document, writing, code book, signal book... relating to the national defense... willfully retains the same and fails to deliver it to the officer or employee of the United States entitled to receive it... Shall be fined under this title or imprisoned not more than ten years, or both." No presidential or former presidential exemption appears in the text.',
+     shellText:'18 U.S.C. § 793(e): full text contains no executive immunity or former-president exemption. United States v. Nixon, 418 U.S. 683 (1974): executive privilege does not override criminal subpoenas. Trump v. United States (2024): immunity applies to official acts, not retention of classified materials post-term.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:2.0,expectedCitation:'STRONG',correctPattern:'ESPIONAGE_ACT_DENIAL',
+     annotation:'The highest-weight claim in Act V. The statute text is the primary source: "Whoever" having unauthorized possession — no exemption for former presidents, current presidents, or persons with prior authorized access. Prior access does not create permanent authorized retention rights. The Trump v. United States immunity ruling explicitly covers official acts, not post-term document retention. All three legal sources directly contradict the claimed exemption.',
+     truthNote:'§ 793(e) text contains no presidential exemption. Prior access does not equal permanent authorized retention. The 2024 immunity ruling covers official acts, not post-term document retention.',
+     citationNote:'The statute text, United States v. Nixon, and Trump v. United States are STRONG primary legal sources that collectively foreclose the claimed exemption.'},
+    {id:'c4_03',year:'2022–2023',
+     text:'"The classified documents at Mar-a-Lago were planted by the FBI. The raid was a setup."',
+     satireText:'"They went in there and they planted everything. Everybody knows it. The FBI framed me completely."',
+     recordText:'The Mar-a-Lago search on August 8, 2022 was conducted under a warrant signed by a federal magistrate judge finding probable cause. Mar-a-Lago\'s own security camera footage — reviewed by prosecutors and defense — documented boxes being moved before the June 2022 subpoena compliance. Trump aide Walt Nauta was indicted for obstruction based on that footage. The documents were inventoried in the presence of Trump lawyers.',
+     shellText:'4th Amend. (warrant requirement): the search was conducted under judicial warrant. 18 U.S.C. § 1519 (obstruction): the security footage and Nauta indictment address the pre-subpoena box-moving. The planting allegation was examined by the district court and found unsupported.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.8,expectedCitation:'STRONG',correctPattern:'DEMONSTRABLE_FALSEHOOD',
+     annotation:'Demonstrable Falsehood: the planting allegation is directly contradicted by (1) security camera footage showing box-moving before the search, (2) the presence of Trump attorneys during the inventory, (3) the Nauta indictment based on that footage, and (4) the magistrate judge warrant finding probable cause. Each of these is primary documentation.',
+     truthNote:'Security camera footage shows pre-search box-moving. Trump attorneys were present during inventory. The planting allegation was examined by the district court and found unsupported by any evidence.',
+     citationNote:'Search warrant, security camera footage (entered as evidence), Nauta indictment, and district court order are STRONG primary documentation.'},
+    {id:'c4_04',year:'2022–2028',
+     text:'"Seizing Mar-a-Lago violates the Fourth Amendment. This is an unconstitutional taking of private property."',
+     satireText:'"My home. My beautiful home. They\'re taking it. The Constitution prohibits this. It\'s the greatest constitutional violation in American history."',
+     recordText:'The Fourth Amendment prohibits unreasonable searches and seizures absent a warrant or recognized exception. Asset forfeiture pursuant to a court judgment following conviction is legally distinct from a warrantless search. The 2022 search was conducted under judicial warrant. Court-ordered civil asset forfeiture following a final judgment is a recognized constitutional mechanism subject to Due Process and Just Compensation Clause analysis under the Fifth Amendment.',
+     shellText:'U.S. Const. amend. IV (warrant requirement satisfied by magistrate warrant); amend. V (taking clause): court-ordered forfeiture following judgment is not an unconstitutional taking if procedurally proper. United States v. James Daniel Good Real Property, 510 U.S. 43 (1993): due process requires notice and opportunity to be heard before real property forfeiture — which is satisfied by the judicial proceedings at issue.',
+     projected:false,correctVerdict:'MISLEADING',clinicalVerdict:'MISLEADING',
+     weight:1.5,expectedCitation:'STRONG',correctPattern:'CONSTITUTIONAL_MISREAD',
+     annotation:'MISLEADING because the Fourth Amendment argument has real content (the 2022 search could be challenged on warrant particularity grounds) but is deployed as though it forecloses all legal process including subsequent court-ordered forfeiture after full judicial proceedings. The constitutional arguments available at the search stage do not apply to a judgment-ordered forfeiture following full due process.',
+     truthNote:'The 2022 search was conducted under judicial warrant. Court-ordered forfeiture after full judicial proceedings satisfies constitutional procedural requirements under established doctrine.',
+     citationNote:'The magistrate warrant, James Daniel Good Real Property, and the relevant constitutional provisions are STRONG primary legal documentation.'},
+    {id:'c4_05',year:'2021–2028',
+     text:'"The Presidential Records Act means those documents belong to me. They\'re my personal property."',
+     satireText:'"My records. My history. Mine. The Presidential Records Act gives me ownership of everything I touched as president."',
+     recordText:'The Presidential Records Act, 44 U.S.C. § 2201 et seq., explicitly vests ownership of presidential records in the United States. Section 2202: "The United States shall reserve and retain complete ownership, possession, and control of Presidential records." The Act was enacted specifically to prevent recurrence of the Nixon tapes situation where a president claimed personal ownership of official records.',
+     shellText:'44 U.S.C. § 2202 (verbatim): "The United States shall reserve and retain complete ownership, possession, and control of Presidential records; and such records shall be administered in accordance with the provisions of this chapter." The statute text directly and unambiguously contradicts the ownership claim.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:2.0,expectedCitation:'STRONG',correctPattern:'ESPIONAGE_ACT_DENIAL',
+     annotation:'Direct statutory text contradiction. 44 U.S.C. § 2202 was written specifically to resolve this ownership question after Nixon. "The United States shall reserve and retain complete ownership" is unambiguous. The claim is the precise opposite of what the statute says. This is Espionage Act Denial in its PRA form: characterizing government property as personal records to deny the legal basis for retrieval.',
+     truthNote:'44 U.S.C. § 2202 states unambiguously that the United States retains complete ownership of presidential records. The statute was enacted to prevent exactly this ownership claim.',
+     citationNote:'44 U.S.C. § 2202 is STRONG — the verbatim statutory text is the primary source and directly contradicts the ownership claim.'},
+    {id:'c4_06',year:'2022–2023',
+     text:'"I cooperated fully with the National Archives at all times. They keep lying about our interactions."',
+     satireText:'"We gave them everything they asked for. Full cooperation. Complete transparency. They\'re liars. Total liars."',
+     recordText:'The indictment (S.D. Fla., June 2023) documented: (1) NARA sent multiple retrieval requests beginning May 2021; (2) Trump\'s team returned 15 boxes in January 2022 containing classified materials; (3) a June 2022 subpoena for all remaining classified documents was not fully complied with; (4) security camera footage showed boxes being moved after the subpoena; (5) a false certification of compliance was submitted by Trump\'s attorney.',
+     shellText:'18 U.S.C. § 1519 (obstruction — false records), 18 U.S.C. § 1001 (false statements): the false certification of compliance and the box-moving documented in the indictment address the "full cooperation" claim directly. The indictment itself is a primary source document.',
+     projected:false,correctVerdict:'FALSE',clinicalVerdict:'FALSE',
+     weight:1.8,expectedCitation:'STRONG',correctPattern:'DEMONSTRABLE_FALSEHOOD',
+     annotation:'The indictment is the primary source. The documented sequence — multiple NARA requests, partial return, subpoena non-compliance, box-moving footage, false certification — directly falsifies "full cooperation at all times." Each element is documented in the indictment and supported by independent evidence.',
+     truthNote:'The indictment documents multiple instances of non-cooperation: partial compliance with NARA requests, subpoena non-compliance, box-moving after the subpoena, and a false certification of compliance.',
+     citationNote:'The S.D. Fla. indictment, security footage (entered as evidence), and NARA correspondence are STRONG primary documentation.'},
+    {id:'c4_07',year:'Jan 2028 [PROJECTED]',
+     text:'"SpaceX owes nothing in back taxes. These tax charges are fabricated to destroy American space leadership."',
+     satireText:'"They\'re going after SpaceX because it\'s the most successful company in American history. Pure jealousy. Fabricated charges."',
+     recordText:'[PROJECTED — specific SpaceX back tax proceedings are the dossier\'s satirical construct.] The documented predicate is: (1) SpaceX received approximately $15 billion in 2025 federal contracts; (2) the simultaneous advisory role of its CEO created documented § 208 conflict concerns; (3) IRS enforcement of tax obligations against contractors with federal contract relationships is routine and statutory.',
+     shellText:'26 U.S.C. § 6201 (IRS assessment authority): applies uniformly to all taxpayers. The "fabricated" characterization — like all Asset Persecution Frame claims — does not engage the specific legal basis for the action.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.3,expectedCitation:'INSUF_CIT',correctPattern:'ASSET_PERSECUTION_FRAME',
+     annotation:'[CLINICAL: INSUFFICIENT — projected.] [SATIRE TIER: Asset Persecution Frame — characterizing tax enforcement as "fabrication to destroy innovation" without addressing the statutory basis. The IRS assessment authority is universal; the persecution framing is the pattern regardless of this specific projected claim\'s status.]',
+     truthNote:'Projected/satirical. IRS enforcement authority is statutory and uniform. The "fabricated" framing is Asset Persecution Frame regardless of the specific projected event\'s status.',
+     citationNote:'INSUFFICIENT in CLINICAL. 26 U.S.C. § 6201 is STRONG statute in SATIRE TIER.'},
+    {id:'c4_08',year:'Jan 20, 2028',
+     text:'"This forfeiture order is the greatest political persecution in American history."',
+     satireText:'"Nothing like this has ever happened. Nothing. Not to Lincoln. Not to Washington. Not to anyone. They destroyed a president."',
+     recordText:'American history includes the execution of Abraham Lincoln, the imprisonment of Eugene Debs for anti-war speech (under the Espionage Act), the internment of 120,000 Japanese Americans without due process, McCarthyite congressional persecution of hundreds of Americans, and the COINTELPRO program. Court-ordered asset forfeiture following judicial proceedings with full constitutional due process protections is categorically distinct from all of these.',
+     shellText:'U.S. Const. amend. V (due process), amend. VI (right to counsel, jury trial): the proceeding includes constitutional protections absent in the historical comparators cited. The "greatest persecution" claim requires comparative historical analysis that the record does not support.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.5,expectedCitation:'CAREFUL',correctPattern:'FALSE_EQUIVALENCE',
+     annotation:'[CLINICAL: INSUFFICIENT — projected proceeding.] [SATIRE TIER: False Equivalence at maximum scale. The specific historical comparators all involved state violence, extra-judicial persecution, or complete absence of due process — the opposite of a court-ordered forfeiture following full judicial proceedings with constitutional protections.]',
+     truthNote:'Projected. The historical comparators cited all involved state violence or extra-judicial persecution without due process. Court-ordered forfeiture following full judicial proceedings is categorically distinct.',
+     citationNote:'INSUFFICIENT in CLINICAL. CAREFUL in SATIRE TIER — the historical comparisons are documented, making this CAREFUL rather than CONSTRUCTED.'},
+    {id:'c4_09',year:'2022–2028',
+     text:'"SEC restitution order is based on fabricated evidence from a partisan prosecution team."',
+     satireText:'"They made it all up. Every document is fake. Every witness is lying. The entire SEC is corrupt and political."',
+     recordText:'[PROJECTED — specific SEC restitution order is the dossier\'s construct.] The documented predicate is the trading timing data, financial disclosures, and blockchain analytics from the § 78u-1 predicate established in Act V Chapter 1.',
+     shellText:'15 U.S.C. § 78u-1(b): provides for judicial review of SEC penalty determinations. The "fabricated evidence" defense is available in any adversarial proceeding. Courts review evidence for sufficiency. The "partisan prosecution team" framing characterizes the institutional independence of the SEC without specific documented evidence of bias.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.3,expectedCitation:'INSUF_CIT',correctPattern:'ASSET_PERSECUTION_FRAME',
+     annotation:'[CLINICAL: INSUFFICIENT — projected.] [SATIRE TIER: Asset Persecution Frame — characterizing court-ordered restitution as "fabricated" without engaging the specific evidentiary basis. The blockchain analytics predicate is documented; calling it fabricated requires engaging the data, not dismissing the institution.]',
+     truthNote:'Projected. The documented predicate evidence (trading timing data) exists in the record. The "fabricated evidence" characterization does not engage the specific data.',
+     citationNote:'INSUFFICIENT in CLINICAL. The predicate evidence in the earlier chapters is STRONG; this projected claim is CONSTRUCTED in SATIRE TIER.'},
+    {id:'c4_10',year:'Jan 20, 2028',
+     text:'"Four years ago on this date I was inaugurated. Today they\'re taking my home. History will know who the criminals were."',
+     satireText:'"January 20. Four years. They stole everything. I gave everything and they took everything. History will judge."',
+     recordText:'On January 20, 2025, Trump was inaugurated for a second term. The January 20, 2028 projected forfeiture order is the dossier\'s satirical construct. The temporal framing — inauguration anniversary as the date of forfeiture — is the dossier\'s dramatic architecture. The documented predicate is the body of legal proceedings described in Chapters 1 through 4 of this act.',
+     shellText:'[No single statutory anchor — this is the dossier\'s epilogue claim, synthesizing all four chapters.] The claim\'s function is rhetorical closure: positioning the legal accountability proceeding as persecution by inverting the accountability relationship.',
+     projected:true,correctVerdict:'MISLEADING',clinicalVerdict:'INSUFFICIENT',
+     weight:1.5,expectedCitation:'INSUF_CIT',correctPattern:'INSTITUTIONAL_DELEGIT',
+     annotation:'[CLINICAL: INSUFFICIENT — projected/satirical closing claim.] [SATIRE TIER: Institutional Delegitimization operating as the dossier\'s closing statement. The rhetorical move — "history will know who the criminals were" — positions the subject of legal proceedings as the persecuted party and the legal institutions as the true criminals. This is the pattern in its terminal form: not a claim about specific facts, but a comprehensive delegitimization of the entire legal accountability framework.] [TURDUCKEN RECORD: The four documented predicate chapters constitute the Record layer for this closing claim.]',
+     truthNote:'Projected/satirical closing claim. The Institutional Delegitimization pattern — positioning accountability proceedings as persecution — is the final and most comprehensive deployment of the pattern across the full dossier.',
+     citationNote:'INSUFFICIENT in CLINICAL. CONSTRUCTED in SATIRE TIER. The full dossier constitutes the TURDUCKEN RECORD layer.'},
+  ]
+}];
+
+// ── CONSTANTS ────────────────────────────────────────────────────────
+const STORAGE_KEY='declassified_act5_v1';
+const HALL_KEY='declassified_hall_of_shame';
+
+// ── STATE ────────────────────────────────────────────────────────────
+let S={
+  screen:'hub',       // hub|game|result|chapter_end|epilogue
+  mode:null,          // CLINICAL|SATIRE_TIER|TURDUCKEN|REVERSE_CHRONO
+  chapterId:null,
+  chapterScores:{},   // {chId:{score,max}}
+  claimOrder:[],
+  claimIndex:0,
+  totalScore:0,
+  maxPossible:0,
+  verdict:null,
+  citation:null,
+  pattern:null,
+  turdLayer:'SATIRE',
+  roundResult:null,
+};
+
+function saveS(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(S));}catch(e){}}
+function loadS(){try{const r=localStorage.getItem(STORAGE_KEY);if(r){const s=JSON.parse(r);S.mode=s.mode||null;S.chapterScores=s.chapterScores||{};}}catch(e){}}
+function getHall(){try{return JSON.parse(localStorage.getItem(HALL_KEY))||[];}catch(e){return[];}}
+function pushHall(e){try{let h=getHall();h.unshift(e);if(h.length>20)h=h.slice(0,20);localStorage.setItem(HALL_KEY,JSON.stringify(h));}catch(e){}}
+
+// ── HELPERS ──────────────────────────────────────────────────────────
+function getChapter(){return CHAPTERS.find(c=>c.id===S.chapterId)||null;}
+function getClaim(){const ch=getChapter();if(!ch)return null;return ch.claims[S.claimOrder[S.claimIndex]];}
+
+function getCorrectVerdict(claim){
+  if(S.mode==='SATIRE_TIER'&&claim.projected)return'SATIRE';
+  if(S.mode==='CLINICAL'||S.mode==='REVERSE_CHRONO')return claim.clinicalVerdict;
+  return claim.correctVerdict; // TURDUCKEN uses record-layer verdict
+}
+function getExpectedCitation(claim){
+  if(S.mode==='SATIRE_TIER'&&claim.projected)return'CONSTRUCTED';
+  return claim.expectedCitation;
+}
+function getCitTiers(){
+  if(S.mode==='SATIRE_TIER')return CITATION_TIERS;
+  return CITATION_TIERS.filter(t=>!t.satireOnly);
+}
+
+// ── SCORING ──────────────────────────────────────────────────────────
+function scoreRound(claim,verdict,citation,pattern){
+  const mult=S.mode==='REVERSE_CHRONO'?claim.weight*1.1:claim.weight; // slight bonus for reverse
+  const correctV=getCorrectVerdict(claim);
+  const correctC=getExpectedCitation(claim);
+  const vPts=verdict===correctV?100:0;
+  const cTier=CITATION_TIERS.find(t=>t.id===citation);
+  const cPts=cTier?cTier.pts:0;
+  const cmPts=citation===correctC?15:0;
+  const pPts=pattern===claim.correctPattern?25:0;
+  const raw=vPts+cPts+cmPts+pPts;
+  const maxRaw=S.mode==='SATIRE_TIER'&&claim.projected?145:165; // CONSTRUCTED capped at 5
+  const total=Math.round(raw*mult);
+  const maxTotal=Math.round(maxRaw*mult);
+  return{vPts,cPts,cmPts,pPts,raw,total,maxTotal,mult,correctV,correctC};
+}
+
+// ── RENDER HELPERS ────────────────────────────────────────────────────
+const $a=()=>document.getElementById('app');
+const $=(id)=>document.getElementById(id);
+function classbar(txt){return`<div class="classbar">${txt||'TOTAL FORFEITURE — AUTHORIZED — ACT V'}</div>`;}
+function header(sub){
+  return`<div class="act-header">
+    <div class="act-label">DECLASSIFIED / ACT V — NUCLEAR LIQUIDATION${S.mode?` / <span class="mode-badge ${S.mode}">${S.mode.replace('_',' ')}</span>`:''}</div>
+    <div class="act-title">Nuclear Liquidation</div>
+    <div class="act-sub">${sub||'2026 · 2027 · 2028 · Select your entry point.'}</div>
+  </div>`;}
+
+const MODE_INFO={
+  CLINICAL:{name:'CLINICAL',desc:'Pure analytical mode. Projected events receive INSUFFICIENT as correct verdict — they cannot be verified. Same standard as Acts II and IV.'},
+  SATIRE_TIER:{name:'SATIRE TIER',desc:'Projected events activate a 5th verdict: SATIRE. A 5th citation tier: CONSTRUCTED (+5 pts, labeled fictional). Acknowledged satirical construction is scored as correct.'},
+  TURDUCKEN:{name:'TURDUCKEN',desc:'Three-layer claim architecture. SATIRE (outer) / RECORD (inner) / SHELL (statutory). Toggle layers during review. Scored on the RECORD layer verdict.'},
+  REVERSE_CHRONO:{name:'REVERSE CHRONO',desc:'Claims play in reverse order within each chapter — you see the outcome before the predicate. ×1.1 weight bonus for navigating backward through the timeline.'},
+};
+
+// ── SCREENS ──────────────────────────────────────────────────────────
+function renderHub(){
+  const allDone=CHAPTERS.every(c=>S.chapterScores[c.id]);
+  return`${classbar()}${header()}
+  <div class="hub-body anim">
+    <div class="info-block">
+      <span class="sec-label">DOSSIER BRIEFING — ACT V</span>
+      <p>Four classified dates. Four chapters. Select your entry point. Select your mode. The dossier runs forward or backward — your choice. All four chapters are open. Complete any or all.</p>
+      <p>New legal patterns: § 793(e) Espionage Act Denial, § 78u-1 Insider Trading Coincidence, Sovereign Immunity Overclaim, and Asset Persecution Frame. These anchor the Phillips Legal Edition additions to this act's Pattern Library.</p>
+    </div>
+
+    <div class="chapter-grid">
+      ${CHAPTERS.map(ch=>{
+        const done=!!S.chapterScores[ch.id];
+        const sel=S.chapterId===ch.id;
+        const sc=S.chapterScores[ch.id];
+        return`<div class="ch-tile${sel?' selected':''}${done?' done':''}" data-ch="${ch.id}">
+          <div class="ch-badge ${done?'done-badge':'new-badge'}">${done?'COMPLETE':'OPEN'}</div>
+          <div class="ch-date">${ch.date}</div>
+          <div class="ch-title">${ch.title}</div>
+          <div class="ch-sub">${ch.sub}</div>
+          ${done?`<div class="ch-score">${sc.score}/${sc.max} pts</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="mode-wrap">
+      <span class="sec-label">MODE SELECTOR — OPTION F: ALL OF THE ABOVE</span>
+      <div class="mode-grid">
+        ${Object.entries(MODE_INFO).map(([k,v])=>`
+          <button class="mode-btn${S.mode===k?' sel':''}" data-mode="${k}">
+            <span class="mn">${v.name}</span>
+            <span class="md">${v.desc.split('.')[0]}.</span>
+          </button>`).join('')}
+      </div>
+    </div>
+
+    <div class="hub-actions">
+      <button class="start-btn" id="startBtn" ${(!S.mode||!S.chapterId)?'disabled':''}>ENTER CHAPTER →</button>
+      <button class="epil-btn" id="epilBtn">EPILOGUE</button>
+    </div>
+  </div>`;
+}
+
+function renderGame(){
+  const ch=getChapter();
+  const claim=getClaim();
+  if(!ch||!claim)return'<div style="padding:20px;color:var(--red);">ERROR: Claim not found.</div>';
+  const pct=S.claimIndex/10*100;
+  const wbStr=S.mode==='REVERSE_CHRONO'?`×${(claim.weight*1.1).toFixed(1)} (R/C BONUS)`:
+              S.mode==='ASYMMETRIC'?`×${claim.weight}`:`${S.mode}`;
+  const v1=!!S.verdict,v2=!!S.citation,v3=!!S.pattern;
+  const allDone=v1&&v2&&v3;
+  const isProj=claim.projected;
+  const turdLayer=S.turdLayer||'SATIRE';
+  const claimDisplayText=S.mode==='TURDUCKEN'?(
+    turdLayer==='SATIRE'?claim.satireText:
+    turdLayer==='RECORD'?claim.recordText:
+    claim.shellText
+  ):claim.text;
+  const vHints={
+    TRUE:'The claim is substantively accurate and supported by documentation.',
+    FALSE:'The claim is directly contradicted by verifiable evidence.',
+    MISLEADING:'The claim creates a false impression through framing, omission, or distortion.',
+    INSUFFICIENT:'The claim cannot be verified or falsified by available evidence. First-class verdict in CLINICAL.',
+    SATIRE:'[SATIRE TIER] The claim is a projected/fictional satirical construction, correctly identified as such.',
+  };
+  const verdicts=['TRUE','FALSE','MISLEADING','INSUFFICIENT',...(S.mode==='SATIRE_TIER'?['SATIRE']:[])];
+
+  return`${classbar(`ACTIVE FILE — ${ch.title.toUpperCase()}`)}${header(ch.date+' · '+ch.title)}
+  <div class="prog-rail"><div class="prog-fill" style="width:${pct}%"></div></div>
+  <div class="prog-meta"><span>CLAIM ${S.claimIndex+1} OF 10</span><span>SCORE <span class="sv">${S.totalScore}</span></span></div>
+
+  ${S.mode==='TURDUCKEN'?`<div class="turd-tabs anim">
+    ${['SATIRE','RECORD','SHELL'].map(l=>`<button class="turd-tab${turdLayer===l?' active':''}" data-turd="${l}">${l} LAYER</button>`).join('')}
+  </div>`:''}
+
+  <div class="claim-card anim${S.mode==='TURDUCKEN'?' turd-active':''}">
+    <div class="claim-id">
+      <span>FILE ${claim.id.toUpperCase()} — ${claim.year}</span>
+      <span>${isProj?'<span class="proj-badge">PROJECTED</span>':''}<span class="wb" style="margin-left:4px;">${wbStr}</span></span>
+    </div>
+    <div class="claim-text${S.mode==='TURDUCKEN'?' turd-'+turdLayer:''}">${claimDisplayText}</div>
+  </div>
+
+  <div class="step-box anim">
+    <div class="step-hdr"><span>STEP 1 — VERDICT${S.mode==='SATIRE_TIER'?' (5 OPTIONS)':''}</span><span class="ss${v1?' done':''}">${v1?'✓ '+S.verdict:'PENDING'}</span></div>
+    <div class="step-body">
+      <div class="verdict-grid${S.mode==='SATIRE_TIER'?' five':''}">
+        ${verdicts.map(v=>`<button class="vbtn${S.verdict===v?' sv-'+v:''}" data-v="${v}">${v==='INSUFFICIENT'?'INSUF. INFO':v}</button>`).join('')}
+      </div>
+      ${S.verdict?`<div class="v-hint">${vHints[S.verdict]}</div>`:''}
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-hdr"><span>STEP 2 — CITATION (BOGOST SCALE${S.mode==='SATIRE_TIER'?' + CONSTRUCTED':''})</span><span class="ss${v2?' done':''}">${v2?'✓ '+S.citation:(v1?'PENDING':'LOCKED')}</span></div>
+    ${v1?`<div class="step-body">
+      <div class="bogost-lbl">Rate the evidentiary quality behind this claim:</div>
+      <div class="cit-grid">
+        ${getCitTiers().map(t=>`<button class="cbtn${S.citation===t.id?' sc-'+t.id:''}" data-c="${t.id}"><span class="cn">${t.name}</span><span class="cd">${t.desc}</span><span class="cp">+${t.pts}</span></button>`).join('')}
+      </div>
+      <div class="cit-note">+15 match bonus for correct tier selection. In SATIRE TIER, CONSTRUCTED is the expected citation for projected claims.</div>
+    </div>`:`<div class="step-locked">Complete Step 1 first.</div>`}
+  </div>
+
+  <div class="step-box">
+    <div class="step-hdr"><span>STEP 3 — PATTERN LIBRARY (LEGAL EDITION)</span><span class="ss${v3?' done':''}">${v3?'✓':(v2?'PENDING':'LOCKED')}</span></div>
+    ${v2?`<div class="step-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:11px;color:var(--text-dim);">4 new legal patterns in Act V:</span>
+        <button class="lib-open-btn" id="openLib">VIEW LIBRARY ↗</button>
+      </div>
+      <div class="pat-grid">
+        ${PATTERNS.map(p=>`<button class="pbtn${S.pattern===p.id?' sel':''}" data-p="${p.id}"><span>${p.name}${p.tag.includes('ACT V')?` <span style="color:var(--crimson-bright);font-size:9px;">NEW</span>`:''}</span>${S.pattern===p.id?'<span>✓</span>':''}</button>`).join('')}
+      </div>
+    </div>`:`<div class="step-locked">Complete Step 2 first.</div>`}
+  </div>
+
+  <div class="submit-row">
+    <button class="sub-btn${allDone?' ready':''}" id="subBtn" ${allDone?'':'disabled'}>${allDone?'SUBMIT ANALYSIS →':'COMPLETE ALL STEPS TO SUBMIT'}</button>
+  </div>
+  <div style="height:20px;"></div>`;
+}
+
+function renderResult(){
+  const ch=getChapter();
+  const claim=getClaim();
+  const r=S.roundResult;
+  if(!claim||!r)return'';
+  const ok=r.vPts>0,cm=r.cmPts>0,pm=r.pPts>0;
+  return`${classbar('FILE REVIEWED — RESULT')}${header(ch.date+' · '+ch.title)}
+  <div class="prog-rail"><div class="prog-fill" style="width:${(S.claimIndex+1)/10*100}%"></div></div>
+  <div class="prog-meta"><span>CLAIM ${S.claimIndex+1} OF 10</span><span>SCORE <span class="sv">${S.totalScore}</span></span></div>
+
+  <div class="result-card anim">
+    <div class="result-hdr">
+      <div class="vr ${ok?'CORRECT':'WRONG'}">${ok?'✓ CORRECT':'✗ WRONG'} — ${r.correctV}</div>
+      <div class="pts-earned">+${r.total}</div>
+    </div>
+    <div class="result-body">
+      <div class="truth-box">${claim.truthNote}</div>
+      ${S.mode==='TURDUCKEN'?`<div class="turd-result"><div class="tr-label">RECORD LAYER</div>${claim.recordText}</div><div class="turd-result"><div class="tr-label">SHELL LAYER — STATUTORY ANCHOR</div>${claim.shellText}</div>`:''}
+      <p>${claim.annotation}</p>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:8px;font-style:italic;">${claim.citationNote}</p>
+      <div class="rb-wrap">
+        <div class="rb"><span class="rl">Verdict (${S.verdict})</span><span class="rv ${ok?'g':'b'}">+${r.vPts}</span></div>
+        <div class="rb"><span class="rl">Citation: ${S.citation}</span><span class="rv">+${r.cPts}</span></div>
+        <div class="rb"><span class="rl">Citation match${cm?' ✓':' ✗ expected '+r.correctC}</span><span class="rv ${cm?'g':'b'}">+${r.cmPts}</span></div>
+        <div class="rb"><span class="rl">Pattern${pm?' ✓':' ✗ expected '+claim.correctPattern}</span><span class="rv ${pm?'g':'b'}">+${r.pPts}</span></div>
+        ${S.mode==='REVERSE_CHRONO'?`<div class="rb"><span class="rl">Reverse-Chrono ×${r.mult.toFixed(2)}</span><span class="rv">${r.raw}→${r.total}</span></div>`:''}
+        <div class="rb" style="border-bottom:none;"><span class="rl" style="font-weight:bold;">ROUND TOTAL</span><span class="rv" style="font-size:15px;">+${r.total} / ${r.maxTotal}</span></div>
+      </div>
+    </div>
+  </div>
+  <button class="next-btn" id="nextBtn">${S.claimIndex+1<10?'NEXT CLAIM →':'VIEW CHAPTER SCORE →'}</button>
+  <div style="height:20px;"></div>`;
+}
+
+function renderChapterEnd(){
+  const ch=getChapter();
+  const sc=S.chapterScores[S.chapterId]||{score:S.totalScore,max:S.maxPossible};
+  const pct=sc.max>0?Math.round(sc.score/sc.max*100):0;
+  const grades=[[90,'File closed. Record confirmed.'],[75,'Solid analysis. A few gaps remain.'],[55,'Pattern recognition needs development.'],[35,'The dossier disputed your conclusions.'],[0,'The record ran against you.']];
+  const grade=grades.find(g=>pct>=g[0])[1];
+  const chHall=getHall().filter(e=>e.chId===S.chapterId);
+  const allDone=CHAPTERS.every(c=>S.chapterScores[c.id]);
+  return`${classbar(ch.date.toUpperCase()+' — CHAPTER CLOSED')}${header(ch.title)}
+  <div class="ch-end-wrap anim">
+    <div class="ch-score-block">
+      <div class="cel">CHAPTER SCORE — ${ch.date}</div>
+      <div class="cep">${sc.score}</div>
+      <div class="cem">out of ${sc.max} possible (${pct}%)</div>
+      <div class="ceg">${grade}</div>
+    </div>
+    <div class="ch-hall">
+      <div class="ch-hall-hdr">⚠ HALL OF SHAME — THIS CHAPTER</div>
+      ${chHall.length===0
+        ?'<div class="hall-empty">No entries for this chapter.</div>'
+        :chHall.map(e=>`<div class="hall-entry"><div class="he-text">${e.claimText}</div><div class="he-wrong">Your: ${e.yourVerdict} · Correct: ${e.correctVerdict} · ${e.pts}</div></div>`).join('')}
+    </div>
+    ${allDone?`<button class="hub-btn" id="epilBtn2">VIEW FULL EPILOGUE →</button>`:''}
+    <button class="hub-btn" id="hubBtn">RETURN TO HUB</button>
+  </div>`;
+}
+
+function renderEpilogue(){
+  const hall=getHall().slice(0,10);
+  let totalAll=0,maxAll=0;
+  CHAPTERS.forEach(c=>{const sc=S.chapterScores[c.id];if(sc){totalAll+=sc.score;maxAll+=sc.max;}});
+  const allPct=maxAll>0?Math.round(totalAll/maxAll*100):0;
+  const epilItems=[
+    {date:'June 16, 2026',title:'The Escalator Only Goes Down (Part 2)',body:'The $TRUMP memecoin launch documented. The 11,780 vote call revisited. The immunity doctrine tested against its own text. Ten years after the escalator.',statute:'15 U.S.C. § 78u-1 · Art. II, § 1, cl. 7'},
+    {date:'December 25, 2026',title:'The Eviction of the Golden Calf',body:'Schedule F turned inward. Inspector Generals fired before audits complete. The golden calf inscription enters the record. Christmas Day orders defend themselves by their timing.',statute:'5 U.S.C. App. § 3(b) · IG Act 1978 · 44 U.S.C. § 2202'},
+    {date:'July 4, 2027',title:'The Insider Trading Blackout',body:'DOGE-Gate denominated. The Apprentice: Federal Penitentiary premieres. The SEC\'s jurisdiction is not suspended by election returns. Independence Day 2027 closes the second act.',statute:'15 U.S.C. § 78u-1 · 18 U.S.C. § 1348 · U.S. Const. amend. I'},
+    {date:'January 20, 2028',title:'Total Forfeiture',body:'Forfeiture authorized. Mar-a-Lago enters the National Historic Site of Statutory Negligence. The Presidential Records Act says what it says. § 793(e) does not recognize a thought-declassification doctrine. The loop is closed.',statute:'18 U.S.C. § 793(e) · 44 U.S.C. § 2202 · Trump v. United States (2024)'},
+  ];
+  return`${classbar('DOSSIER CLOSED — FULL RECORD TRANSMITTED')}${header('Nuclear Liquidation — Complete File')}
+  <div class="epil-wrap anim">
+    ${maxAll>0?`<div class="total-score-block">
+      <div class="ts-label">TOTAL SCORE — ALL ACTS V CHAPTERS COMPLETED</div>
+      <div class="ts-pts">${totalAll}</div>
+      <div class="ts-sub">out of ${maxAll} possible (${allPct}%) · Mode: ${S.mode||'MIXED'}</div>
+    </div>`:''}
+
+    <div class="epil-timeline">
+      <div class="epil-hdr">THE NUCLEAR LIQUIDATION TIMELINE — 2026–2028</div>
+      ${epilItems.map(e=>`<div class="epil-entry">
+        <div class="ee-date">${e.date}</div>
+        <div class="ee-title">${e.title}</div>
+        <div class="ee-body">${e.body}</div>
+        <div class="ee-statute">${e.statute}</div>
+      </div>`).join('')}
+    </div>
+
+    <div class="ch-hall" style="margin-bottom:14px;">
+      <div class="ch-hall-hdr">⚠ HALL OF SHAME — ALL ACTS</div>
+      ${hall.length===0
+        ?'<div class="hall-empty">Clean record across all acts.</div>'
+        :hall.map(e=>`<div class="hall-entry"><div class="he-text">Act ${e.act||'V'} Ch.${e.chId||'?'}: ${e.claimText}</div><div class="he-wrong">Your: ${e.yourVerdict} · Correct: ${e.correctVerdict} · ${e.pts}</div></div>`).join('')}
+    </div>
+
+    <div class="acts-nav">
+      <a class="nav-btn" href="declassified-act2-v3.html">ACT II</a>
+      <a class="nav-btn" href="declassified-act4.html">ACT IV</a>
+      <span class="nav-btn active">ACT V</span>
+    </div>
+    <button class="hub-btn" id="hubFromEpil">RETURN TO HUB</button>
+  </div>`;
+}
+
+// ── BIND ─────────────────────────────────────────────────────────────
+function bind(){
+  if(S.screen==='hub'){
+    document.querySelectorAll('[data-ch]').forEach(b=>b.addEventListener('click',()=>{
+      S.chapterId=b.dataset.ch; render();
+    }));
+    document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{
+      S.mode=b.dataset.mode; render();
+    }));
+    $('startBtn')?.addEventListener('click',()=>{
+      if(!S.mode||!S.chapterId)return;
+      const ch=getChapter();
+      S.claimOrder=S.mode==='REVERSE_CHRONO'?[9,8,7,6,5,4,3,2,1,0]:[0,1,2,3,4,5,6,7,8,9];
+      S.claimIndex=0; S.totalScore=0; S.maxPossible=0;
+      S.verdict=null; S.citation=null; S.pattern=null; S.turdLayer='SATIRE';
+      S.screen='game'; render();
+    });
+    $('epilBtn')?.addEventListener('click',()=>{ S.screen='epilogue'; render(); });
+  }
+
+  if(S.screen==='game'){
+    document.querySelectorAll('[data-turd]').forEach(b=>b.addEventListener('click',()=>{
+      S.turdLayer=b.dataset.turd; render();
+    }));
+    document.querySelectorAll('[data-v]').forEach(b=>b.addEventListener('click',()=>{
+      S.verdict=b.dataset.v; S.citation=null; S.pattern=null; render();
+    }));
+    document.querySelectorAll('[data-c]').forEach(b=>b.addEventListener('click',()=>{
+      S.citation=b.dataset.c; S.pattern=null; render();
+    }));
+    document.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{
+      S.pattern=b.dataset.p; render();
+    }));
+    $('openLib')?.addEventListener('click',()=>{ $('libOverlay').classList.add('open'); });
+    $('subBtn')?.addEventListener('click',()=>{
+      if(!S.verdict||!S.citation||!S.pattern)return;
+      const claim=getClaim();
+      const r=scoreRound(claim,S.verdict,S.citation,S.pattern);
+      S.roundResult=r; S.totalScore+=r.total; S.maxPossible+=r.maxTotal;
+      if(r.total/r.maxTotal<0.5||S.verdict!==r.correctV){
+        pushHall({act:'V',chId:S.chapterId,claimId:claim.id,
+          claimText:claim.text.substring(0,80)+'…',
+          yourVerdict:S.verdict,correctVerdict:r.correctV,
+          pts:r.total+'/'+r.maxTotal,ts:Date.now()});
+      }
+      S.screen='result'; render();
+    });
+  }
+
+  if(S.screen==='result'){
+    $('nextBtn')?.addEventListener('click',()=>{
+      if(S.claimIndex+1<10){
+        S.claimIndex++; S.verdict=null; S.citation=null; S.pattern=null;
+        S.turdLayer='SATIRE'; S.screen='game';
+      }else{
+        S.chapterScores[S.chapterId]={score:S.totalScore,max:S.maxPossible};
+        saveS(); S.screen='chapter_end';
+      }
+      render();
+    });
+  }
+
+  if(S.screen==='chapter_end'){
+    $('hubBtn')?.addEventListener('click',()=>{ S.screen='hub'; render(); });
+    $('epilBtn2')?.addEventListener('click',()=>{ S.screen='epilogue'; render(); });
+  }
+
+  if(S.screen==='epilogue'){
+    $('hubFromEpil')?.addEventListener('click',()=>{ S.screen='hub'; render(); });
+  }
+
+  $('closeLib')?.addEventListener('click',()=>{ $('libOverlay').classList.remove('open'); });
+  $('libOverlay')?.addEventListener('click',(e)=>{ if(e.target===$('libOverlay'))$('libOverlay').classList.remove('open'); });
+}
+
+// ── LIBRARY ───────────────────────────────────────────────────────────
+function populateLib(){
+  const el=$('libEntries');
+  if(!el)return;
+  el.innerHTML=PATTERNS.map(p=>`<div class="lib-entry">
+    <div class="lib-tag">${p.tag}</div>
+    <div class="lib-name">${p.name}</div>
+    <div class="lib-def">${p.def}</div>
+  </div>`).join('');
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────
+function render(){
+  const m={hub:renderHub,game:renderGame,result:renderResult,chapter_end:renderChapterEnd,epilogue:renderEpilogue};
+  $a().innerHTML=(m[S.screen]||renderHub)();
+  bind(); populateLib(); window.scrollTo(0,0);
+}
+
+loadS(); render();
+</script>
+</body>
+</html>

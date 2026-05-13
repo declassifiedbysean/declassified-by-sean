@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FIELD GLOSSARY — DECLASSIFIED by Sean</title>
+<meta name="description" content="Legal and political vocabulary tracker for DECLASSIFIED. Look up terms. Track what you've learned.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678" crossorigin="anonymous"></script>
+<style>
+:root{
+  --bg:#00060e;--bg2:#041228;--bg3:#081a38;--bg4:#0d2248;
+  --amber:#FFCB05;--amber-dim:#C9A000;--amber-bright:#FFD740;
+  --red:#ff3c3c;--green:#2dff6e;--blue:#5bb4ff;--orange:#ff9933;
+  --text:#F0EAD2;--text-dim:#6a7890;--text-mid:#9aacbc;
+  --border:#0a1e3c;--classify:#00274C;
+  --accent:#2255bb;--accent-dim:#14306e;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:14px;line-height:1.5;}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.05) 2px,rgba(0,0,0,.05) 4px);
+  pointer-events:none;z-index:9999;}
+
+/* NAV */
+nav{background:var(--classify);border-bottom:1px solid var(--amber-dim);padding:0 20px;
+  display:flex;justify-content:space-between;align-items:center;min-height:44px;flex-wrap:wrap;gap:8px;}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;letter-spacing:.2em;color:#FFCB05;text-transform:uppercase;padding:10px 0;}
+.nav-links{display:flex;gap:18px;flex-wrap:wrap;}
+.nav-links a{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.6);text-transform:uppercase;text-decoration:none;padding:10px 0;transition:color .15s;}
+.nav-links a:hover,.nav-links a.active{color:var(--amber);}
+
+/* HEADER */
+.page-header{padding:28px 20px 0;max-width:900px;margin:0 auto;}
+.classbar-top{background:var(--classify);border:1px solid var(--amber-dim);color:var(--amber);
+  font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:.3em;
+  text-transform:uppercase;padding:5px 12px;display:inline-block;margin-bottom:16px;}
+.page-title{font-family:'Special Elite',serif;font-size:clamp(24px,5vw,38px);color:var(--amber);line-height:1.1;margin-bottom:6px;}
+.page-sub{font-size:11px;color:var(--text-dim);letter-spacing:.06em;margin-bottom:20px;}
+
+/* STATS BAR */
+.stats-bar{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--amber);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:20px;max-width:900px;margin-left:auto;margin-right:auto;}
+.stat-cell{padding:12px 16px;text-align:center;border-right:1px solid var(--border);}
+.stat-cell:last-child{border-right:none;}
+.stat-num{font-family:'Oswald',sans-serif;font-size:26px;font-weight:700;color:var(--amber);line-height:1;}
+.stat-label{font-size:9px;letter-spacing:.15em;color:var(--text-dim);text-transform:uppercase;margin-top:2px;}
+
+/* PROGRESS BAR */
+.progress-wrap{max-width:900px;margin:0 auto 20px;padding:0 0px;}
+.progress-label{display:flex;justify-content:space-between;font-size:10px;color:var(--text-dim);margin-bottom:4px;letter-spacing:.08em;}
+.progress-track{background:var(--bg3);height:6px;border:1px solid var(--border);}
+.progress-fill{background:var(--amber);height:100%;transition:width .4s ease;min-width:2px;}
+
+/* CONTROLS */
+.controls{max-width:900px;margin:0 auto 16px;display:flex;gap:10px;flex-wrap:wrap;}
+.search-wrap{flex:1;min-width:200px;position:relative;}
+.search-input{width:100%;background:var(--bg2);border:1px solid var(--border);color:var(--text);
+  font-family:'Share Tech Mono',monospace;font-size:13px;padding:10px 14px 10px 34px;outline:none;
+  letter-spacing:.04em;transition:border-color .15s;}
+.search-input:focus{border-color:var(--amber-dim);}
+.search-input::placeholder{color:var(--text-dim);}
+.search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--text-dim);pointer-events:none;}
+.filter-btns{display:flex;gap:6px;flex-wrap:wrap;}
+.fbtn{background:var(--bg2);border:1px solid var(--border);color:var(--text-dim);
+  font-family:'Oswald',sans-serif;font-size:10px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;padding:8px 12px;cursor:pointer;transition:all .12s;white-space:nowrap;-webkit-tap-highlight-color:transparent;}
+.fbtn:hover,.fbtn.active{border-color:var(--amber-dim);color:var(--amber);background:var(--bg3);}
+.fbtn.active{background:#1a160a;}
+
+/* SORT + VIEW */
+.sort-row{max-width:900px;margin:0 auto 12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.sort-label{font-size:10px;color:var(--text-dim);letter-spacing:.1em;}
+.sort-btns{display:flex;gap:6px;}
+.sbtn{background:transparent;border:none;color:var(--text-dim);font-family:'Oswald',sans-serif;
+  font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;padding:4px 8px;border-bottom:1px solid transparent;}
+.sbtn.active{color:var(--amber);border-bottom-color:var(--amber);}
+
+/* GRID */
+.glossary-grid{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;padding-bottom:40px;}
+
+/* TERM CARD */
+.term-card{background:var(--bg2);border:1px solid var(--border);cursor:pointer;
+  transition:border-color .12s,background .12s;-webkit-tap-highlight-color:transparent;position:relative;}
+.term-card:hover{border-color:var(--amber-dim);background:var(--bg3);}
+.term-card.opened{border-color:var(--amber-dim);border-left:3px solid var(--amber);}
+.term-card.hot{border-left:3px solid var(--red);}
+.term-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.term-name{font-family:'Oswald',sans-serif;font-size:14px;font-weight:600;color:var(--text);letter-spacing:.06em;line-height:1.2;}
+.term-card.opened .term-name{color:var(--amber);}
+.term-cat{font-size:8px;letter-spacing:.15em;text-transform:uppercase;padding:2px 6px;border:1px solid;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.cat-LEGAL{color:#5bb4ff;border-color:#1a3a6a;}
+.cat-CONSTITUTIONAL{color:#aabcee;border-color:#1a2a5a;}
+.cat-POLITICAL{color:#ff9933;border-color:#4a2a0a;}
+.cat-RHETORIC{color:#FFCB05;border-color:#3a2c00;}
+.cat-ECONOMIC{color:#2dff6e;border-color:#0a3a1a;}
+.cat-GAME{color:#cc88ff;border-color:#3a1a6a;}
+.term-count-badge{position:absolute;top:8px;right:8px;background:var(--red);color:#fff;
+  font-family:'Oswald',sans-serif;font-size:9px;font-weight:700;padding:1px 5px;border-radius:0;
+  display:none;}
+.term-card.looked-up .term-count-badge{display:block;}
+
+/* DEFINITION */
+.term-def{display:none;padding:0 14px 12px;border-top:1px solid var(--border);}
+.term-card.opened .term-def{display:block;}
+.def-text{font-size:12px;color:var(--text-mid);line-height:1.7;margin-bottom:8px;}
+.def-example{font-size:11px;color:var(--text-dim);border-left:2px solid var(--amber-dim);
+  padding-left:10px;font-style:italic;line-height:1.6;margin-bottom:8px;}
+.def-acts{font-size:10px;color:var(--amber-dim);letter-spacing:.08em;}
+.def-meta{display:flex;justify-content:space-between;align-items:center;margin-top:8px;
+  padding-top:8px;border-top:1px solid var(--border);}
+.def-lookups{font-size:10px;color:var(--text-dim);}
+.def-lookups span{color:var(--amber);}
+.lookup-stamp{font-size:9px;color:var(--green);letter-spacing:.1em;}
+
+/* HOT WORDS PANEL */
+.hot-panel{max-width:900px;margin:0 auto 20px;background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);}
+.hot-panel-hdr{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+.hot-panel-title{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;}
+.hot-panel-sub{font-size:10px;color:var(--text-dim);}
+.hot-list{display:flex;gap:6px;padding:10px 14px;flex-wrap:wrap;}
+.hot-tag{background:var(--bg3);border:1px solid var(--border);font-family:'Oswald',sans-serif;
+  font-size:10px;font-weight:600;letter-spacing:.08em;padding:4px 10px;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;display:flex;align-items:center;gap:6px;}
+.hot-tag:hover{border-color:var(--red);color:var(--red);}
+.hot-count{background:var(--red);color:#fff;font-size:9px;padding:1px 5px;}
+.hot-empty{padding:10px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+
+/* EMPTY STATE */
+.empty-state{max-width:900px;margin:20px auto;text-align:center;padding:40px 20px;}
+.empty-state .ei{font-size:32px;margin-bottom:12px;}
+.empty-state p{font-size:12px;color:var(--text-dim);}
+
+/* RESET ROW */
+.reset-row{max-width:900px;margin:0 auto 20px;display:flex;justify-content:flex-end;}
+.reset-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);
+  font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;
+  padding:7px 14px;cursor:pointer;transition:all .12s;}
+.reset-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--bg3);border:1px solid var(--amber-dim);color:var(--amber);
+  font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  padding:10px 20px;z-index:10000;transition:transform .2s ease;pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:20px;margin-top:20px;}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;}
+.footer-links{display:flex;flex-wrap:wrap;gap:14px;}
+.footer-links a{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.2em;color:var(--text-dim);text-transform:uppercase;text-decoration:none;}
+.footer-links a:hover{color:var(--amber);}
+.footer-copy{font-size:9px;color:var(--text-dim);letter-spacing:.08em;}
+
+@media(max-width:600px){
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .stat-cell:nth-child(2){border-right:none;}
+  .glossary-grid{grid-template-columns:1fr;}
+  nav{padding:0 12px;}
+  .page-header{padding:20px 12px 0;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">DECLASSIFIED by Sean</span>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="press.html">Press</a>
+    <a href="glossary.html" class="active">Glossary</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="classbar-top">Field Intelligence — Vocabulary Dossier</div>
+  <h1 class="page-title">Field Glossary</h1>
+  <p class="page-sub">Legal · Constitutional · Rhetorical · Economic · Game Terms &nbsp;·&nbsp; Every term used across all DECLASSIFIED acts.</p>
+</div>
+
+<div class="stats-bar" id="statsBar">
+  <div class="stat-cell"><div class="stat-num" id="statSession">0</div><div class="stat-label">Lookups This Session</div></div>
+  <div class="stat-cell"><div class="stat-num" id="statTotal">0</div><div class="stat-label">Total Lookups Ever</div></div>
+  <div class="stat-cell"><div class="stat-num" id="statUnique">0</div><div class="stat-label">Unique Terms Opened</div></div>
+  <div class="stat-cell"><div class="stat-num" id="statPct">0%</div><div class="stat-label">Vocabulary Explored</div></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-label">
+    <span id="progressText">0 of 0 terms explored</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+
+<div class="hot-panel" id="hotPanel">
+  <div class="hot-panel-hdr">
+    <span class="hot-panel-title">⚑ Most Looked Up</span>
+    <span class="hot-panel-sub">Terms you've returned to most often</span>
+  </div>
+  <div class="hot-list" id="hotList"><div class="hot-empty">No lookups yet. Start exploring the dossier.</div></div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <span class="search-icon">⌕</span>
+    <input class="search-input" id="searchInput" type="text" placeholder="Search terms, definitions, categories…" autocomplete="off" spellcheck="false">
+  </div>
+  <div class="filter-btns" id="filterBtns">
+    <button class="fbtn active" data-cat="ALL">All</button>
+    <button class="fbtn" data-cat="LEGAL">Legal</button>
+    <button class="fbtn" data-cat="CONSTITUTIONAL">Constitutional</button>
+    <button class="fbtn" data-cat="POLITICAL">Political</button>
+    <button class="fbtn" data-cat="RHETORIC">Rhetoric</button>
+    <button class="fbtn" data-cat="ECONOMIC">Economic</button>
+    <button class="fbtn" data-cat="GAME">Game Terms</button>
+  </div>
+</div>
+
+<div class="sort-row">
+  <span class="sort-label" id="resultCount">Showing all terms</span>
+  <div class="sort-btns">
+    <button class="sbtn active" data-sort="alpha">A–Z</button>
+    <button class="sbtn" data-sort="hot">Most Looked Up</button>
+    <button class="sbtn" data-sort="unread">Not Yet Opened</button>
+  </div>
+</div>
+
+<div class="reset-row">
+  <button class="reset-btn" id="resetBtn">↺ Reset Lookup History</button>
+</div>
+
+<div class="glossary-grid" id="glossaryGrid"></div>
+<div class="empty-state" id="emptyState" style="display:none;">
+  <div class="ei">🗂️</div>
+  <p>No terms match your search. Try a different query or clear the filter.</p>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="press.html">Press</a>
+      <a href="glossary.html">Glossary</a>
+      <a href="disclaimer.html">Disclaimer</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-copy">DECLASSIFIED by Sean · Field Glossary · All acts</div>
+  </div>
+</footer>
+
+<script>
+// ── GLOSSARY DATA ─────────────────────────────────────────────────────
+const TERMS = [
+  // LEGAL
+  {id:'habeas_corpus',    cat:'LEGAL',          name:'Habeas Corpus',
+   def:'A fundamental legal right requiring a person detained by the government to be brought before a court, which must then determine whether the detention is lawful. The name means "you shall have the body" in Latin. Suspension is permitted under the U.S. Constitution only "in cases of rebellion or invasion."',
+   example:'El Salvador suspended habeas corpus protections in its mass detention program — a model that would be directly blocked by U.S. constitutional law.',
+   acts:['Act IV','Act V']},
+  {id:'injunction',       cat:'LEGAL',          name:'Injunction',
+   def:'A court order requiring a party to do or stop doing a specific action. A preliminary injunction halts challenged conduct while litigation proceeds. Federal courts issued preliminary injunctions blocking the birthright citizenship executive order and the Alien Enemies Act deportations.',
+   example:'Federal courts issued preliminary injunctions on Schedule F, the birthright citizenship order, and the Alien Enemies Act deportations within weeks of each being announced.',
+   acts:['Act IV']},
+  {id:'prima_facie',      cat:'LEGAL',          name:'Prima Facie',
+   def:'Latin for "at first sight." A prima facie case presents sufficient evidence to establish a legal claim unless rebutted. To make out a prima facie case of retaliation, for example, a plaintiff must show protected activity, employer knowledge, adverse action, and causal connection.',
+   example:'To establish a prima facie case of retaliation under the ADA, a plaintiff must show four elements — including a causal connection between protected activity and the adverse action.',
+   acts:['Record Forge']},
+  {id:'adverse_action',   cat:'LEGAL',          name:'Adverse Action',
+   def:'In employment and credit law, an action taken by an institution that negatively affects a person\'s rights or status. Under ECOA (Equal Credit Opportunity Act), adverse action includes termination of an account. Creditors must provide written notice within 30 days stating specific reasons.',
+   example:'PNC\'s closure of an account constitutes adverse action under 12 C.F.R. § 1002.2(c), triggering ECOA\'s notice requirements.',
+   acts:['Record Forge','Act V']},
+  {id:'due_process',      cat:'CONSTITUTIONAL',  name:'Due Process',
+   def:'The constitutional requirement that the government respect all legal rights owed to a person before depriving them of life, liberty, or property. Procedural due process requires fair notice and a fair hearing. Substantive due process protects fundamental rights even if procedures are followed. Fifth Amendment applies to federal government; Fourteenth to states.',
+   example:'A court cannot impose the "harshest sanction" of dismissal on procedural conduct that the court\'s own machinery produced without violating basic due process.',
+   acts:['Act II','Act IV','Act V']},
+  {id:'standing',         cat:'LEGAL',          name:'Standing',
+   def:'The legal requirement that a party bringing a lawsuit has a sufficient stake in the outcome. To have standing, a plaintiff must show: (1) a concrete injury-in-fact, (2) traceable to the defendant\'s conduct, (3) redressable by a favorable ruling. Without standing, federal courts lack jurisdiction.',
+   example:'Pro se litigants must establish standing to bring federal civil rights claims, demonstrating concrete injury traceable to the defendant.',
+   acts:['Act IV','Record Forge']},
+  {id:'administrative_stay', cat:'LEGAL',       name:'Administrative Stay',
+   def:'A temporary pause in judicial or administrative proceedings, issued by a court or arbitrator. Different from a preliminary injunction — a stay pauses proceedings while a merits question is resolved. The AAA used an administrative stay in McKendry v. Charter while the claimant was unavailable due to medical circumstances.',
+   example:'Out of an abundance of caution regarding a self-represented claimant\'s apparent disability, an arbitrator placed the matter in an administrative stay protocol.',
+   acts:['Record Forge']},
+  {id:'discovery',        cat:'LEGAL',          name:'Discovery',
+   def:'The pre-trial process by which parties exchange information relevant to the lawsuit. Includes interrogatories (written questions), requests for production of documents, requests for admission, and depositions. Under Rule 26(f), parties must confer and submit a joint discovery plan before discovery begins.',
+   example:'Discovery does not commence until the court enters a Rule 26(f) scheduling order. It should not be unilaterally initiated by plaintiff before a scheduling order is in place.',
+   acts:['Act V','Record Forge']},
+  {id:'res_judicata',     cat:'LEGAL',          name:'Res Judicata',
+   def:'Latin for "the matter has been decided." Doctrine that bars relitigation of claims that were or could have been raised in prior proceedings that reached a final judgment. A party that loses an arbitration may be barred from re-litigating the same claims in federal court.',
+   example:'The Charter Communications claim presents res judicata concerns arising from prior arbitration proceedings — evaluating voluntary dismissal before any responsive pleading triggers preclusion litigation.',
+   acts:['Record Forge']},
+  {id:'pro_se',           cat:'LEGAL',          name:'Pro Se',
+   def:'Latin for "for oneself." A person representing themselves in legal proceedings without an attorney. Pro se litigants receive liberal construction of their filings under Haines v. Kerner, but are still bound by procedural rules. The right of access to courts is well-established even for non-attorneys.',
+   example:'Under Haines v. Kerner, pro se pleadings are held to less stringent standards than formal pleadings drafted by lawyers — but this does not relieve the obligation to cite accurate law.',
+   acts:['Act V','Record Forge']},
+  {id:'preemption',       cat:'CONSTITUTIONAL',  name:'Preemption',
+   def:'The doctrine that federal law takes precedence over conflicting state law under the Supremacy Clause of the U.S. Constitution. Express preemption: Congress explicitly states its intent to occupy a field. Implied preemption: inferred from the structure and purpose of a federal statute.',
+   example:'A state law directly conflicting with federal ADA requirements would be preempted — the federal floor cannot be lowered by state action.',
+   acts:['Act IV']},
+  // CONSTITUTIONAL
+  {id:'14th_amendment',   cat:'CONSTITUTIONAL',  name:'14th Amendment',
+   def:'Ratified 1868. Section 1 guarantees birthright citizenship ("all persons born or naturalized in the United States"), equal protection, and due process to all persons. United States v. Wong Kim Ark (1898) established that children born on U.S. soil to non-citizen parents are citizens under this Amendment. No subsequent Supreme Court decision has overruled this.',
+   example:'The 14th Amendment\'s text and 127 years of precedent directly contradict the claim that birthright citizenship can be ended by executive order.',
+   acts:['Act IV']},
+  {id:'civil_service',    cat:'CONSTITUTIONAL',  name:'Civil Service System',
+   def:'The merit-based system of federal employment established by the Pendleton Civil Service Reform Act of 1883, specifically to replace the spoils system in which government jobs were awarded for political loyalty. Career civil servants are protected from at-will dismissal to ensure continuity and independence from political pressure.',
+   example:'The existing merit system — not a "deep state" — is the accountability mechanism that Schedule F would dismantle. It was created specifically to prevent politically corrupt patronage appointments.',
+   acts:['Act IV']},
+  {id:'first_amendment',  cat:'CONSTITUTIONAL',  name:'First Amendment',
+   def:'Prohibits Congress from making laws abridging freedom of speech, press, assembly, and petition. Does NOT create a legal right to make false statements to the public free from fact-checking. Politicians\' false claims are First Amendment-protected expression — which is why Declassified fact-checks through the evidentiary record, not legal action.',
+   example:'The First Amendment protects political speech including false claims. Declassified addresses this through public record analysis, not litigation.',
+   acts:['About','Press']},
+  {id:'separation_powers', cat:'CONSTITUTIONAL', name:'Separation of Powers',
+   def:'The constitutional division of government authority among three branches — legislative (makes law), executive (enforces law), judicial (interprets law). No branch can exercise the core powers of another. An executive order cannot override a constitutional Amendment; that requires the Article V amendment process.',
+   example:'An executive order cannot constitutionally override the 14th Amendment — overriding a constitutional provision requires a constitutional amendment under Article V, not an executive action.',
+   acts:['Act IV']},
+  {id:'pardon_power',     cat:'CONSTITUTIONAL',  name:'Pardon Power',
+   def:'The President\'s authority under Article II, Section 2 to grant pardons and reprieves for federal offenses. Absolute power for past federal crimes. Cannot be used to pardon state crimes or future offenses. Does not prevent civil liability or overturn impeachment.',
+   example:'Pardons are a legitimate executive power. The characterization of all January 6 prosecutions as "unjust" is selective summary — it omits the evidentiary record of individual convictions.',
+   acts:['Act IV']},
+  // POLITICAL
+  {id:'schedule_f',       cat:'POLITICAL',       name:'Schedule F',
+   def:'An executive order reclassifying career federal civil servants in "policy-related" roles from competitive-service employment protections to at-will status. First issued by Trump in 2020, revoked by Biden in 2021, reissued in 2025. Would expose tens of thousands of career employees to dismissal by political appointees without merit-system protections.',
+   example:'Schedule F eliminates the civil service protections that currently prevent politically motivated dismissals of career federal employees.',
+   acts:['Act IV']},
+  {id:'doge',             cat:'POLITICAL',       name:'DOGE',
+   def:'Department of Government Efficiency — an advisory body established in 2025 to identify federal spending cuts. Not a formal Cabinet department. Its $2 trillion savings target was stated as a goal; independent CBO and GAO analyses found actual identified savings far lower, with substantial double-counting and legally constrained spending included.',
+   example:'The $2 trillion figure was the stated goal at launch — not a documented finding. CBO estimates of realized cuts were measured in the tens of billions.',
+   acts:['Act IV']},
+  {id:'electoral_college', cat:'POLITICAL',      name:'Electoral College',
+   def:'The body of 538 electors who formally elect the President. A candidate must win 270 electoral votes to win the presidency. In 2024, Trump won 312–226. The popular vote was approximately 49.9% for Trump — a plurality, not a majority. A win, but not the "massive mandate" of 2/3 popular approval that the term historically implies.',
+   example:'Trump won 49.9% of the popular vote and 312 electoral votes — a legitimate win. Characterizing this as a "massive mandate" for any specific policy agenda overstates what the margins support.',
+   acts:['Act IV']},
+  {id:'tariff',           cat:'ECONOMIC',        name:'Tariff',
+   def:'A tax levied on imported goods, paid by the U.S. importer (company or individual) at the point of entry to U.S. Customs. The importer typically passes costs to consumers through higher prices. Foreign countries do not "pay" tariffs in any direct economic sense — domestic consumers bear the incidence. Multiple Federal Reserve studies confirm this.',
+   example:'U.S. importers pay tariffs to U.S. Customs. Costs are typically passed to consumers. This is not contested in economics — multiple Fed studies documented consumer price increases from 2018–2019 tariffs.',
+   acts:['Act IV']},
+  {id:'alien_enemies_act', cat:'POLITICAL',      name:'Alien Enemies Act of 1798',
+   def:'A federal statute authorizing the President to detain and remove nationals of a country with which the U.S. is at war or subject to "invasion." Applied historically during declared wars (War of 1812, WWI, WWII). Application to gang designations absent a formal declaration of war or state-directed invasion is contested — courts issued stays.',
+   example:'The Act has a defined predicate — declared war or formal invasion — that a gang designation may not satisfy. Courts reviewing the 2025 application issued preliminary injunctions.',
+   acts:['Act IV']},
+  {id:'cfpb',             cat:'POLITICAL',       name:'CFPB',
+   def:'Consumer Financial Protection Bureau. Federal agency established by the Dodd-Frank Act (2010) to regulate consumer financial products and services. Accepts complaints from consumers about financial institutions. CFPB complaints are a formal administrative avenue for reporting ECOA and other consumer protection violations.',
+   example:'Filing CFPB complaints alleging ECOA discrimination constitutes protected activity under 15 U.S.C. § 1691(a)(3). The filing of six CFPB complaints followed by account closure creates a retaliation inference.',
+   acts:['Act V','Record Forge']},
+  // RHETORIC
+  {id:'inflated_metric',  cat:'RHETORIC',        name:'Inflated Metric',
+   def:'A rhetorical pattern in which a numerical figure accurate in isolation is systematically overstated through definitional expansion, double-counting, or projection as though it were a realized result. The number is real; what it purports to represent is not.',
+   example:'DOGE claimed $2 trillion in identified savings. Announcing a target as though it were a result is the defining feature of Inflated Metric.',
+   acts:['Act IV']},
+  {id:'framing_inversion', cat:'RHETORIC',       name:'Framing Inversion',
+   def:'Characterizing a mechanism primarily associated with one function in terms of its opposite function. The label and the structural effect run in contrary directions. The mechanism does X while being characterized as doing not-X.',
+   example:'Schedule F removes accountability structures while being characterized as "restoring accountability." The framing runs directly contrary to the structural effect.',
+   acts:['Act IV']},
+  {id:'selective_summary', cat:'RHETORIC',       name:'Selective Summary',
+   def:'A technically sourced claim that omits material context, contradicting evidence, or qualifying information — such that the overall impression differs substantially from the documented record. The source is real; the picture it paints is not.',
+   example:'Characterizing all January 6 prosecutions as "unjust" omits the evidentiary record of individual convictions by juries with documented physical evidence.',
+   acts:['Act II','Act IV']},
+  {id:'false_equivalence', cat:'RHETORIC',       name:'False Equivalence',
+   def:'Treating two unlike situations as structurally identical to neutralize a criticism or deflect accountability. The comparison ignores material differences in scale, legality, or context.',
+   example:'Comparing U.S. crime policy to El Salvador\'s Bukele program ignores that El Salvador suspended habeas corpus and that U.S. constitutional law would directly block equivalent measures.',
+   acts:['Act II','Act IV']},
+  {id:'institutional_delegit', cat:'RHETORIC',   name:'Institutional Delegitimization',
+   def:'Framing a legitimate oversight body, law enforcement entity, intelligence agency, or electoral system as inherently corrupt or conspiratorial without specific evidence — to preemptively discredit its findings.',
+   example:'"Deep state" framing characterizes the civil service — established in 1883 specifically to prevent patronage corruption — as an unaccountable shadow government.',
+   acts:['Act II','Act IV']},
+  {id:'strategic_ambiguity', cat:'RHETORIC',     name:'Strategic Ambiguity',
+   def:'Issuing a statement sufficiently open that it can be construed as either a threat or a preference depending on audience — while denying the more provocative reading when challenged. Ambiguity is the mechanism, not the accident. Does real political work precisely because its scope is unclear.',
+   example:'"We\'re going to get Greenland one way or another" encompasses everything from diplomacy to military action — the ambiguity does geopolitical work, which is its purpose.',
+   acts:['Act IV']},
+  {id:'constitutional_misread', cat:'RHETORIC',  name:'Constitutional Misreading',
+   def:'Citing constitutional authority for an action while the relevant text, binding precedent, or plain-language interpretation directly forecloses or qualifies that reading. Distinguished from good-faith legal dispute by the directness of the textual contradiction.',
+   example:'Claiming an executive order can override the 14th Amendment directly contradicts the text and 127 years of settled Supreme Court precedent.',
+   acts:['Act IV']},
+  {id:'legal_overreach',  cat:'RHETORIC',        name:'Legal Overreach',
+   def:'Invoking an existing legal authority — statute, executive order, or treaty — for a purpose that exceeds or contradicts its defined scope, as established by judicial interpretation, legislative history, or the statute\'s limiting language.',
+   example:'Invoking the Alien Enemies Act for gang designations extends the Act beyond its textual scope — the Act requires declared war or formal state-directed invasion.',
+   acts:['Act IV']},
+  {id:'economic_misrep',  cat:'RHETORIC',        name:'Economic Misrepresentation',
+   def:'Misstating who bears the economic incidence of a policy — typically through a simplistic or reversed description of who pays a tax, fee, or tariff — in a way that contradicts basic economic consensus about how the relevant mechanism functions.',
+   example:'Claiming foreign countries pay U.S. tariffs directly contradicts how tariffs work: U.S. importers pay them and typically pass costs to consumers.',
+   acts:['Act IV']},
+  {id:'mandate_overclaim', cat:'RHETORIC',       name:'Mandate Overclaim',
+   def:'Claiming an electoral result as a sweeping policy mandate when the margin, geographic distribution, or stated voter motivations do not support the scope of the authority claimed.',
+   example:'A 49.9% popular vote plurality, while a legitimate win, does not constitute a "massive mandate" for any specific policy agenda — especially when exit polling showed voter concerns were primarily economic, not policy-specific.',
+   acts:['Act IV']},
+  {id:'flooding_the_zone', cat:'RHETORIC',       name:'Flooding the Zone',
+   def:'An information-saturation strategy in which the volume of claims — true, false, and uncertain — is so high that audiences give up trying to verify them individually. Coined by Steve Bannon ("flood the zone with shit"). The assumption: if verification is exhausting, people default to tribal credibility. Declassified directly counters this by making individual claim verification a game.',
+   example:'When false claims arrive faster than fact-checkers can respond, audiences become cynical about verification itself. Declassified is designed to make verification the engaging response to this strategy.',
+   acts:['About']},
+  // ECONOMIC
+  {id:'tariff_incidence', cat:'ECONOMIC',        name:'Tariff Incidence',
+   def:'Who actually bears the economic burden of a tariff. In standard economics, incidence depends on price elasticity. For most consumer goods, domestic importers pay the tariff to Customs, then pass costs through higher consumer prices. Foreign exporters may absorb some cost by lowering export prices — but the burden falls primarily on U.S. importers and consumers, not foreign governments.',
+   example:'Multiple Federal Reserve studies documented consumer price increases from the 2018–2019 tariffs — direct evidence of domestic incidence, not foreign-government payment.',
+   acts:['Act IV']},
+  {id:'ecoa',             cat:'ECONOMIC',        name:'ECOA — Equal Credit Opportunity Act',
+   def:'15 U.S.C. § 1691 et seq. Federal statute prohibiting creditors from discriminating in credit transactions on the basis of race, color, religion, national origin, sex, marital status, age, or the receipt of public assistance income. Regulated by CFPB under Regulation B. Provides private right of action for actual and punitive damages.',
+   example:'PNC\'s onboarding form forces SSDI recipients to misclassify themselves — potentially constituting discrimination on the basis of public assistance income under § 1691(a)(2).',
+   acts:['Act V','Record Forge']},
+  {id:'ssdi',             cat:'ECONOMIC',        name:'SSDI — Social Security Disability Insurance',
+   def:'Federal benefit program providing income to individuals with disabilities who have worked and paid into Social Security. SSA adjudicates disability eligibility. SSDI constitutes "public assistance" income under ECOA, which prohibits creditors from discriminating on this basis. Not the same as SSI (Supplemental Security Income).',
+   example:'SSDI is a program of public assistance within the meaning of 15 U.S.C. § 1691(a)(2). A creditor cannot discriminate on the basis of this income source.',
+   acts:['Act V','Record Forge']},
+  // GAME TERMS
+  {id:'bogost_scale',     cat:'GAME',            name:'Bogost Citation Scale',
+   def:'Declassified\'s 4-tier evidence quality rating system. STRONG: primary source, official record, or direct documentation (+25 pts). CAREFUL: expert consensus or major institutional reporting (+15 pts). WEAK: contested or secondary-source basis only (+5 pts). INSUFFICIENT: no credible evidentiary basis (+0 pts). Named after Ian Bogost\'s framework for epistemological rigor in media analysis.',
+   example:'The tariff claim (foreign countries pay tariffs) has STRONG evidence contradicting it — Federal Reserve studies, Tax Foundation analyses, and basic customs law all confirm domestic incidence.',
+   acts:['Act II','Act IV','Act V','Record Forge']},
+  {id:'phillips_library', cat:'GAME',            name:'Phillips Pattern Library',
+   def:'Declassified\'s taxonomy of rhetorical mechanisms used in political misinformation. Identifies the structural method by which a claim misleads — not just that it\'s wrong, but how. Named after the discipline of rhetorical analysis associated with Wendell Phillips. Patterns include Inflated Metric, Framing Inversion, Selective Summary, Mandate Overclaim, and others.',
+   example:'Identifying the correct pattern adds +25 points and teaches users to recognize the mechanism, not just the individual instance. The same pattern appears across different claims.',
+   acts:['Act II','Act IV','Act V','Record Forge']},
+  {id:'benkler_calib',    cat:'GAME',            name:'Benkler Calibration',
+   def:'An optional high-difficulty mode in Act IV that adds a fourth analytical step: assessing the societal impact of a claim (LOW/MEDIUM/HIGH/CRITICAL) independent of its truth value. Uses a three-axis composite: Historical Impact (1–4), Resistance to Debunking (1–4), and Institutional Power (1–4). Named after Yochai Benkler (Harvard Law), whose research on network propaganda established that claim danger is a function of structural conditions, not just truth value.',
+   example:'Schedule F and the tariff claim both score 4.0 (CRITICAL) on the Benkler composite — maximum institutional power, maximum persistence, maximum historical impact.',
+   acts:['Act IV']},
+  {id:'hall_of_shame',    cat:'GAME',            name:'Hall of Shame',
+   def:'Declassified\'s cross-act record of claims the player got wrong. Persists across sessions. Imported from prior acts into the current act\'s intro screen. Serves as a memory device: the record of your analytical errors is always visible. "Contumacious conduct" (Sixth Circuit term for deliberate disobedience) is what the Hall documents.',
+   example:'Your Hall of Shame entries from Act II are imported into Act IV — the record reconvenes across acts.',
+   acts:['Act II','Act IV','Act V','Record Forge']},
+  {id:'insufficient_info', cat:'GAME',           name:'INSUFFICIENT INFO Verdict',
+   def:'The fourth verdict option in Declassified (alongside TRUE, FALSE, MISLEADING). Used when a claim is structured so it cannot be verified or falsified by available evidence — not because the evidence is weak, but because the claim\'s meaning is deliberately ambiguous or unprovable. Recognizing this accurately is itself a form of analytical precision. Many political claims are designed to be unfalsifiable.',
+   example:'"We\'re going to get Greenland one way or another" is correctly rated MISLEADING (the ambiguity does real political work) rather than INSUFFICIENT INFO — the claim makes a specific geopolitical statement even without specifiable evidence.',
+   acts:['Act II','Act IV','Act V','Record Forge']},
+  {id:'bone_honest',      cat:'GAME',            name:'"Bone-Honest" Standard',
+   def:'The analytical standard Declassified applies to every verdict: no overreach into unsupported claims, no motivating of conclusions, strict separation of what the documented record shows versus what opinion or inference suggests. Borrowed from the pro se federal litigation practice of the platform\'s founder, where courts penalize unsupported assertions. The record is the arbiter — nothing else.',
+   example:'"The record is the arbiter" is the platform\'s operating principle. Claims are assessed against primary sources; the evidentiary basis is always stated.',
+   acts:['About','All Acts']},
+];
+
+// ── STORAGE ────────────────────────────────────────────────────────────
+const STORAGE_KEY = 'declassified_glossary_v1';
+
+function loadData(){
+  try{
+    const r = localStorage.getItem(STORAGE_KEY);
+    return r ? JSON.parse(r) : { lookups:{}, totalEver:0, sessionStart: Date.now() };
+  }catch(e){ return { lookups:{}, totalEver:0, sessionStart:Date.now() }; }
+}
+
+function saveData(d){
+  try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); }catch(e){}
+}
+
+// ── STATE ──────────────────────────────────────────────────────────────
+let DATA = loadData();
+let sessionLookups = 0;
+let openCard = null;
+let currentFilter = 'ALL';
+let currentSort = 'alpha';
+let searchQuery = '';
+
+// ── HELPERS ────────────────────────────────────────────────────────────
+function getLookupCount(id){ return (DATA.lookups[id] || 0); }
+
+function recordLookup(id){
+  DATA.lookups[id] = (DATA.lookups[id] || 0) + 1;
+  DATA.totalEver = (DATA.totalEver || 0) + 1;
+  sessionLookups++;
+  saveData(DATA);
+}
+
+function getHotTerms(){
+  return Object.entries(DATA.lookups)
+    .filter(([,v]) => v > 0)
+    .sort((a,b) => b[1]-a[1])
+    .slice(0,8)
+    .map(([id, count]) => ({ id, count, term: TERMS.find(t=>t.id===id) }))
+    .filter(x => x.term);
+}
+
+function getUniqueOpened(){
+  return Object.values(DATA.lookups).filter(v=>v>0).length;
+}
+
+// ── STATS ──────────────────────────────────────────────────────────────
+function updateStats(){
+  const unique = getUniqueOpened();
+  const pct = Math.round(unique / TERMS.length * 100);
+  document.getElementById('statSession').textContent = sessionLookups;
+  document.getElementById('statTotal').textContent = DATA.totalEver || 0;
+  document.getElementById('statUnique').textContent = unique;
+  document.getElementById('statPct').textContent = pct + '%';
+  document.getElementById('progressText').textContent = `${unique} of ${TERMS.length} terms explored`;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressFill').style.width = pct + '%';
+  renderHot();
+}
+
+function renderHot(){
+  const hot = getHotTerms();
+  const el = document.getElementById('hotList');
+  if(hot.length === 0){
+    el.innerHTML = '<div class="hot-empty">No lookups yet. Start exploring the dossier.</div>';
+    return;
+  }
+  el.innerHTML = hot.map(h=>`
+    <button class="hot-tag" data-jump="${h.id}">
+      <span>${h.term.name}</span>
+      <span class="hot-count">${h.count}</span>
+    </button>`).join('');
+  el.querySelectorAll('[data-jump]').forEach(b=>{
+    b.addEventListener('click',()=>{ jumpToTerm(b.dataset.jump); });
+  });
+}
+
+function jumpToTerm(id){
+  const card = document.querySelector(`[data-id="${id}"]`);
+  if(!card) return;
+  card.scrollIntoView({ behavior:'smooth', block:'center' });
+  setTimeout(()=>{ if(!card.classList.contains('opened')) card.click(); }, 400);
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+
+// ── FILTER + SORT + SEARCH ─────────────────────────────────────────────
+function getFilteredTerms(){
+  let terms = [...TERMS];
+  if(currentFilter !== 'ALL') terms = terms.filter(t=>t.cat===currentFilter);
+  if(searchQuery){
+    const q = searchQuery.toLowerCase();
+    terms = terms.filter(t=>
+      t.name.toLowerCase().includes(q) ||
+      t.def.toLowerCase().includes(q) ||
+      t.cat.toLowerCase().includes(q) ||
+      (t.example && t.example.toLowerCase().includes(q))
+    );
+  }
+  if(currentSort === 'alpha') terms.sort((a,b)=>a.name.localeCompare(b.name));
+  if(currentSort === 'hot') terms.sort((a,b)=>(getLookupCount(b.id)||0)-(getLookupCount(a.id)||0));
+  if(currentSort === 'unread') terms.sort((a,b)=>getLookupCount(a.id)-getLookupCount(b.id));
+  return terms;
+}
+
+// ── RENDER GRID ────────────────────────────────────────────────────────
+function renderGrid(){
+  const terms = getFilteredTerms();
+  const grid = document.getElementById('glossaryGrid');
+  const empty = document.getElementById('emptyState');
+  const count = document.getElementById('resultCount');
+
+  if(terms.length === 0){
+    grid.innerHTML = '';
+    empty.style.display = 'block';
+    count.textContent = '0 terms found';
+    return;
+  }
+  empty.style.display = 'none';
+  count.textContent = `Showing ${terms.length} of ${TERMS.length} terms`;
+
+  grid.innerHTML = terms.map(t=>{
+    const lookupCount = getLookupCount(t.id);
+    const isOpen = openCard === t.id;
+    const actsStr = t.acts ? t.acts.join(' · ') : '';
+    return `
+    <div class="term-card${isOpen?' opened':''}${lookupCount>2?' hot':''}" data-id="${t.id}">
+      <div class="term-header">
+        <span class="term-name">${t.name}</span>
+        <span class="term-cat cat-${t.cat}">${t.cat.replace('_',' ')}</span>
+      </div>
+      ${lookupCount>0?`<span class="term-count-badge">${lookupCount}×</span>`:''}
+      <div class="term-def">
+        <p class="def-text">${t.def}</p>
+        ${t.example?`<p class="def-example">"${t.example}"</p>`:''}
+        <div class="def-meta">
+          <span class="def-lookups">You've looked this up <span>${lookupCount}</span>×</span>
+          ${actsStr?`<span class="def-acts">→ ${actsStr}</span>`:''}
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Bind clicks
+  grid.querySelectorAll('.term-card').forEach(card=>{
+    card.addEventListener('click', ()=>{
+      const id = card.dataset.id;
+      if(openCard === id){
+        openCard = null;
+      } else {
+        const wasOpened = getLookupCount(id) > 0;
+        openCard = id;
+        recordLookup(id);
+        if(!wasOpened) showToast('FILED: ' + TERMS.find(t=>t.id===id)?.name);
+        updateStats();
+      }
+      renderGrid();
+    });
+  });
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────
+function init(){
+  updateStats();
+  renderGrid();
+
+  // Search
+  document.getElementById('searchInput').addEventListener('input', e=>{
+    searchQuery = e.target.value.trim();
+    openCard = null;
+    renderGrid();
+  });
+
+  // Filter buttons
+  document.getElementById('filterBtns').addEventListener('click', e=>{
+    const btn = e.target.closest('[data-cat]');
+    if(!btn) return;
+    currentFilter = btn.dataset.cat;
+    document.querySelectorAll('.fbtn').forEach(b=>b.classList.toggle('active', b===btn));
+    openCard = null;
+    renderGrid();
+  });
+
+  // Sort buttons
+  document.querySelectorAll('.sbtn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      currentSort = btn.dataset.sort;
+      document.querySelectorAll('.sbtn').forEach(b=>b.classList.toggle('active',b===btn));
+      openCard = null;
+      renderGrid();
+    });
+  });
+
+  // Reset
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    if(!confirm('Reset all lookup history? This cannot be undone.')) return;
+    DATA = { lookups:{}, totalEver:0, sessionStart:Date.now() };
+    sessionLookups = 0;
+    saveData(DATA);
+    openCard = null;
+    updateStats();
+    renderGrid();
+    showToast('HISTORY CLEARED');
+  });
+}
+
+init();
+</script>
+</body>
+</html>

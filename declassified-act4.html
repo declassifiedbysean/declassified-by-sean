@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DECLASSIFIED — Act IV: The Return (2024–2026)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0b0d;
+    --bg2: #111318;
+    --bg3: #181c22;
+    --accent: #3060cc;
+    --accent-dim: #1a3a7a;
+    --green: #2dff6e;
+    --red: #ff3c3c;
+    --amber: #e8b640;
+    --amber-dim: #a07c20;
+    --blue: #5bb4ff;
+    --orange: #ff9933;
+    --text: #c8d0dc;
+    --text-dim: #5a6270;
+    --border: #1e2530;
+    --classify: #1a2a6c;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:14px;line-height:1.5;overflow-x:hidden;}
+  body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9999;}
+  body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,0.6) 100%);pointer-events:none;z-index:9998;}
+  #app{max-width:660px;margin:0 auto;min-height:100vh;padding-bottom:80px;}
+  .classbar{background:var(--classify);color:#aabcee;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:.25em;text-align:center;padding:6px 12px;text-transform:uppercase;user-select:none;border-bottom:1px solid var(--accent);}
+  .act-header{padding:22px 20px 14px;border-bottom:1px solid var(--border);}
+  .act-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--accent-dim);text-transform:uppercase;margin-bottom:5px;}
+  .act-title{font-family:'Special Elite',serif;font-size:22px;color:var(--blue);line-height:1.2;margin-bottom:3px;}
+  .act-sub{font-size:11px;color:var(--text-dim);letter-spacing:.08em;}
+  /* INTRO */
+  .intro-body{padding:18px 20px;}
+  .info-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);padding:14px 16px;margin-bottom:14px;font-size:12px;line-height:1.6;}
+  .info-block p+p{margin-top:8px;}
+  .sec-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--blue);text-transform:uppercase;margin-bottom:8px;display:block;}
+  /* HALL IMPORT */
+  .hall-import{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);margin-bottom:14px;}
+  .hall-import-hdr{padding:9px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;border-bottom:1px solid var(--border);}
+  .hi-entry{padding:8px 14px;border-bottom:1px solid var(--border);font-size:11px;}
+  .hi-entry:last-child{border-bottom:none;}
+  .hi-text{color:var(--text-dim);font-style:italic;margin-bottom:2px;}
+  .hi-wrong{color:var(--red);}
+  .hi-none{padding:10px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  /* DIFFICULTY */
+  .diff-wrap{background:var(--bg2);border:1px solid var(--border);padding:14px 16px;margin-bottom:14px;}
+  .diff-note{font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5;}
+  .diff-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .diff-btn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;padding:14px 10px;cursor:pointer;text-align:center;transition:all .14s;-webkit-tap-highlight-color:transparent;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+  .diff-btn .dn{font-size:14px;color:var(--blue);}
+  .diff-btn .dd{font-size:10px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-weight:400;letter-spacing:0;text-align:center;}
+  .diff-btn.sel{border-color:var(--blue);background:#0d1522;}
+  .diff-btn:active{opacity:.65;}
+  .start-btn{display:block;width:100%;background:var(--accent);color:#fff;font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:18px;border:none;cursor:pointer;margin-top:18px;-webkit-tap-highlight-color:transparent;transition:opacity .14s;}
+  .start-btn:active{opacity:.7;}
+  .start-btn:disabled{background:var(--bg3);color:var(--text-dim);cursor:not-allowed;}
+  /* PROGRESS */
+  .prog-rail{background:var(--bg3);height:3px;}
+  .prog-fill{background:var(--accent);height:3px;transition:width .3s;}
+  .prog-meta{display:flex;justify-content:space-between;padding:7px 20px;font-size:11px;color:var(--text-dim);border-bottom:1px solid var(--border);}
+  .prog-meta .sv{color:var(--blue);font-weight:bold;}
+  /* CLAIM */
+  .claim-card{margin:14px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .claim-id{background:var(--border);padding:6px 12px;font-size:10px;letter-spacing:.18em;color:var(--text-dim);display:flex;justify-content:space-between;}
+  .claim-id .wb{color:var(--accent-dim);}
+  .claim-text{font-family:'Special Elite',serif;font-size:17px;line-height:1.55;padding:14px 16px;color:#dce4f0;border-left:3px solid var(--accent-dim);font-style:italic;}
+  /* STEPS */
+  .step-box{margin:10px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .step-hdr{background:var(--bg3);padding:8px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;}
+  .step-hdr .ss{font-size:10px;}
+  .step-hdr .ss.done{color:var(--green);}
+  .step-body{padding:12px 14px;}
+  .step-locked{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  /* VERDICT */
+  .verdict-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .vbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;padding:14px 8px;cursor:pointer;text-align:center;transition:all .12s;-webkit-tap-highlight-color:transparent;min-height:52px;}
+  .vbtn:active{opacity:.6;}
+  .vbtn.sv-TRUE{border-color:var(--green);color:var(--green);background:#0a1f0f;}
+  .vbtn.sv-FALSE{border-color:var(--red);color:var(--red);background:#1f0a0a;}
+  .vbtn.sv-MISLEADING{border-color:var(--amber);color:var(--amber);background:#1a1408;}
+  .vbtn.sv-INSUFFICIENT{border-color:var(--blue);color:var(--blue);background:#0a1220;}
+  .v-hint{margin-top:8px;font-size:10px;color:var(--text-dim);line-height:1.4;padding-top:6px;border-top:1px solid var(--border);}
+  /* BOGOST */
+  .bogost-lbl{font-family:'Oswald',sans-serif;font-size:10px;color:var(--accent-dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;}
+  .cit-grid{display:flex;flex-direction:column;gap:6px;}
+  .cbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .12s;-webkit-tap-highlight-color:transparent;display:grid;grid-template-columns:90px 1fr 36px;gap:8px;align-items:start;}
+  .cbtn .cn{font-weight:bold;font-size:12px;}
+  .cbtn .cd{font-size:10px;color:var(--text-dim);line-height:1.3;}
+  .cbtn .cp{font-size:11px;color:var(--accent-dim);text-align:right;}
+  .cbtn:active{opacity:.6;}
+  .cbtn.sc-STRONG{border-color:var(--green);background:#0a1a0f;} .cbtn.sc-STRONG .cn{color:var(--green);}
+  .cbtn.sc-CAREFUL{border-color:var(--amber);background:#1a1408;} .cbtn.sc-CAREFUL .cn{color:var(--amber);}
+  .cbtn.sc-WEAK{border-color:var(--orange);background:#1a1008;} .cbtn.sc-WEAK .cn{color:var(--orange);}
+  .cbtn.sc-INSUF_CIT{border-color:var(--red);background:#1a0808;} .cbtn.sc-INSUF_CIT .cn{color:var(--red);}
+  .cit-note{margin-top:7px;font-size:10px;color:var(--text-dim);line-height:1.4;border-top:1px solid var(--border);padding-top:6px;}
+  /* PATTERN */
+  .pat-grid{display:flex;flex-direction:column;gap:6px;}
+  .pbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .12s;-webkit-tap-highlight-color:transparent;display:flex;justify-content:space-between;align-items:center;}
+  .pbtn:active{opacity:.6;}
+  .pbtn.sel{border-color:var(--blue);background:#0d1522;color:var(--blue);}
+  .lib-open-btn{background:transparent;border:1px solid var(--accent-dim);color:var(--accent-dim);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.12em;padding:6px 10px;cursor:pointer;text-transform:uppercase;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+  /* SUBMIT */
+  .submit-row{margin:12px 20px 0;}
+  .sub-btn{display:block;width:100%;background:var(--bg3);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:16px;border:2px solid var(--border);cursor:not-allowed;transition:all .15s;}
+  .sub-btn.ready{background:var(--accent);color:#fff;border-color:var(--accent);cursor:pointer;}
+  .sub-btn.ready:active{opacity:.7;}
+  /* RESULT */
+  .result-card{margin:14px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .result-hdr{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+  .vr{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;letter-spacing:.12em;}
+  .vr.CORRECT{color:var(--green);}
+  .vr.WRONG{color:var(--red);}
+  .pts-earned{font-family:'Oswald',sans-serif;font-size:20px;color:var(--blue);}
+  .result-body{padding:14px 16px;font-size:12px;line-height:1.6;}
+  .result-body p+p{margin-top:10px;}
+  .truth-box{background:var(--bg3);border-left:3px solid var(--green);padding:10px 12px;margin-bottom:12px;font-size:12px;line-height:1.5;}
+  .rb-wrap{display:flex;flex-direction:column;gap:3px;margin-top:10px;font-size:11px;}
+  .rb{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);}
+  .rb .rl{color:var(--text-dim);}
+  .rb .rv{color:var(--blue);}
+  .rb .rv.g{color:var(--green);}
+  .rb .rv.b{color:var(--red);}
+  .next-btn{display:block;width:calc(100% - 40px);margin:12px 20px 0;background:var(--accent);color:#fff;font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .next-btn:active{opacity:.7;}
+  /* FINAL */
+  .final-wrap{padding:20px;}
+  .final-score{background:var(--bg2);border:1px solid var(--blue);padding:24px;text-align:center;margin-bottom:14px;}
+  .fl{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--accent-dim);text-transform:uppercase;margin-bottom:6px;}
+  .fp{font-family:'Oswald',sans-serif;font-size:52px;color:var(--blue);line-height:1;margin-bottom:4px;}
+  .fm{font-size:12px;color:var(--text-dim);}
+  .fg{font-family:'Special Elite',serif;font-size:20px;color:var(--text);margin-top:10px;line-height:1.3;}
+  .hall-wrap{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);margin-bottom:14px;}
+  .hall-hdr{padding:9px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;border-bottom:1px solid var(--border);}
+  .hall-entry{padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px;line-height:1.4;}
+  .hall-entry:last-child{border-bottom:none;}
+  .he-text{color:var(--text-dim);font-style:italic;margin-bottom:2px;}
+  .he-wrong{color:var(--red);}
+  .hall-empty{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  .acts-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .nav-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.08em;padding:13px 10px;cursor:pointer;text-align:center;text-decoration:none;display:block;-webkit-tap-highlight-color:transparent;}
+  .nav-btn.active{border-color:var(--blue);color:var(--blue);}
+  .replay-btn{display:block;width:100%;background:transparent;border:1px solid var(--accent-dim);color:var(--accent-dim);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .replay-btn:active{opacity:.7;}
+  /* LIBRARY OVERLAY */
+  .lib-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.75);z-index:1000;align-items:flex-end;}
+  .lib-overlay.open{display:flex;}
+  .lib-sheet{background:var(--bg2);border-top:2px solid var(--blue);width:100%;max-width:660px;margin:0 auto;max-height:82vh;overflow-y:auto;padding-bottom:20px;}
+  .lib-sheet-hdr{background:var(--bg3);padding:11px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--blue);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;}
+  .close-lib{background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;padding:2px 8px;-webkit-tap-highlight-color:transparent;}
+  .lib-intro{padding:10px 16px 8px;font-size:10px;color:var(--text-dim);line-height:1.5;border-bottom:1px solid var(--border);font-style:italic;}
+  .lib-entry{padding:11px 16px;border-bottom:1px solid var(--border);}
+  .lib-name{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--blue);margin-bottom:3px;}
+  .lib-def{font-size:11px;color:var(--text-dim);line-height:1.5;}
+  .lib-tag{font-size:9px;color:var(--accent-dim);letter-spacing:.15em;text-transform:uppercase;margin-bottom:3px;}
+  /* BENKLER CALIBRATION */
+  .benkler-section{margin:10px 20px 0;}
+  .benkler-card{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--orange);}
+  .benkler-hdr{background:var(--bg3);padding:8px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.18em;color:var(--orange);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;}
+  .benkler-body{padding:12px 14px;}
+  .benkler-locked{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  .benkler-intro{font-size:10px;color:var(--text-dim);margin-bottom:10px;line-height:1.5;border-bottom:1px solid var(--border);padding-bottom:8px;}
+  .benkler-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .bbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.06em;padding:12px 8px;cursor:pointer;text-align:center;transition:all .12s;-webkit-tap-highlight-color:transparent;display:flex;flex-direction:column;align-items:center;gap:2px;}
+  .bbtn:active{opacity:.6;}
+  .bbtn .bi{font-size:13px;} .bbtn .bd{font-size:9px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-weight:400;text-align:center;}
+  .bbtn.sel-LOW{border-color:#2dff6e;background:#0a1a0f;color:#2dff6e;}
+  .bbtn.sel-MEDIUM{border-color:#e8b640;background:#1a1408;color:#e8b640;}
+  .bbtn.sel-HIGH{border-color:#ff9933;background:#1a1008;color:#ff9933;}
+  .bbtn.sel-CRITICAL{border-color:#ff3c3c;background:#1a0808;color:#ff3c3c;}
+  /* BENKLER RESULT DISPLAY */
+  .benkler-result{background:var(--bg3);border-left:3px solid var(--orange);padding:12px 14px;margin-top:10px;}
+  .benkler-result-hdr{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.15em;color:var(--orange);text-transform:uppercase;margin-bottom:8px;}
+  .benkler-axes{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;}
+  .baxis{display:flex;justify-content:space-between;font-size:10px;padding:3px 0;border-bottom:1px solid var(--border);}
+  .baxis:last-child{border-bottom:none;}
+  .baxis-label{color:var(--text-dim);} .baxis-val{color:var(--orange);}
+  .benkler-verdict-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+  .bvd{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;}
+  .bvd.LOW{color:#2dff6e;} .bvd.MEDIUM{color:#e8b640;} .bvd.HIGH{color:#ff9933;} .bvd.CRITICAL{color:#ff3c3c;}
+  .bvd-user{font-size:11px;} .bvd-user.match{color:#2dff6e;} .bvd-user.miss{color:#ff3c3c;}
+  .benkler-explain{font-size:10px;color:var(--text-dim);line-height:1.5;font-style:italic;}
+  /* BENKLER FINAL STATS */
+  .benkler-final{background:var(--bg2);border:1px solid var(--orange);padding:16px;margin-bottom:14px;}
+  .bf-hdr{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--orange);text-transform:uppercase;margin-bottom:12px;}
+  .bf-row{display:flex;justify-content:space-between;font-size:11px;padding:4px 0;border-bottom:1px solid var(--border);}
+  .bf-row:last-child{border-bottom:none;}
+  .bf-label{color:var(--text-dim);} .bf-val{color:var(--orange);}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .anim{animation:fadeIn .2s ease forwards;}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678"
+     crossorigin="anonymous"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+</head>
+<body>
+<div id="app"></div>
+<div class="lib-overlay" id="libOverlay">
+  <div class="lib-sheet">
+    <div class="lib-sheet-hdr">PATTERN LIBRARY — PHILLIPS EDITION (ACT IV)<button class="close-lib" id="closeLib">✕</button></div>
+    <div class="lib-intro">Act IV introduces seven new patterns specific to executive governance and second-term political rhetoric. Three patterns carry over from Act II (labeled). All definitions describe rhetorical mechanisms, not intent.</div>
+    <div id="libEntries"></div>
+  </div>
+</div>
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────
+
+// Act IV Phillips Edition — 7 new patterns + 3 carryovers
+const PATTERNS = [
+  {id:'INFLATED_METRIC',         name:'Inflated Metric',             tag:'ACT IV NEW', def:'Citing a numerical figure that is accurate in isolation but systematically overstated through definitional expansion, double-counting, or projection as though it were a realized result. The number is real; what it purports to represent is not.'},
+  {id:'FRAMING_INVERSION',       name:'Framing Inversion',           tag:'ACT IV NEW', def:'Characterizing a mechanism primarily associated with one function (e.g., accountability restriction) in terms of its opposite function (e.g., accountability enhancement). The label and the structural effect run in contrary directions.'},
+  {id:'CONSTITUTIONAL_MISREAD',  name:'Constitutional Misreading',   tag:'ACT IV NEW', def:'Citing constitutional authority for an action while the relevant text, binding precedent, or plain-language interpretation directly forecloses or qualifies that reading. Distinguished from good-faith legal dispute by the directness of the textual contradiction.'},
+  {id:'LEGAL_OVERREACH',         name:'Legal Overreach',             tag:'ACT IV NEW', def:'Invoking an existing legal authority — statute, executive order, or treaty — for a purpose that exceeds or contradicts its defined scope, as established by judicial interpretation, legislative history, or the statute\'s own limiting language.'},
+  {id:'STRATEGIC_AMBIGUITY',     name:'Strategic Ambiguity',         tag:'ACT IV NEW', def:'Issuing a statement sufficiently open that it can be construed as either a threat or a preference, or as either serious or rhetorical, depending on the audience — while denying the more provocative reading when challenged. Ambiguity is the mechanism, not the accident.'},
+  {id:'ECONOMIC_MISREP',         name:'Economic Misrepresentation',  tag:'ACT IV NEW', def:'Misstating who bears the economic incidence of a policy — typically through a simplistic or reversed description of who pays a tax, fee, or tariff — in a way that contradicts basic economic consensus about how the relevant mechanism functions.'},
+  {id:'MANDATE_OVERCLAIM',       name:'Mandate Overclaim',           tag:'ACT IV NEW', def:'Claiming an electoral result as a sweeping policy mandate when the margin, geographic distribution, or stated voter motivations do not support the scope of the authority claimed.'},
+  {id:'SELECTIVE_SUMMARY',       name:'Selective Summary',           tag:'CARRYOVER',  def:'A technically sourced claim that omits material context, contradicting evidence, or qualifying information — such that the overall impression differs substantially from the documented record.'},
+  {id:'FALSE_EQUIVALENCE',       name:'False Equivalence',           tag:'CARRYOVER',  def:'Treating two unlike situations as structurally identical to neutralize a criticism or deflect accountability. The comparison ignores material differences in scale, legality, or context.'},
+  {id:'INSTITUTIONAL_DELEGIT',   name:'Institutional Delegitimization', tag:'CARRYOVER', def:'Framing a legitimate oversight body, law enforcement entity, intelligence agency, or electoral system as inherently corrupt or conspiratorial — without specific evidence — to preemptively discredit its findings.'},
+];
+
+const CITATION_TIERS = [
+  {id:'STRONG',    name:'STRONG',       desc:'Primary source, official record, or direct documentation',         pts:25},
+  {id:'CAREFUL',   name:'CAREFUL',      desc:'Expert consensus, major institutional or multi-source reporting',   pts:15},
+  {id:'WEAK',      name:'WEAK',         desc:'Contested, partisan, or secondary-source basis only',               pts:5},
+  {id:'INSUF_CIT', name:'INSUFFICIENT', desc:'No credible or identifiable evidentiary basis',                    pts:0},
+];
+
+const CLAIMS = [
+  {
+    id:'a4_01', year:'2025',
+    text:'"DOGE has identified $2 trillion in savings to cut from the federal budget."',
+    correctVerdict:'FALSE', weight:1.5,
+    expectedCitation:'STRONG', correctPattern:'INFLATED_METRIC',
+    annotation:'The $2 trillion figure was the stated goal at launch — not a documented finding. Subsequent independent analyses by the Congressional Budget Office, Government Accountability Office, and budget economists found that actual identified savings were dramatically lower, with substantial double-counting, legally constrained spending, and items that cannot be cut by executive action counted as though they were. CBO estimates of realized cuts were measured in the tens of billions, not trillions. Announcing a target as though it were a result is the defining feature of Inflated Metric.',
+    truthNote:'Independent budget analyses found actual verifiable DOGE savings far below $2 trillion. Much of the figure included legally protected spending, double-counted items, and projected rather than realized cuts.',
+    citationNote:'CBO, GAO, and independent budget office analyses are STRONG primary documentation of the gap between the announced figure and verified results.',
+    benkler:{ historicalImpact:4, persistence:3, institutionalPower:4, displayImpact:'CRITICAL', score:3.65,
+      explanation:'This claim shapes public understanding of the federal budget — affecting how 330M Americans evaluate fiscal policy. Despite extensive CBO/GAO contradictions, the $2T figure persists widely. Made by the President with full institutional backing.' }
+  },
+  {
+    id:'a4_02', year:'2025',
+    text:'"Schedule F restores accountability to the federal workforce."',
+    correctVerdict:'MISLEADING', weight:1.8,
+    expectedCitation:'CAREFUL', correctPattern:'FRAMING_INVERSION',
+    annotation:'Schedule F reclassifies career civil servants in policy-related roles from competitive-service protections to at-will employment status, making them dismissible without the procedural safeguards that currently apply. The mechanism removes the existing independent accountability structure — civil service protections, merit-based hiring, and IG oversight rights — while characterizing this removal as an enhancement of accountability. The framing inverts the structural effect: what it does is reduce accountability of the executive branch to civil service law, while claiming the opposite.',
+    truthNote:'Schedule F eliminates civil service protections for tens of thousands of federal employees, making them at-will dismissible by political appointees. The existing merit system is the accountability mechanism being removed, not circumvented.',
+    citationNote:'The Federal Register text, OPM analysis, and civil service law experts provide CAREFUL documentation of what Schedule F structurally does versus how it is characterized.',
+    benkler:{ historicalImpact:4, persistence:4, institutionalPower:4, displayImpact:'CRITICAL', score:4.0,
+      explanation:'Schedule F structurally alters the civil service system established in 1883. It affects the independence of every policy-adjacent federal employee — tens of thousands — and sets precedent for future administrations. It is ongoing implemented policy with maximum institutional weight.' }
+  },
+  {
+    id:'a4_03', year:'2025',
+    text:'"The 14th Amendment does not guarantee birthright citizenship. I can end it by executive order."',
+    correctVerdict:'FALSE', weight:1.5,
+    expectedCitation:'STRONG', correctPattern:'CONSTITUTIONAL_MISREAD',
+    annotation:'The 14th Amendment states: "All persons born or naturalized in the United States, and subject to the jurisdiction thereof, are citizens of the United States." The Supreme Court in United States v. Wong Kim Ark (1898) held this language confers birthright citizenship on children born in the U.S. to non-citizen parents. No subsequent court has overruled this. An executive order cannot constitutionally override a directly applicable Amendment — that would require a constitutional amendment. Federal courts immediately enjoined the executive order on these grounds when it was issued.',
+    truthNote:'United States v. Wong Kim Ark (1898) directly governs and was not overruled. Federal courts enjoined the executive order. The 14th Amendment\'s text and 127 years of precedent directly contradict the claim.',
+    citationNote:'The 14th Amendment text, Wong Kim Ark, and the federal court injunctions are STRONG primary legal documentation.',
+    benkler:{ historicalImpact:4, persistence:3, institutionalPower:4, displayImpact:'CRITICAL', score:3.65,
+      explanation:'Birthright citizenship under the 14th Amendment protects millions of U.S.-born individuals. An executive order premised on this claim directly threatens their constitutional status. Courts enjoined it, but the claim continues to circulate as constitutional argument.' }
+  },
+  {
+    id:'a4_04', year:'2025',
+    text:'"The Alien Enemies Act of 1798 authorizes the deportation of Venezuelan gang members without immigration court proceedings."',
+    correctVerdict:'MISLEADING', weight:1.8,
+    expectedCitation:'CAREFUL', correctPattern:'LEGAL_OVERREACH',
+    annotation:'The Alien Enemies Act authorizes detention and removal of nationals of a country with which the U.S. is in a state of declared war or formal invasion. Its application to a gang designation — absent a formal declaration of war with Venezuela or a finding of state-directed "invasion" in the statutory sense — extends the Act beyond its textual scope and the context of its historical application. Courts reviewing the use issued preliminary injunctions. The Act exists; the claimed scope of its authority is disputed and judicially challenged as exceeding what the statute covers.',
+    truthNote:'Courts reviewing the Alien Enemies Act application issued stays and found the claimed scope exceeded the statute\'s terms. The Act has a defined predicate — declared war or formal invasion — that the gang designation may not satisfy.',
+    citationNote:'The statute text, historical application context, and federal court orders are CAREFUL documentation — the legal dispute is genuine and ongoing, warranting expert-level rather than primary-source citation for the full argument.',
+    benkler:{ historicalImpact:3, persistence:3, institutionalPower:4, displayImpact:'HIGH', score:3.25,
+      explanation:'This claim enables deportation without due process for a defined population. The precedential impact extends beyond the immediate group — courts blocked it, but the structural argument (war-power exception to immigration courts) remains in active litigation and could apply broadly.' }
+  },
+  {
+    id:'a4_05', year:'2025',
+    text:'"The January 6 pardons addressed unjust prosecutions of political prisoners."',
+    correctVerdict:'MISLEADING', weight:1.5,
+    expectedCitation:'STRONG', correctPattern:'SELECTIVE_SUMMARY',
+    annotation:'The pardons covered all defendants convicted or charged in connection with January 6, including individuals convicted of assaulting police officers with weapons — charges well-documented in trial records, body-camera footage, and congressional testimony. The "unjust prosecution" framing omits that many convictions resulted from jury trials with documented physical evidence reviewed by federal judges appointed across administrations. Pardons are a legitimate executive power; the characterization of what was pardoned as uniformly "unjust" is selective in the extreme.',
+    truthNote:'The pardons included individuals convicted by juries of assaulting law enforcement with weapons, documented on video and in trial records. The characterization of all prosecutions as "unjust" omits the evidentiary record of individual convictions.',
+    citationNote:'DOJ charging documents, trial records, and Jan. 6 Committee evidence are STRONG primary documentation of what the pardoned conduct actually consisted of.',
+    benkler:{ historicalImpact:3, persistence:2, institutionalPower:4, displayImpact:'HIGH', score:2.9,
+      explanation:'Pardoning all January 6 defendants — including those convicted of assaulting officers — affects democratic norms and the signal sent to future actors. The "political prisoners" framing, if accepted, undermines federal prosecution credibility broadly. Impact is significant but less immediate than constitutional changes.' }
+  },
+  {
+    id:'a4_06', year:'2025',
+    text:'"We\'re going to get Greenland one way or another."',
+    correctVerdict:'MISLEADING', weight:1.7,
+    expectedCitation:'WEAK', correctPattern:'STRATEGIC_AMBIGUITY',
+    annotation:'"One way or another" is structurally ambiguous by design: it encompasses everything from diplomatic purchase to military action, while allowing denial of the most provocative reading when challenged by allied governments. Denmark and Greenlandic officials responded to the statement as a territorial threat; the administration characterized it as aspirational diplomacy. Strategic Ambiguity — as a pattern — is operative here: the statement does real geopolitical work precisely because its scope is unclear, and that unclarity is a feature. MISLEADING rather than TRUE or FALSE reflects that the statement\'s meaning cannot be pinned down — which is the mechanism.',
+    truthNote:'The statement was interpreted by Denmark and Greenland as a territorial threat. The administration subsequently claimed it was diplomatic interest. The ambiguity did real geopolitical work.',
+    citationNote:'WEAK is the appropriate tier: the primary documentation is of diplomatic reactions and subsequent clarifications, not a verifiable factual claim with a primary-source answer.',
+    benkler:{ historicalImpact:2, persistence:1, institutionalPower:4, displayImpact:'MEDIUM', score:2.15,
+      explanation:'The claim creates real diplomatic disruption with a NATO ally and raises territorial sovereignty questions. However, it is a single statement that has not been repeated in actionable form, and its impact — while geopolitically significant — is bounded compared to domestic constitutional or economic claims.' }
+  },
+  {
+    id:'a4_07', year:'2025',
+    text:'"Tariffs are paid by foreign countries. They pour money into our treasury."',
+    correctVerdict:'FALSE', weight:1.0,
+    expectedCitation:'STRONG', correctPattern:'ECONOMIC_MISREP',
+    annotation:'Tariffs are taxes levied on the U.S. importer at the point of entry. The importer — a U.S. company or person — pays the tariff to U.S. Customs, then typically passes the cost to consumers through higher prices. This is not disputed in economics: it is the definitional structure of how tariffs function. Foreign exporters may absorb some cost through reduced prices to remain competitive, but the legal and economic incidence falls primarily on domestic importers and consumers. Multiple Federal Reserve studies, the Tax Foundation, and peer-reviewed economics literature confirm the pass-through of tariff costs to U.S. consumers.',
+    truthNote:'U.S. importers pay tariffs to U.S. Customs. Costs are typically passed to consumers. This is not contested in economics — multiple Fed studies documented consumer price increases from 2018–2019 tariffs.',
+    citationNote:'Federal Reserve economic studies, Tax Foundation analyses, and basic customs law are STRONG primary documentation of who actually pays tariffs.',
+    benkler:{ historicalImpact:4, persistence:4, institutionalPower:4, displayImpact:'CRITICAL', score:4.0,
+      explanation:'This is arguably the highest-impact economic misinformation in Act IV. Tariffs affect the price of nearly every consumer good. The claim has been repeated thousands of times by the President despite unanimous economic consensus to the contrary — maximum persistence. When accepted by the public, it prevents accurate understanding of who bears economic pain from trade policy.' }
+  },
+  {
+    id:'a4_08', year:'2025',
+    text:'"We have a massive mandate from the American people."',
+    correctVerdict:'MISLEADING', weight:1.3,
+    expectedCitation:'CAREFUL', correctPattern:'MANDATE_OVERCLAIM',
+    annotation:'Trump won the 2024 presidential election with approximately 49.9% of the popular vote — a plurality, not a majority. The Electoral College margin was 312-226, a clear win but not historically extraordinary. Exit polling and post-election research consistently showed that voter concerns centered heavily on inflation and economic anxiety rather than wholesale endorsement of any single policy agenda. A legitimate electoral victory becomes a Mandate Overclaim when characterized as sweeping policy authorization that the result\'s margin and the documented voter motivations do not support.',
+    truthNote:'Trump won 49.9% of the popular vote. Exit polling showed economic concerns were the primary driver. The result is a legitimate win; describing it as a "massive mandate" for any specific policy agenda overstates what the margins and voter data show.',
+    citationNote:'FEC vote tallies and exit polling are CAREFUL documentation — official records plus survey data, appropriately weighted.',
+    benkler:{ historicalImpact:3, persistence:3, institutionalPower:4, displayImpact:'HIGH', score:3.25,
+      explanation:'Mandate claims justify the scope of policy action taken. When a President frames a narrow popular vote win as a sweeping mandate, it is used to justify executive orders, agency dismantlement, and legislative pressure that goes beyond what voter data supports. Medium-high historical impact, persistent throughout the administration.' }
+  },
+  {
+    id:'a4_09', year:'2025',
+    text:'"We are eliminating the deep state and restoring government to the people."',
+    correctVerdict:'MISLEADING', weight:1.8,
+    expectedCitation:'WEAK', correctPattern:'INSTITUTIONAL_DELEGIT',
+    annotation:'"Eliminating the deep state" characterizes the removal of career civil servants, IG firings, and agency restructuring as populist restoration, while framing the existing civil service — a merit-based system established by the Pendleton Civil Service Reform Act of 1883 specifically to replace spoils-system patronage — as an unaccountable shadow government. This is institutional delegitimization operating on the civil service itself. MISLEADING rather than FALSE acknowledges that bureaucratic insularity is a documented and legitimately debated concern in governance literature; what is false is the "deep state coup" characterization of routine institutional process.',
+    truthNote:'The civil service merit system was established precisely to prevent politically corrupt patronage appointments. Framing its protections as "deep state" obstruction inverts its historical accountability function.',
+    citationNote:'WEAK is appropriate: legitimate governance debates about bureaucratic reform exist, but the "deep state" framing has no credible evidentiary sourcing beyond internal political commentary.',
+    benkler:{ historicalImpact:4, persistence:4, institutionalPower:4, displayImpact:'CRITICAL', score:4.0,
+      explanation:'Institutional delegitimization at this scale — targeting the entire career federal workforce, IGs, and oversight structures simultaneously — is among the highest-impact claim patterns in the game. It provides justification for dismantling accountability infrastructure. Persistent across years, made at the highest institutional level, affects the functioning of all federal government.' }
+  },
+  {
+    id:'a4_10', year:'2025',
+    text:'"What Bukele did in El Salvador — that\'s what we need to do in America with crime."',
+    correctVerdict:'MISLEADING', weight:1.8,
+    expectedCitation:'CAREFUL', correctPattern:'FALSE_EQUIVALENCE',
+    annotation:'El Salvador\'s crime reduction under Bukele involved suspension of constitutional habeas corpus protections, mass detention of over 80,000 people under emergency powers, documented due process violations reviewed by international human rights organizations, and the operation of a single-party government that imprisoned political opponents. The comparison to U.S. law enforcement policy ignores that: the U.S. Constitution prohibits suspension of habeas corpus except in cases of rebellion or invasion, U.S. courts would not sustain such a program, and the structural political conditions are not equivalent. Treating them as comparable is False Equivalence on a constitutional scale.',
+    truthNote:'El Salvador\'s program included mass detention without due process and suspension of constitutional rights under emergency powers — measures that would be directly blocked by U.S. constitutional law. The comparison ignores foundational structural differences.',
+    citationNote:'Human Rights Watch, Amnesty International, and OAS documentation of El Salvador\'s program are CAREFUL sources — institutional reporting from credible human rights bodies, not partisan commentary.',
+    benkler:{ historicalImpact:3, persistence:2, institutionalPower:4, displayImpact:'HIGH', score:2.9,
+      explanation:'This claim normalizes suspension of habeas corpus and mass detention without due process as a legitimate U.S. policy model. The immediate impact is bounded (comparison, not implemented policy), but the precedential framing — if accepted — provides a model that directly contradicts constitutional protections. Medium-high impact.' }
+  },
+];
+
+// ── CONSTANTS ────────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'declassified_act4_v1';
+const HALL_KEY    = 'declassified_hall_of_shame';
+
+// ── STATE ─────────────────────────────────────────────────────────────
+
+const BENKLER_LEVELS = [
+  {id:'LOW',      label:'LOW',      desc:'Limited reach, fades quickly',        pts:20, color:'#2dff6e'},
+  {id:'MEDIUM',   label:'MEDIUM',   desc:'Significant but bounded impact',       pts:20, color:'#e8b640'},
+  {id:'HIGH',     label:'HIGH',     desc:'Widespread, structural consequences',  pts:20, color:'#ff9933'},
+  {id:'CRITICAL', label:'CRITICAL', desc:'Existential / democratic-system level',pts:20, color:'#ff3c3c'},
+];
+
+let S = {
+  screen: 'intro',
+  difficulty: null,
+  claimIndex: 0,
+  totalScore: 0,
+  maxPossible: 0,
+  answers: [],
+  verdict: null,
+  citation: null,
+  pattern: null,
+  benklerGuess: null,
+  benklerCorrect: 0,
+  benklerTotal: 0,
+  roundResult: null,
+};
+
+function saveS(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); }catch(e){} }
+function loadS(){
+  try{
+    const r = localStorage.getItem(STORAGE_KEY);
+    if(r){ const s = JSON.parse(r); if(s.screen === 'final') S = s; }
+  }catch(e){}
+}
+function getHall(){ try{ return JSON.parse(localStorage.getItem(HALL_KEY))||[]; }catch(e){ return []; } }
+function pushHall(entry){
+  try{
+    let h = getHall(); h.unshift(entry);
+    if(h.length > 15) h = h.slice(0,15);
+    localStorage.setItem(HALL_KEY, JSON.stringify(h));
+  }catch(e){}
+}
+
+// ── SCORING ───────────────────────────────────────────────────────────
+
+function scoreRound(claim, verdict, citation, pattern, benklerGuess){
+  const mult = S.difficulty === 'ASYMMETRIC' ? claim.weight : 1.0;
+  const vPts  = verdict === claim.correctVerdict ? 100 : 0;
+  const cTier = CITATION_TIERS.find(t => t.id === citation);
+  const cPts  = cTier ? cTier.pts : 0;
+  const cmPts = citation === claim.expectedCitation ? 15 : 0;
+  const pPts  = pattern  === claim.correctPattern   ? 25 : 0;
+  const bPts  = (S.difficulty === 'BENKLER' && benklerGuess === claim.benkler.displayImpact) ? 20 : 0;
+  const raw   = vPts + cPts + cmPts + pPts + bPts;
+  const total = Math.round(raw * mult);
+  const maxBase = S.difficulty === 'BENKLER' ? 185 : 165;
+  const maxTotal = Math.round(maxBase * mult);
+  return { vPts, cPts, cmPts, pPts, bPts, raw, total, maxTotal, mult, benklerGuess, benklerCorrect: bPts > 0 };
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────
+
+const $a = () => document.getElementById('app');
+const $  = (id) => document.getElementById(id);
+
+function classbar(txt){ return `<div class="classbar">${txt||'CLASSIFIED — OFFICIAL USE ONLY — ACT IV'}</div>`; }
+function header(){
+  return `<div class="act-header">
+    <div class="act-label">DECLASSIFIED / ACT IV — THE RETURN${S.difficulty?' / '+S.difficulty:''}</div>
+    <div class="act-title">The Return: 2024–2026</div>
+    <div class="act-sub">Schedule F. DOGE. Deportations. Pardons. The record reconvenes.</div>
+  </div>`;
+}
+
+function renderHallImport(){
+  const hall = getHall().filter(e => e.act !== 'IV');
+  if(hall.length === 0) return `<div class="hall-import"><div class="hall-import-hdr">⚠ HALL OF SHAME — PRIOR ACTS IMPORT</div><div class="hi-none">No entries from prior acts. Clean record coming in.</div></div>`;
+  return `<div class="hall-import">
+    <div class="hall-import-hdr">⚠ HALL OF SHAME — IMPORTED FROM PRIOR ACTS (${hall.length})</div>
+    ${hall.slice(0,6).map(e=>`<div class="hi-entry"><div class="hi-text">${e.claimText}</div><div class="hi-wrong">Act ${e.act} · Your: ${e.yourVerdict} · Correct: ${e.correctVerdict} · ${e.pts}</div></div>`).join('')}
+    ${hall.length > 6 ? `<div class="hi-entry" style="color:var(--text-dim);font-style:italic;">${hall.length - 6} more entries in the full record.</div>` : ''}
+  </div>`;
+}
+
+function renderIntro(){
+  return `${classbar()}${header()}
+  <div class="intro-body anim">
+    <div class="info-block">
+      <span class="sec-label">BRIEFING — ACT IV</span>
+      <p>The second Trump administration began January 2025. This act covers ten statements from the first year: DOGE savings claims, Schedule F, birthright citizenship, the Alien Enemies Act, January 6 pardons, Greenland, tariffs, the electoral mandate, the deep state, and El Salvador.</p>
+      <p>Seven new rhetorical patterns appear in the Phillips Edition for this act — specific to executive governance, constitutional claims, and economic policy framing. Three patterns carry over from Act II.</p>
+    </div>
+
+    ${renderHallImport()}
+
+    <div class="diff-wrap">
+      <span class="sec-label">DIFFICULTY MODE — SELECT ONE</span>
+      <p class="diff-note">SYMMETRIC: all claims weighted equally. ASYMMETRIC: claims weighted 1.0–1.8× by structural significance. BENKLER: adds a fourth calibration step — you assess each claim's societal impact (Low/Medium/High/Critical) alongside the standard analysis. +20 pts per correct calibration.</p>
+      <div class="diff-options" style="grid-template-columns:1fr 1fr 1fr;">
+        <button class="diff-btn${S.difficulty==='SYMMETRIC'?' sel':''}" id="btnSym">
+          <span class="dn">SYMMETRIC</span>
+          <span class="dd">All claims equal weight. Pure epistemics.</span>
+        </button>
+        <button class="diff-btn${S.difficulty==='ASYMMETRIC'?' sel':''}" id="btnAsym">
+          <span class="dn">ASYMMETRIC</span>
+          <span class="dd">Claims weighted 1.0–1.8× by impact.</span>
+        </button>
+        <button class="diff-btn${S.difficulty==='BENKLER'?' sel':''}" id="btnBenkler" style="border-color:${S.difficulty==='BENKLER'?'var(--orange)':'var(--border)'};">
+          <span class="dn" style="color:var(--orange);">BENKLER</span>
+          <span class="dd">Standard + assess societal impact. Recommended for advanced players.</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <span class="sec-label">SCORING GUIDE</span>
+      <p>Correct verdict: +100 pts &nbsp;·&nbsp; Citation quality (Bogost Scale): +0–25 pts &nbsp;·&nbsp; Citation match bonus: +15 pts &nbsp;·&nbsp; Correct pattern: +25 pts</p>
+      <p>BENKLER MODE adds: Correct impact calibration: +20 pts. Max per claim: 185 pts. You assess whether each claim is LOW, MEDIUM, HIGH, or CRITICAL impact — not just true or false.</p>
+      <p>Hall of Shame tracks all acts — your Act II errors are already on the board.</p>
+    </div>
+
+    <button class="start-btn" id="startBtn" ${!S.difficulty?'disabled':''}>BEGIN ACT IV →</button>
+  </div>`;
+}
+
+function renderGame(){
+  const c = CLAIMS[S.claimIndex];
+  const pct = S.claimIndex / CLAIMS.length * 100;
+  const wbStr = S.difficulty==='ASYMMETRIC' ? `WEIGHT ×${c.weight}` : 'SYMMETRIC';
+  const v1 = !!S.verdict, v2 = !!S.citation, v3 = !!S.pattern;
+  const v4 = S.difficulty !== 'BENKLER' || !!S.benklerGuess;
+  const allDone = v1 && v2 && v3 && v4;
+  const vHints = {
+    TRUE:'The claim is substantively accurate and supported by available documentation.',
+    FALSE:'The claim is directly contradicted by verifiable evidence.',
+    MISLEADING:'The claim is technically sourced but creates a false impression through framing, omission, or distortion.',
+    INSUFFICIENT:'The claim is structured so it cannot be verified or falsified by available evidence.',
+  };
+  return `${classbar('ACTIVE REVIEW FILE — ACT IV')}${header()}
+  <div class="prog-rail"><div class="prog-fill" style="width:${pct}%"></div></div>
+  <div class="prog-meta"><span>CLAIM ${S.claimIndex+1} OF ${CLAIMS.length}</span><span>SCORE <span class="sv">${S.totalScore}</span></span></div>
+
+  <div class="claim-card anim">
+    <div class="claim-id"><span>FILE ${c.id.toUpperCase()} — ${c.year}</span><span class="wb">${wbStr}</span></div>
+    <div class="claim-text">${c.text}</div>
+  </div>
+
+  <div class="step-box anim">
+    <div class="step-hdr"><span>STEP 1 — VERDICT</span><span class="ss${v1?' done':''}">${v1?'✓ '+S.verdict:'PENDING'}</span></div>
+    <div class="step-body">
+      <div class="verdict-grid">
+        ${['TRUE','FALSE','MISLEADING','INSUFFICIENT'].map(v=>`<button class="vbtn${S.verdict===v?' sv-'+v:''}" data-v="${v}">${v==='INSUFFICIENT'?'INSUF. INFO':v}</button>`).join('')}
+      </div>
+      ${S.verdict?`<div class="v-hint">${vHints[S.verdict]}</div>`:''}
+    </div>
+  </div>
+
+  <div class="step-box">
+    <div class="step-hdr"><span>STEP 2 — CITATION QUALITY (BOGOST SCALE)</span><span class="ss${v2?' done':''}">${v2?'✓ '+S.citation:(v1?'PENDING':'LOCKED')}</span></div>
+    ${v1?`<div class="step-body">
+      <div class="bogost-lbl">Rate the quality of evidence behind this claim:</div>
+      <div class="cit-grid">
+        ${CITATION_TIERS.map(t=>`<button class="cbtn${S.citation===t.id?' sc-'+t.id:''}" data-c="${t.id}"><span class="cn">${t.name}</span><span class="cd">${t.desc}</span><span class="cp">+${t.pts}</span></button>`).join('')}
+      </div>
+      <div class="cit-note">+15 match bonus if your tier matches the expected citation quality for this claim. In Act IV, several claims involve ongoing litigation — pay attention to whether a claim has a definitive primary-source answer or requires expert-level institutional analysis.</div>
+    </div>`:`<div class="step-locked">Complete Step 1 first.</div>`}
+  </div>
+
+  <div class="step-box">
+    <div class="step-hdr"><span>STEP 3 — PATTERN LIBRARY (PHILLIPS EDITION)</span><span class="ss${v3?' done':''}">${v3?'✓':(v2?'PENDING':'LOCKED')}</span></div>
+    ${v2?`<div class="step-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:11px;color:var(--text-dim);">Seven new patterns + three carryovers:</span>
+        <button class="lib-open-btn" id="openLib">VIEW LIBRARY ↗</button>
+      </div>
+      <div class="pat-grid">
+        ${PATTERNS.map(p=>`<button class="pbtn${S.pattern===p.id?' sel':''}" data-p="${p.id}"><span>${p.name}${p.tag==='CARRYOVER'?' ↩':''}</span>${S.pattern===p.id?'<span>✓</span>':''}</button>`).join('')}
+      </div>
+    </div>`:`<div class="step-locked">Complete Step 2 first.</div>`}
+  </div>
+
+  <div class="submit-row">
+    <button class="sub-btn${allDone?' ready':''}" id="subBtn" ${allDone?'':'disabled'}>${allDone?'SUBMIT ANALYSIS →':'COMPLETE ALL STEPS TO SUBMIT'}</button>
+  </div>
+  ${S.difficulty==='BENKLER'?`
+  <div class="benkler-section">
+    <div class="benkler-card">
+      <div class="benkler-hdr"><span>STEP 4 — BENKLER CALIBRATION</span><span style="font-size:10px;">${v4?'✓ '+S.benklerGuess:(v3?'PENDING':'LOCKED')}</span></div>
+      ${v3?`<div class="benkler-body">
+        <div class="benkler-intro">Assess the societal impact of this claim — independent of whether it is true or false. How many people does it affect? How persistent is it despite evidence? This is the Benkler dimension: structural danger, not just epistemic error.</div>
+        <div class="benkler-grid">
+          ${BENKLER_LEVELS.map(l=>`<button class="bbtn${S.benklerGuess===l.id?' sel-'+l.id:''}" data-b="${l.id}">
+            <span class="bi">${l.label}</span>
+            <span class="bd">${l.desc}</span>
+          </button>`).join('')}
+        </div>
+      </div>`:`<div class="benkler-locked">Complete Step 3 first.</div>`}
+    </div>
+  </div>`:''}
+  <div style="height:20px;"></div>`;
+}
+
+function renderResult(){
+  const c = CLAIMS[S.claimIndex];
+  const r = S.roundResult;
+  const ok = r.vPts > 0, cm = r.cmPts > 0, pm = r.pPts > 0;
+  return `${classbar('FILE REVIEWED — RESULT FOLLOWS')}${header()}
+  <div class="prog-rail"><div class="prog-fill" style="width:${(S.claimIndex+1)/CLAIMS.length*100}%"></div></div>
+  <div class="prog-meta"><span>CLAIM ${S.claimIndex+1} OF ${CLAIMS.length}</span><span>SCORE <span class="sv">${S.totalScore}</span></span></div>
+
+  <div class="result-card anim">
+    <div class="result-hdr">
+      <div class="vr ${ok?'CORRECT':'WRONG'}">${ok?'✓ CORRECT':'✗ WRONG'} — ${c.correctVerdict}</div>
+      <div class="pts-earned">+${r.total}</div>
+    </div>
+    <div class="result-body">
+      <div class="truth-box">${c.truthNote}</div>
+      <p>${c.annotation}</p>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:8px;font-style:italic;">${c.citationNote}</p>
+      <div class="rb-wrap">
+        <div class="rb"><span class="rl">Verdict (${S.verdict})</span><span class="rv ${ok?'g':'b'}">+${r.vPts}</span></div>
+        <div class="rb"><span class="rl">Citation: ${S.citation} (base +${r.cPts})</span><span class="rv">+${r.cPts}</span></div>
+        <div class="rb"><span class="rl">Citation match${cm?' ✓':' ✗ expected '+c.expectedCitation}</span><span class="rv ${cm?'g':'b'}">+${r.cmPts}</span></div>
+        <div class="rb"><span class="rl">Pattern${pm?' ✓':' ✗ expected '+c.correctPattern}</span><span class="rv ${pm?'g':'b'}">+${r.pPts}</span></div>
+        ${S.difficulty==='ASYMMETRIC'?`<div class="rb"><span class="rl">Asymmetric ×${r.mult}</span><span class="rv">${r.raw} → ${r.total}</span></div>`:''}
+        ${S.difficulty==='BENKLER'?`<div class="rb"><span class="rl">Benkler calibration${r.benklerCorrect?' ✓ '+r.benklerGuess:' ✗ you: '+r.benklerGuess+' / correct: '+c.benkler.displayImpact}</span><span class="rv ${r.benklerCorrect?'g':'b'}">+${r.bPts}</span></div>`:''}
+        <div class="rb" style="border-bottom:none;"><span class="rl" style="font-weight:bold;">ROUND TOTAL</span><span class="rv" style="font-size:15px;">+${r.total} / ${r.maxTotal}</span></div>
+      </div>
+      ${S.difficulty==='BENKLER'?`
+      <div class="benkler-result">
+        <div class="benkler-result-hdr">BENKLER IMPACT ASSESSMENT</div>
+        <div class="benkler-verdict-row">
+          <span class="bvd ${c.benkler.displayImpact}">${c.benkler.displayImpact} IMPACT</span>
+          <span class="bvd-user ${r.benklerCorrect?'match':'miss'}">${r.benklerCorrect?'✓ Your calibration matched':'✗ You said '+r.benklerGuess}</span>
+        </div>
+        <div class="benkler-axes">
+          <div class="baxis"><span class="baxis-label">Historical Impact</span><span class="baxis-val">${c.benkler.historicalImpact}/4</span></div>
+          <div class="baxis"><span class="baxis-label">Resistance to Debunking</span><span class="baxis-val">${c.benkler.persistence}/4</span></div>
+          <div class="baxis"><span class="baxis-label">Institutional Power</span><span class="baxis-val">${c.benkler.institutionalPower}/4</span></div>
+          <div class="baxis" style="border-bottom:none;"><span class="baxis-label">Composite Score</span><span class="baxis-val">${c.benkler.score.toFixed(2)}/4.0</span></div>
+        </div>
+        <div class="benkler-explain">${c.benkler.explanation}</div>
+      </div>`:''}
+    </div>
+  </div>
+  <button class="next-btn" id="nextBtn">${S.claimIndex+1 < CLAIMS.length ? 'NEXT CLAIM →' : 'VIEW FINAL SCORE →'}</button>
+  <div style="height:20px;"></div>`;
+}
+
+function renderFinal(){
+  const pct = S.maxPossible > 0 ? Math.round(S.totalScore/S.maxPossible*100) : 0;
+  const grades = [[90,'Constitutional analyst. The record holds.'],[75,'Solid work on the new administration\'s record.'],[55,'Several governance patterns slipped through.'],[35,'The Act IV file disputes most of your analysis.'],[0,'The record was less cooperative than expected.']];
+  const grade = grades.find(g => pct >= g[0])[1];
+  const hall = getHall();
+  const act4hall = hall.filter(e => e.act === 'IV');
+  const allHall = hall.slice(0, 8);
+  return `${classbar('ACT IV — REVIEW COMPLETE')}${header()}
+  <div class="final-wrap anim">
+    ${S.difficulty==='BENKLER'?`
+    <div class="benkler-final">
+      <div class="bf-hdr">⬡ BENKLER CALIBRATION — FINAL ASSESSMENT</div>
+      <div class="bf-row"><span class="bf-label">Claims calibrated correctly</span><span class="bf-val">${S.benklerCorrect} / ${CLAIMS.length}</span></div>
+      <div class="bf-row"><span class="bf-label">Calibration accuracy</span><span class="bf-val">${Math.round(S.benklerCorrect/CLAIMS.length*100)}%</span></div>
+      <div class="bf-row"><span class="bf-label">CRITICAL claims in this act</span><span class="bf-val">${CLAIMS.filter(c=>c.benkler.displayImpact==='CRITICAL').length}</span></div>
+      <div class="bf-row" style="border-bottom:none;"><span class="bf-label">Your calibration bonus points</span><span class="bf-val">+${S.benklerCorrect * 20}</span></div>
+    </div>`:''}
+
+    <div class="final-score">
+      <div class="fl">FINAL SCORE — ACT IV</div>
+      <div class="fp">${S.totalScore}</div>
+      <div class="fm">out of ${S.maxPossible} possible (${pct}%)</div>
+      <div class="fg">${grade}</div>
+    </div>
+
+    <div class="hall-wrap">
+      <div class="hall-hdr">⚠ HALL OF SHAME — ALL ACTS (${allHall.length} entries shown)</div>
+      ${allHall.length === 0
+        ? '<div class="hall-empty">Clean record across all acts. File closed.</div>'
+        : allHall.map(e=>`<div class="hall-entry"><div class="he-text">Act ${e.act}: ${e.claimText}</div><div class="he-wrong">Your: ${e.yourVerdict} · Correct: ${e.correctVerdict} · ${e.pts}</div></div>`).join('')}
+    </div>
+
+    <div class="acts-nav">
+      <a class="nav-btn" href="declassified-act2-v3.html">← ACT II: THE RECORD</a>
+      <span class="nav-btn active">ACT IV — ACTIVE</span>
+    </div>
+    <button class="replay-btn" id="replayBtn">REPLAY ACT IV</button>
+  </div>`;
+}
+
+// ── BIND ─────────────────────────────────────────────────────────────
+
+function bind(){
+  if(S.screen === 'intro'){
+    $('btnSym')?.addEventListener('click',     ()=>{ S.difficulty='SYMMETRIC';  render(); });
+    $('btnAsym')?.addEventListener('click',    ()=>{ S.difficulty='ASYMMETRIC'; render(); });
+    $('btnBenkler')?.addEventListener('click', ()=>{ S.difficulty='BENKLER';    render(); });
+    $('startBtn')?.addEventListener('click',   ()=>{ if(!S.difficulty) return; S.screen='game'; render(); });
+  }
+  if(S.screen === 'game'){
+    document.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', ()=>{
+      S.verdict=b.dataset.v; S.citation=null; S.pattern=null; S.benklerGuess=null; render();
+    }));
+    document.querySelectorAll('[data-c]').forEach(b => b.addEventListener('click', ()=>{
+      S.citation=b.dataset.c; S.pattern=null; S.benklerGuess=null; render();
+    }));
+    document.querySelectorAll('[data-p]').forEach(b => b.addEventListener('click', ()=>{
+      S.pattern=b.dataset.p; render();
+    }));
+    document.querySelectorAll('[data-b]').forEach(b => b.addEventListener('click', ()=>{
+      S.benklerGuess=b.dataset.b; render();
+    }));
+    $('openLib')?.addEventListener('click', ()=>{ $('libOverlay').classList.add('open'); });
+    $('subBtn')?.addEventListener('click', ()=>{
+      const needBenkler = S.difficulty === 'BENKLER';
+      if(!S.verdict||!S.citation||!S.pattern||(needBenkler&&!S.benklerGuess)) return;
+      const c = CLAIMS[S.claimIndex];
+      const r = scoreRound(c, S.verdict, S.citation, S.pattern, S.benklerGuess);
+      S.roundResult = r;
+      S.totalScore  += r.total;
+      S.maxPossible += r.maxTotal;
+      if(r.benklerCorrect) S.benklerCorrect++;
+      if(needBenkler) S.benklerTotal++;
+      S.answers.push({ claimId:c.id, verdict:S.verdict, citation:S.citation, pattern:S.pattern, benklerGuess:S.benklerGuess, result:r });
+      if(r.total/r.maxTotal < 0.5 || S.verdict !== c.correctVerdict){
+        pushHall({ act:'IV', claimId:c.id, claimText:c.text.substring(0,90)+'…',
+          yourVerdict:S.verdict, correctVerdict:c.correctVerdict,
+          pts:r.total+'/'+r.maxTotal, ts:Date.now() });
+      }
+      S.screen='result'; render();
+    });
+  }
+  if(S.screen === 'result'){
+    $('nextBtn')?.addEventListener('click', ()=>{
+      if(S.claimIndex+1 < CLAIMS.length){
+        S.claimIndex++; S.verdict=null; S.citation=null; S.pattern=null; S.benklerGuess=null; S.screen='game';
+      } else {
+        S.screen='final'; saveS();
+      }
+      render();
+    });
+  }
+  if(S.screen === 'final'){
+    $('replayBtn')?.addEventListener('click', ()=>{
+      localStorage.removeItem(STORAGE_KEY);
+      S={ screen:'intro', difficulty:null, claimIndex:0, totalScore:0, maxPossible:0,
+          answers:[], verdict:null, citation:null, pattern:null, benklerGuess:null, benklerCorrect:0, benklerTotal:0, roundResult:null };
+      render();
+    });
+  }
+  $('closeLib')?.addEventListener('click', ()=>{ $('libOverlay').classList.remove('open'); });
+  $('libOverlay')?.addEventListener('click', (e)=>{ if(e.target===$('libOverlay')) $('libOverlay').classList.remove('open'); });
+}
+
+function populateLib(){
+  const el = $('libEntries');
+  if(!el) return;
+  el.innerHTML = PATTERNS.map(p=>`<div class="lib-entry">
+    <div class="lib-tag">${p.tag}</div>
+    <div class="lib-name">${p.name}</div>
+    <div class="lib-def">${p.def}</div>
+  </div>`).join('');
+}
+
+function render(){
+  const m = { intro:renderIntro, game:renderGame, result:renderResult, final:renderFinal };
+  $a().innerHTML = (m[S.screen]||renderIntro)();
+  bind(); populateLib(); window.scrollTo(0,0);
+}
+
+loadS(); render();
+</script>
+</body>
+</html>

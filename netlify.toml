@@ -1,0 +1,87 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/act1"
+  to = "/declassified-act1.html"
+  status = 200
+
+[[redirects]]
+  from = "/act2"
+  to = "/declassified-act2-v3.html"
+  status = 200
+
+[[redirects]]
+  from = "/act4"
+  to = "/declassified-act4.html"
+  status = 200
+
+[[redirects]]
+  from = "/act5"
+  to = "/declassified-act5.html"
+  status = 200
+
+[[redirects]]
+  from = "/record-forge"
+  to = "/record-forge-s6.html"
+  status = 200
+
+[[redirects]]
+  from = "/glossary"
+  to = "/glossary.html"
+  status = 200
+
+[[redirects]]
+  from = "/press"
+  to = "/press.html"
+  status = 200
+
+[[redirects]]
+  from = "/about"
+  to = "/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
+
+[[redirects]]
+  from = "/disclaimer"
+  to = "/disclaimer.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, must-revalidate"
+
+[[headers]]
+  for = "/ads.txt"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+    Content-Type = "application/xml"

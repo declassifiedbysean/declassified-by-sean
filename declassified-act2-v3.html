@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DECLASSIFIED — Act II: The Record (2017–2020)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0b;
+    --bg2: #141410;
+    --bg3: #1c1c17;
+    --amber: #e8b640;
+    --amber-dim: #a07c20;
+    --green: #2dff6e;
+    --red: #ff3c3c;
+    --blue: #5bb4ff;
+    --orange: #ff9933;
+    --text: #d4cdb8;
+    --text-dim: #7a7060;
+    --border: #2a2820;
+    --classify: #c0392b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:14px;line-height:1.5;overflow-x:hidden;}
+  body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);pointer-events:none;z-index:9999;}
+  body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.5) 100%);pointer-events:none;z-index:9998;}
+  #app{max-width:660px;margin:0 auto;min-height:100vh;padding-bottom:80px;}
+  .classbar{background:var(--classify);color:#fff;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:.25em;text-align:center;padding:6px 12px;text-transform:uppercase;user-select:none;}
+  .act-header{padding:22px 20px 14px;border-bottom:1px solid var(--border);}
+  .act-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--amber-dim);text-transform:uppercase;margin-bottom:5px;}
+  .act-title{font-family:'Special Elite',serif;font-size:22px;color:var(--amber);line-height:1.2;margin-bottom:3px;}
+  .act-sub{font-size:11px;color:var(--text-dim);letter-spacing:.08em;}
+  /* INTRO */
+  .intro-body{padding:18px 20px;}
+  .info-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--amber);padding:14px 16px;margin-bottom:14px;font-size:12px;line-height:1.6;}
+  .info-block p+p{margin-top:8px;}
+  .sec-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--amber);text-transform:uppercase;margin-bottom:8px;display:block;}
+  /* BENKLER DIFFICULTY TOGGLE */
+  .diff-wrap{background:var(--bg2);border:1px solid var(--border);padding:14px 16px;margin-bottom:14px;}
+  .diff-note{font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5;}
+  .diff-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .diff-btn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;padding:14px 10px;cursor:pointer;text-align:center;transition:all .14s;-webkit-tap-highlight-color:transparent;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+  .diff-btn .dn{font-size:14px;color:var(--amber);}
+  .diff-btn .dd{font-size:10px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-weight:400;letter-spacing:0;text-align:center;}
+  .diff-btn.sel{border-color:var(--amber);background:#1e1c14;}
+  .diff-btn:active{opacity:.65;}
+  .start-btn{display:block;width:100%;background:var(--amber);color:#0d0d0b;font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:18px;border:none;cursor:pointer;margin-top:18px;-webkit-tap-highlight-color:transparent;transition:opacity .14s;}
+  .start-btn:active{opacity:.7;}
+  .start-btn:disabled{background:var(--bg3);color:var(--text-dim);cursor:not-allowed;}
+  /* PROGRESS */
+  .prog-rail{background:var(--bg3);height:3px;}
+  .prog-fill{background:var(--amber);height:3px;transition:width .3s;}
+  .prog-meta{display:flex;justify-content:space-between;padding:7px 20px;font-size:11px;color:var(--text-dim);border-bottom:1px solid var(--border);}
+  .prog-meta .sv{color:var(--amber);font-weight:bold;}
+  /* CLAIM */
+  .claim-card{margin:14px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .claim-id{background:var(--border);padding:6px 12px;font-size:10px;letter-spacing:.18em;color:var(--text-dim);display:flex;justify-content:space-between;}
+  .claim-id .wb{color:var(--amber-dim);}
+  .claim-text{font-family:'Special Elite',serif;font-size:17px;line-height:1.55;padding:14px 16px;color:#f0e8d0;border-left:3px solid var(--amber-dim);font-style:italic;}
+  /* STEPS */
+  .step-box{margin:10px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .step-hdr{background:var(--bg3);padding:8px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;}
+  .step-hdr .ss{font-size:10px;}
+  .step-hdr .ss.done{color:var(--green);}
+  .step-body{padding:12px 14px;}
+  .step-locked{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  /* VERDICT */
+  .verdict-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .vbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;padding:14px 8px;cursor:pointer;text-align:center;transition:all .12s;-webkit-tap-highlight-color:transparent;min-height:52px;}
+  .vbtn:active{opacity:.6;}
+  .vbtn.sv-TRUE{border-color:var(--green);color:var(--green);background:#0a1f0f;}
+  .vbtn.sv-FALSE{border-color:var(--red);color:var(--red);background:#1f0a0a;}
+  .vbtn.sv-MISLEADING{border-color:var(--amber);color:var(--amber);background:#1a1408;}
+  .vbtn.sv-INSUFFICIENT{border-color:var(--blue);color:var(--blue);background:#0a1220;}
+  .v-hint{margin-top:8px;font-size:10px;color:var(--text-dim);line-height:1.4;padding-top:6px;border-top:1px solid var(--border);}
+  /* BOGOST CITATION */
+  .bogost-lbl{font-family:'Oswald',sans-serif;font-size:10px;color:var(--amber-dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;}
+  .cit-grid{display:flex;flex-direction:column;gap:6px;}
+  .cbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .12s;-webkit-tap-highlight-color:transparent;display:grid;grid-template-columns:90px 1fr 36px;gap:8px;align-items:start;}
+  .cbtn .cn{font-weight:bold;font-size:12px;}
+  .cbtn .cd{font-size:10px;color:var(--text-dim);line-height:1.3;}
+  .cbtn .cp{font-size:11px;color:var(--amber-dim);text-align:right;}
+  .cbtn:active{opacity:.6;}
+  .cbtn.sc-STRONG{border-color:var(--green);background:#0a1a0f;} .cbtn.sc-STRONG .cn{color:var(--green);}
+  .cbtn.sc-CAREFUL{border-color:var(--amber);background:#1a1408;} .cbtn.sc-CAREFUL .cn{color:var(--amber);}
+  .cbtn.sc-WEAK{border-color:var(--orange);background:#1a1008;} .cbtn.sc-WEAK .cn{color:var(--orange);}
+  .cbtn.sc-INSUF_CIT{border-color:var(--red);background:#1a0808;} .cbtn.sc-INSUF_CIT .cn{color:var(--red);}
+  .cit-note{margin-top:7px;font-size:10px;color:var(--text-dim);line-height:1.4;border-top:1px solid var(--border);padding-top:6px;}
+  /* PATTERN */
+  .pat-grid{display:flex;flex-direction:column;gap:6px;}
+  .pbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .12s;-webkit-tap-highlight-color:transparent;display:flex;justify-content:space-between;align-items:center;}
+  .pbtn:active{opacity:.6;}
+  .pbtn.sel{border-color:var(--amber);background:#1e1c14;color:var(--amber);}
+  .lib-open-btn{background:transparent;border:1px solid var(--amber-dim);color:var(--amber-dim);font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.12em;padding:6px 10px;cursor:pointer;text-transform:uppercase;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+  /* SUBMIT */
+  .submit-row{margin:12px 20px 0;}
+  .sub-btn{display:block;width:100%;background:var(--bg3);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:16px;border:2px solid var(--border);cursor:not-allowed;transition:all .15s;}
+  .sub-btn.ready{background:var(--amber);color:#0d0d0b;border-color:var(--amber);cursor:pointer;}
+  .sub-btn.ready:active{opacity:.7;}
+  /* RESULT */
+  .result-card{margin:14px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .result-hdr{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);}
+  .vr{font-family:'Oswald',sans-serif;font-size:18px;font-weight:700;letter-spacing:.12em;}
+  .vr.CORRECT{color:var(--green);}
+  .vr.WRONG{color:var(--red);}
+  .pts-earned{font-family:'Oswald',sans-serif;font-size:20px;color:var(--amber);}
+  .result-body{padding:14px 16px;font-size:12px;line-height:1.6;}
+  .result-body p+p{margin-top:10px;}
+  .truth-box{background:var(--bg3);border-left:3px solid var(--green);padding:10px 12px;margin-bottom:12px;font-size:12px;line-height:1.5;}
+  .rb-wrap{display:flex;flex-direction:column;gap:3px;margin-top:10px;font-size:11px;}
+  .rb{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--border);}
+  .rb .rl{color:var(--text-dim);}
+  .rb .rv{color:var(--amber);}
+  .rb .rv.g{color:var(--green);}
+  .rb .rv.b{color:var(--red);}
+  .next-btn{display:block;width:calc(100% - 40px);margin:12px 20px 0;background:var(--amber);color:#0d0d0b;font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:16px;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .next-btn:active{opacity:.7;}
+  /* FINAL */
+  .final-wrap{padding:20px;}
+  .final-score{background:var(--bg2);border:1px solid var(--amber);padding:24px;text-align:center;margin-bottom:14px;}
+  .fl{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--amber-dim);text-transform:uppercase;margin-bottom:6px;}
+  .fp{font-family:'Oswald',sans-serif;font-size:52px;color:var(--amber);line-height:1;margin-bottom:4px;}
+  .fm{font-size:12px;color:var(--text-dim);}
+  .fg{font-family:'Special Elite',serif;font-size:20px;color:var(--text);margin-top:10px;line-height:1.3;}
+  .hall-wrap{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);margin-bottom:14px;}
+  .hall-hdr{padding:9px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;border-bottom:1px solid var(--border);}
+  .hall-entry{padding:9px 14px;border-bottom:1px solid var(--border);font-size:11px;line-height:1.4;}
+  .hall-entry:last-child{border-bottom:none;}
+  .he-text{color:var(--text-dim);font-style:italic;margin-bottom:2px;}
+  .he-wrong{color:var(--red);}
+  .hall-empty{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  .acts-nav{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+  .nav-btn{background:var(--bg3);border:1px solid var(--border);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.08em;padding:13px 10px;cursor:pointer;text-align:center;text-decoration:none;display:block;-webkit-tap-highlight-color:transparent;}
+  .nav-btn.active{border-color:var(--amber);color:var(--amber);}
+  .replay-btn{display:block;width:100%;background:transparent;border:1px solid var(--amber-dim);color:var(--amber-dim);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;padding:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .replay-btn:active{opacity:.7;}
+  /* LIBRARY OVERLAY */
+  .lib-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.72);z-index:1000;align-items:flex-end;}
+  .lib-overlay.open{display:flex;}
+  .lib-sheet{background:var(--bg2);border-top:2px solid var(--amber);width:100%;max-width:660px;margin:0 auto;max-height:82vh;overflow-y:auto;padding-bottom:20px;}
+  .lib-sheet-hdr{background:var(--bg3);padding:11px 16px;font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;letter-spacing:.18em;color:var(--amber);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;}
+  .close-lib{background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;padding:2px 8px;-webkit-tap-highlight-color:transparent;}
+  .lib-intro{padding:10px 16px 8px;font-size:10px;color:var(--text-dim);line-height:1.5;border-bottom:1px solid var(--border);font-style:italic;}
+  .lib-entry{padding:11px 16px;border-bottom:1px solid var(--border);}
+  .lib-name{font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;color:var(--amber);margin-bottom:3px;}
+  .lib-def{font-size:11px;color:var(--text-dim);line-height:1.5;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .anim{animation:fadeIn .2s ease forwards;}
+</style>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678"
+     crossorigin="anonymous"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+</head>
+<body>
+<div id="app"></div>
+<div class="lib-overlay" id="libOverlay">
+  <div class="lib-sheet">
+    <div class="lib-sheet-hdr">
+      PATTERN LIBRARY — PHILLIPS EDITION
+      <button class="close-lib" id="closeLib">✕</button>
+    </div>
+    <div class="lib-intro">Named for Katharine Phillips, whose work on recognizing structural patterns in public communication informs this taxonomy. Each pattern describes a rhetorical mechanism — not a statement about intent.</div>
+    <div id="libEntries"></div>
+  </div>
+</div>
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+
+const PATTERNS = [
+  {id:'DEMONSTRABLE_FALSEHOOD', name:'Demonstrable Falsehood', def:'A claim directly contradicted by verifiable public record, physical evidence, or official documentation. The falsity is not a matter of interpretation — it can be confirmed through primary sources.'},
+  {id:'UNFULFILLABLE_PROMISE',  name:'Unfulfillable Promise',  def:'A commitment made with rhetorical confidence but no credible mechanism for delivery. Often involves implausible timelines, contested resources, or structural impossibilities left unaddressed.'},
+  {id:'SELECTIVE_SUMMARY',      name:'Selective Summary',      def:'A technically sourced claim that omits material context, contradicting evidence, or qualifying information — such that the overall impression differs substantially from the documented record.'},
+  {id:'CHERRY_PICKING',         name:'Cherry Picking',         def:'Choosing a single favorable data point from a larger dataset while suppressing the trend, range, or conflicting figures that would alter the claim\'s meaning.'},
+  {id:'PREMATURE_CERTAINTY',    name:'Premature Certainty',    def:'Asserting a conclusion as settled fact before the evidentiary record is complete — often during active investigations, ongoing processes, or events whose outcome remains open.'},
+  {id:'FALSE_EQUIVALENCE',      name:'False Equivalence',      def:'Treating two unlike situations as structurally identical in order to neutralize a criticism or deflect accountability. The comparison ignores material differences in scale, legality, or context.'},
+  {id:'WHATABOUTISM',           name:'Whataboutism',           def:'Responding to an accountability claim not by addressing it, but by redirecting to a different party\'s alleged misconduct. The original charge is implicitly answered by "what about X" rather than substantively.'},
+  {id:'THE_BIG_LIE',            name:'The Big Lie',            def:'A claim so large and so consequential that its scale becomes part of its credibility mechanism. Repeated without evidence across months or years; resistant to refutation because the listener assumes something this significant must have some basis.'},
+  {id:'UNVERIFIABLE_BOAST',     name:'Unverifiable Boast',     def:'A superlative claim about personal attributes, knowledge, or performance that cannot be confirmed or denied because it concerns internal states, private deliberations, or hypothetical counterfactuals.'},
+  {id:'INSTITUTIONAL_DELEGIT',  name:'Institutional Delegitimization', def:'Framing a legitimate oversight body, law enforcement entity, intelligence agency, or electoral system as inherently corrupt or conspiratorial — without specific evidence — in order to preemptively discredit its findings.'},
+];
+
+const CITATION_TIERS = [
+  {id:'STRONG',    name:'STRONG',       desc:'Primary source, official record, or direct documentation',    pts:25},
+  {id:'CAREFUL',   name:'CAREFUL',      desc:'Expert consensus, major institutional or multi-source reporting', pts:15},
+  {id:'WEAK',      name:'WEAK',         desc:'Contested, partisan, or secondary-source basis only',          pts:5},
+  {id:'INSUF_CIT', name:'INSUFFICIENT', desc:'No credible or identifiable evidentiary basis',               pts:0},
+];
+
+const CLAIMS = [
+  {
+    id:'a2_01', year:'2017',
+    text:'"The crowd on the National Mall was the largest in inaugural history — period."',
+    correctVerdict:'FALSE', weight:1.0,
+    expectedCitation:'STRONG', correctPattern:'DEMONSTRABLE_FALSEHOOD',
+    annotation:'National Park Service aerial photography, DC Metro ridership data, and timestamped media coverage from multiple outlets all document a crowd substantially smaller than the 2009 inauguration. This is one of the most thoroughly documented inaugural comparisons in the photographic record — primary sources are not merely available, they were contested in real time.',
+    truthNote:'Aerial photography and Metro ridership data confirm the 2017 crowd was significantly smaller than 2009. The claim is directly falsifiable through official photographic and transit records.',
+    citationNote:'A STRONG citation case. Official NPS photos and Metro ridership are primary-source records, not interpretations. The expected tier is STRONG.',
+  },
+  {
+    id:'a2_02', year:'2017–2020',
+    text:'"Mexico will pay for the wall."',
+    correctVerdict:'FALSE', weight:1.0,
+    expectedCitation:'STRONG', correctPattern:'UNFULFILLABLE_PROMISE',
+    annotation:'Mexico\'s government stated publicly and repeatedly that it would not pay. No bilateral mechanism, treaty provision, or financial arrangement was ever established. Wall construction was ultimately funded through a combination of congressional appropriations and reprogrammed U.S. military funds — neither of which constitutes Mexican payment by any accounting standard.',
+    truthNote:'Mexico never paid. Wall sections were funded by U.S. appropriations and Pentagon-reallocated funds. Mexico\'s government publicly and repeatedly refused on the record.',
+    citationNote:'Congressional funding records and Mexican government statements are STRONG primary documentation. The promise had no mechanism from day one.',
+  },
+  {
+    id:'a2_03', year:'2019',
+    text:'"The Mueller Report was a complete and total exoneration."',
+    correctVerdict:'MISLEADING', weight:1.3,
+    expectedCitation:'STRONG', correctPattern:'SELECTIVE_SUMMARY',
+    annotation:'The Mueller Report explicitly states: the report "does not exonerate" the president on obstruction. Ten episodes were detailed for congressional evaluation. The word exoneration does not appear in the report\'s conclusions in any affirmative sense. The claim inverts the document\'s stated language — not a matter of interpretation but a direct comparison with the text. MISLEADING rather than FALSE acknowledges that the report did not result in charges, which some read as partial vindication.',
+    truthNote:'The report explicitly declined to exonerate on obstruction and noted that charging a sitting president was constitutionally unavailable — not that no relevant conduct occurred.',
+    citationNote:'The Mueller Report itself is the primary source — STRONG. The document\'s language directly contradicts the exoneration claim.',
+  },
+  {
+    id:'a2_04', year:'2019',
+    text:'"We have the greatest economy in the history of our country."',
+    correctVerdict:'MISLEADING', weight:1.0,
+    expectedCitation:'CAREFUL', correctPattern:'CHERRY_PICKING',
+    annotation:'Certain late-2019 metrics were genuinely strong: unemployment hit 3.5% and pre-COVID GDP growth was solid. But GDP growth rates in the 1950s and 1960s regularly exceeded 4–6%, national debt-to-GDP ratios were dramatically lower throughout most of American economic history, and inflation-adjusted wage growth was modest. "Greatest in history" selects favorable short-horizon metrics while suppressing the comparative record. This is Cherry Picking in its structural form.',
+    truthNote:'Late 2019 had strong but historically precedented metrics. Post-WWII growth rates and substantially lower national debt ratios undercut any absolute superlative across full U.S. economic history.',
+    citationNote:'BLS and BEA data are STRONG for current-period claims, but the "greatest in history" comparative requires broader economic analysis — CAREFUL is the better fit for the full evidentiary case.',
+  },
+  {
+    id:'a2_05', year:'2020',
+    text:'"It\'s going to disappear. One day — it\'s like a miracle — it will disappear."',
+    correctVerdict:'FALSE', weight:1.5,
+    expectedCitation:'STRONG', correctPattern:'PREMATURE_CERTAINTY',
+    annotation:'This statement was made in February 2020. COVID-19 did not disappear. Over one million Americans ultimately died. No epidemiological model, public health guidance, or internal White House task force communication suggested disappearance was a realistic trajectory. The claim was not a cautious forecast — it was stated with rhetorical confidence as an expected outcome, at a moment when the CDC and WHO were already issuing public warnings.',
+    truthNote:'COVID-19 resulted in over 1 million U.S. deaths. The "miracle disappearance" framing directly contradicted concurrent warnings from the CDC, WHO, and White House task force members.',
+    citationNote:'CDC mortality data and the date-stamped statement itself are STRONG primary documentation. This is one of the most consequentially falsified predictions in the dataset.',
+  },
+  {
+    id:'a2_06', year:'2020',
+    text:'"We have it totally under control. It\'s one person coming in from China." (Jan. 22, 2020)',
+    correctVerdict:'FALSE', weight:1.5,
+    expectedCitation:'STRONG', correctPattern:'PREMATURE_CERTAINTY',
+    annotation:'By January 22, 2020 the CDC had begun monitoring, Dr. Fauci and other task force members had internally communicated concern about pandemic potential, and WHO declared a Public Health Emergency of International Concern on January 30 — eight days later. "Totally under control" proved catastrophically incorrect. Community spread was already occurring in multiple states undetected at the time of the statement.',
+    truthNote:'Within six weeks, the U.S. declared a national emergency. The virus was not one case — community spread was documented in multiple states before this statement was made.',
+    citationNote:'The date-stamped transcript, WHO PHEIC declaration (Jan. 30), and CDC outbreak timelines are STRONG contemporaneous documentation.',
+  },
+  {
+    id:'a2_07', year:'2020',
+    text:'"Ukraine — not Russia — interfered in the 2016 election."',
+    correctVerdict:'FALSE', weight:1.8,
+    expectedCitation:'STRONG', correctPattern:'WHATABOUTISM',
+    annotation:'The bipartisan Senate Intelligence Committee report (2020) confirmed Russian interference across five volumes. The U.S. intelligence community\'s January 2017 assessment was unanimous across all 17 agencies. The claim about Ukrainian interference was examined by the same committee and found to originate partly from Russian active-measures campaigns. This is documented not in Democratic-majority findings, but in reports produced under Republican Senate leadership.',
+    truthNote:'The Senate Intelligence Committee (bipartisan, Republican-chaired) and 17 intelligence agencies confirmed Russian interference. The Ukraine interference narrative was traced in the same report to Russian-origin disinformation.',
+    citationNote:'Senate Intelligence Committee report is STRONG. The Ukrainian interference claim was examined and rejected by the same institutional process that confirmed Russian interference.',
+  },
+  {
+    id:'a2_08', year:'2020–2021',
+    text:'"This election was stolen. We won by a landslide."',
+    correctVerdict:'FALSE', weight:2.0,
+    expectedCitation:'STRONG', correctPattern:'THE_BIG_LIE',
+    annotation:'This is the canonical case for The Big Lie pattern in this dataset. Over 60 federal court cases — presided over by judges appointed across administrations including Trump\'s own — found no credible evidence of fraud sufficient to alter any state\'s outcome. Attorney General Barr, appointed by Trump, publicly stated the DOJ found no such evidence. DHS cybersecurity chief Chris Krebs called the election "the most secure in American history." Every state certified its results. The claim\'s persistence was enabled in part by its scale: it seemed too consequential to dismiss, which functioned as its own propagation mechanism. ASYMMETRIC weight: 2.0×.',
+    truthNote:'Biden won 306 electoral votes. 60+ courts dismissed election fraud claims. Trump\'s own AG, DHS cybersecurity chief, and campaign legal team acknowledged the loss in private communications later documented by the Jan. 6 Committee.',
+    citationNote:'Court records, state certification documents, the Barr statement, and the Jan. 6 Committee report are STRONG primary sources. This is the highest-weight claim in Act II.',
+  },
+  {
+    id:'a2_09', year:'2015',
+    text:'"I know more about ISIS than the generals do. Believe me."',
+    correctVerdict:'INSUFFICIENT', weight:1.0,
+    expectedCitation:'INSUF_CIT', correctPattern:'UNVERIFIABLE_BOAST',
+    annotation:'INSUFFICIENT INFO is the analytically correct verdict here — not TRUE, not FALSE, not MISLEADING. This claim describes an internal epistemic state: comparative personal knowledge relative to military professionals about a classified operational theater. There is no independent test for this assertion. We cannot audit someone\'s knowledge against a classified baseline. Marking it FALSE would require affirmatively proving a negative about private cognition. Marking it TRUE requires equally impossible verification. The claim sits structurally outside the domain of factual assessment. Recognizing that accurately is not a hedge — it is the precise analytical conclusion the evidence (or its absence) supports.',
+    truthNote:'This claim is structurally unverifiable. The correct move is to categorize it correctly, not force it into TRUE/FALSE. INSUFFICIENT INFO is a first-class verdict, not an abstention.',
+    citationNote:'INSUFFICIENT is also the correct citation tier — no evidentiary basis exists for or against the claim, and that is intrinsic to the claim\'s structure, not a gap in research.',
+  },
+  {
+    id:'a2_10', year:'2019–2020',
+    text:'"There are people in the deep state trying to overthrow the government through a coup."',
+    correctVerdict:'MISLEADING', weight:1.8,
+    expectedCitation:'WEAK', correctPattern:'INSTITUTIONAL_DELEGIT',
+    annotation:'The claim functions as institutional delegitimization: framing routine oversight mechanisms, whistleblower protections, and inspector general processes as covert subversion. "Deep state" and "coup" carry specific meaning in political science and law — neither applied to the activities described. MISLEADING rather than FALSE acknowledges that documented bureaucratic resistance to executive directives does exist as a real phenomenon. What is false is the characterization of legally protected processes (whistleblower complaints, IG referrals) as sedition.',
+    truthNote:'The Ukraine whistleblower complaint followed proper Inspector General channels under federal statute. "Coup" is not a legally or procedurally accurate description of these processes.',
+    citationNote:'WEAK is appropriate here: there are real accounts of bureaucratic friction, but the coup characterization has no credible legal or intelligence sourcing — the basis is largely internal political commentary from partisan sources.',
+  },
+];
+
+// ── CONSTANTS ────────────────────────────────────────────────────────
+
+const STORAGE_KEY = 'declassified_act2_v3';
+const HALL_KEY    = 'declassified_hall_of_shame';
+
+// ── STATE ─────────────────────────────────────────────────────────────
+
+let S = {
+  screen: 'intro',
+  difficulty: null,
+  claimIndex: 0,
+  totalScore: 0,
+  maxPossible: 0,
+  answers: [],
+  verdict: null,
+  citation: null,
+  pattern: null,
+  roundResult: null,
+};
+
+function saveS(){ try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(S)); }catch(e){} }
+function loadS(){
+  try{
+    const r = localStorage.getItem(STORAGE_KEY);
+    if(r){ const s = JSON.parse(r); if(s.screen === 'final') S = s; }
+  }catch(e){}
+}
+function getHall(){ try{ return JSON.parse(localStorage.getItem(HALL_KEY))||[]; }catch(e){ return []; } }
+function pushHall(entry){
+  try{
+    let h = getHall(); h.unshift(entry);
+    if(h.length > 15) h = h.slice(0,15);
+    localStorage.setItem(HALL_KEY, JSON.stringify(h));
+  }catch(e){}
+}
+
+// ── SCORING ───────────────────────────────────────────────────────────
+
+function scoreRound(claim, verdict, citation, pattern){
+  const mult = S.difficulty === 'ASYMMETRIC' ? claim.weight : 1.0;
+  const vPts  = verdict === claim.correctVerdict ? 100 : 0;
+  const cTier = CITATION_TIERS.find(t => t.id === citation);
+  const cPts  = cTier ? cTier.pts : 0;
+  const cmPts = citation === claim.expectedCitation ? 15 : 0;
+  const pPts  = pattern  === claim.correctPattern   ? 25 : 0;
+  const raw   = vPts + cPts + cmPts + pPts;
+  const total = Math.round(raw * mult);
+  const maxTotal = Math.round(165 * mult);
+  return { vPts, cPts, cmPts, pPts, raw, total, maxTotal, mult };
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────
+
+const $a = () => document.getElementById('app');
+const $  = (id) => document.getElementById(id);
+
+function classbar(txt){ return `<div class="classbar">${txt||'CLASSIFIED — OFFICIAL USE ONLY'}</div>`; }
+function header(){
+  return `<div class="act-header">
+    <div class="act-label">DECLASSIFIED / ACT II${S.difficulty?' / '+S.difficulty:''}</div>
+    <div class="act-title">The Record: 2017–2020</div>
+    <div class="act-sub">Ten statements. One standard: what does the documented record show?</div>
+  </div>`;
+}
+
+function renderIntro(){
+  return `${classbar()}${header()}
+  <div class="intro-body anim">
+    <div class="info-block">
+      <span class="sec-label">BRIEFING</span>
+      <p>You are reviewing ten public statements made between 2017 and 2020. Each has a documented evidentiary record you will assess.</p>
+      <p>Assign a verdict (TRUE / FALSE / MISLEADING / INSUFFICIENT INFO), grade the quality of evidence behind the claim on the Bogost Scale, identify the rhetorical pattern in play, and submit your analysis.</p>
+      <p>INSUFFICIENT INFO is a first-class verdict — not a hedge. Some claims are structured so that they cannot be verified or falsified. Recognizing that accurately is its own form of analytical precision.</p>
+    </div>
+
+    <div class="diff-wrap">
+      <span class="sec-label">DIFFICULTY MODE — BENKLER CALIBRATION</span>
+      <p class="diff-note">SYMMETRIC weights all claims equally — pure epistemics, no adjustment for political significance or reach. ASYMMETRIC weights claims 1.0–2.0× by documented historical impact and structural resistance to debunking. Named for Yochai Benkler's research on information asymmetry and network-level disinformation propagation.</p>
+      <div class="diff-options">
+        <button class="diff-btn${S.difficulty==='SYMMETRIC'?' sel':''}" id="btnSym">
+          <span class="dn">SYMMETRIC</span>
+          <span class="dd">All claims 1.0× weight. Pure epistemics.</span>
+        </button>
+        <button class="diff-btn${S.difficulty==='ASYMMETRIC'?' sel':''}" id="btnAsym">
+          <span class="dn">ASYMMETRIC</span>
+          <span class="dd">Claims weighted 1.0–2.0× by impact and debunkability.</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="info-block">
+      <span class="sec-label">SCORING GUIDE</span>
+      <p>Correct verdict: +100 pts &nbsp;·&nbsp; Citation quality (Bogost Scale): +0–25 pts &nbsp;·&nbsp; Citation match bonus: +15 pts &nbsp;·&nbsp; Correct pattern: +25 pts</p>
+      <p>Max per claim: 165 pts (×weight in ASYMMETRIC). Answers below 50% or with wrong verdict enter the Hall of Shame — carried forward to Act IV.</p>
+    </div>
+
+    <button class="start-btn" id="startBtn" ${!S.difficulty?'disabled':''}>BEGIN REVIEW →</button>
+  </div>`;
+}
+
+function renderGame(){
+  const c = CLAIMS[S.claimIndex];
+  const pct = S.claimIndex / CLAIMS.length * 100;
+  const wbStr = S.difficulty==='ASYMMETRIC' ? `WEIGHT ×${c.weight}` : 'SYMMETRIC';
+  const v1 = !!S.verdict, v2 = !!S.citation, v3 = !!S.pattern;
+  const allDone = v1 && v2 && v3;
+
+  const vHints = {
+    TRUE:'The claim is substantively accurate and supported by available documentation.',
+    FALSE:'The claim is directly contradicted by verifiable evidence.',
+    MISLEADING:'The claim is technically sourced but creates a false impression through framing, omission, or distortion.',
+    INSUFFICIENT:'The claim is structured so it cannot be verified or falsified by available evidence. This is a first-class analytical verdict.',
+  };
+
+  return `${classbar('ACTIVE REVIEW FILE — ACT II')}${header()}
+  <div class="prog-rail"><div class="prog-fill" style="width:${pct}%"></div></div>
+  <div class="prog-meta"><span>CLAIM ${S.claimIndex+1} OF ${CLAIMS.length}</span><span>SCORE <span class="sv">${S.totalScore}</span></span></div>
+
+  <div class="claim-card anim">
+    <div class="claim-id"><span>FILE ${c.id.toUpperCase()} — ${c.year}</span><span class="wb">${wbStr}</span></div>
+    <div class="claim-text">${c.text}</div>
+  </div>
+
+  <!-- STEP 1: VERDICT -->
+  <div class="step-box anim">
+    <div class="step-hdr"><span>STEP 1 — VERDICT</span><span class="ss${v1?' done':''}">${v1?'✓ '+S.verdict:'PENDING'}</span></div>
+    <div class="step-body">
+      <div class="verdict-grid">
+        ${['TRUE','FALSE','MISLEADING','INSUFFICIENT'].map(v=>`<button class="vbtn${S.verdict===v?' sv-'+v:''}" data-v="${v}">${v==='INSUFFICIENT'?'INSUF. INFO':v}</button>`).join('')}
+      </div>
+      ${S.verdict?`<div class="v-hint">${vHints[S.verdict]}</div>`:''}
+    </div>
+  </div>
+
+  <!-- STEP 2: BOGOST CITATION SCALE -->
+  <div class="step-box">
+    <div class="step-hdr"><span>STEP 2 — CITATION QUALITY (BOGOST SCALE)</span><span class="ss${v2?' done':''}">${v2?'✓ '+S.citation:(v1?'PENDING':'LOCKED')}</span></div>
+    ${v1?`<div class="step-body">
+      <div class="bogost-lbl">Rate the quality of evidence behind this claim:</div>
+      <div class="cit-grid">
+        ${CITATION_TIERS.map(t=>`<button class="cbtn${S.citation===t.id?' sc-'+t.id:''}" data-c="${t.id}"><span class="cn">${t.name}</span><span class="cd">${t.desc}</span><span class="cp">+${t.pts}</span></button>`).join('')}
+      </div>
+      <div class="cit-note">A +15 match bonus is awarded if your selection matches the expected citation tier for this claim. The Bogost Scale measures evidentiary quality regardless of whether the claim is true or false — a false claim can still have STRONG documentation of its falsity.</div>
+    </div>`:`<div class="step-locked">Complete Step 1 first.</div>`}
+  </div>
+
+  <!-- STEP 3: PATTERN (Phillips Edition) -->
+  <div class="step-box">
+    <div class="step-hdr"><span>STEP 3 — PATTERN LIBRARY (PHILLIPS EDITION)</span><span class="ss${v3?' done':''}">${v3?'✓':(v2?'PENDING':'LOCKED')}</span></div>
+    ${v2?`<div class="step-body">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:11px;color:var(--text-dim);">Select the rhetorical mechanism:</span>
+        <button class="lib-open-btn" id="openLib">VIEW LIBRARY ↗</button>
+      </div>
+      <div class="pat-grid">
+        ${PATTERNS.map(p=>`<button class="pbtn${S.pattern===p.id?' sel':''}" data-p="${p.id}"><span>${p.name}</span>${S.pattern===p.id?'<span>✓</span>':''}</button>`).join('')}
+      </div>
+    </div>`:`<div class="step-locked">Complete Step 2 first.</div>`}
+  </div>
+
+  <div class="submit-row">
+    <button class="sub-btn${allDone?' ready':''}" id="subBtn" ${allDone?'':'disabled'}>${allDone?'SUBMIT ANALYSIS →':'COMPLETE ALL STEPS TO SUBMIT'}</button>
+  </div>
+  <div style="height:20px;"></div>`;
+}
+
+function renderResult(){
+  const c = CLAIMS[S.claimIndex];
+  const r = S.roundResult;
+  const ok = r.vPts > 0;
+  const cm = r.cmPts > 0;
+  const pm = r.pPts > 0;
+  return `${classbar('FILE REVIEWED — RESULT FOLLOWS')}${header()}
+  <div class="prog-rail"><div class="prog-fill" style="width:${(S.claimIndex+1)/CLAIMS.length*100}%"></div></div>
+  <div class="prog-meta"><span>CLAIM ${S.claimIndex+1} OF ${CLAIMS.length}</span><span>SCORE <span class="sv">${S.totalScore}</span></span></div>
+
+  <div class="result-card anim">
+    <div class="result-hdr">
+      <div class="vr ${ok?'CORRECT':'WRONG'}">${ok?'✓ CORRECT':'✗ WRONG'} — ${c.correctVerdict}</div>
+      <div class="pts-earned">+${r.total}</div>
+    </div>
+    <div class="result-body">
+      <div class="truth-box">${c.truthNote}</div>
+      <p>${c.annotation}</p>
+      <p style="font-size:11px;color:var(--text-dim);margin-top:8px;font-style:italic;">${c.citationNote}</p>
+      <div class="rb-wrap">
+        <div class="rb"><span class="rl">Verdict (${S.verdict})</span><span class="rv ${ok?'g':'b'}">+${r.vPts}</span></div>
+        <div class="rb"><span class="rl">Citation: ${S.citation} (base +${r.cPts})</span><span class="rv">+${r.cPts}</span></div>
+        <div class="rb"><span class="rl">Citation match${cm?' ✓':' ✗ expected '+c.expectedCitation}</span><span class="rv ${cm?'g':'b'}">+${r.cmPts}</span></div>
+        <div class="rb"><span class="rl">Pattern${pm?' ✓':' ✗ expected '+c.correctPattern}</span><span class="rv ${pm?'g':'b'}">+${r.pPts}</span></div>
+        ${S.difficulty==='ASYMMETRIC'?`<div class="rb"><span class="rl">Asymmetric ×${r.mult}</span><span class="rv">${r.raw} → ${r.total}</span></div>`:''}
+        <div class="rb" style="border-bottom:none;"><span class="rl" style="font-weight:bold;">ROUND TOTAL</span><span class="rv" style="font-size:15px;">+${r.total} / ${r.maxTotal}</span></div>
+      </div>
+    </div>
+  </div>
+  <button class="next-btn" id="nextBtn">${S.claimIndex+1 < CLAIMS.length ? 'NEXT CLAIM →' : 'VIEW FINAL SCORE →'}</button>
+  <div style="height:20px;"></div>`;
+}
+
+function renderFinal(){
+  const pct = S.maxPossible > 0 ? Math.round(S.totalScore/S.maxPossible*100) : 0;
+  const grades = [[90,'Analyst-grade. The record is what it is.'],[75,'Solid work. A few blind spots remain.'],[55,'Partial accuracy. Review your pattern library.'],[35,'The record disagreed with you repeatedly.'],[0,'The file disputes most of your conclusions.']];
+  const grade = grades.find(g => pct >= g[0])[1];
+  const hall = getHall().filter(e => e.act === 'II');
+  return `${classbar('ACT II — REVIEW COMPLETE')}${header()}
+  <div class="final-wrap anim">
+    <div class="final-score">
+      <div class="fl">FINAL SCORE — ACT II</div>
+      <div class="fp">${S.totalScore}</div>
+      <div class="fm">out of ${S.maxPossible} possible (${pct}%)</div>
+      <div class="fg">${grade}</div>
+    </div>
+    <div class="hall-wrap">
+      <div class="hall-hdr">⚠ HALL OF SHAME — ACT II ENTRIES</div>
+      ${hall.length===0
+        ? '<div class="hall-empty">No entries. Clean record on Act II.</div>'
+        : hall.map(e=>`<div class="hall-entry"><div class="he-text">${e.claimText}</div><div class="he-wrong">Your answer: ${e.yourVerdict} · Correct: ${e.correctVerdict} · ${e.pts} pts</div></div>`).join('')}
+    </div>
+    <div class="acts-nav">
+      <span class="nav-btn active">ACT II — ACTIVE</span>
+      <a class="nav-btn" href="declassified-act4.html">ACT IV: THE RETURN →</a>
+    </div>
+    <button class="replay-btn" id="replayBtn">REPLAY ACT II</button>
+  </div>`;
+}
+
+// ── BIND ─────────────────────────────────────────────────────────────
+
+function bind(){
+  if(S.screen === 'intro'){
+    $('btnSym')?.addEventListener('click',  ()=>{ S.difficulty='SYMMETRIC';  render(); });
+    $('btnAsym')?.addEventListener('click', ()=>{ S.difficulty='ASYMMETRIC'; render(); });
+    $('startBtn')?.addEventListener('click', ()=>{
+      if(!S.difficulty) return;
+      S.screen='game'; render();
+    });
+  }
+  if(S.screen === 'game'){
+    document.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', ()=>{
+      S.verdict=b.dataset.v; S.citation=null; S.pattern=null; render();
+    }));
+    document.querySelectorAll('[data-c]').forEach(b => b.addEventListener('click', ()=>{
+      S.citation=b.dataset.c; S.pattern=null; render();
+    }));
+    document.querySelectorAll('[data-p]').forEach(b => b.addEventListener('click', ()=>{
+      S.pattern=b.dataset.p; render();
+    }));
+    $('openLib')?.addEventListener('click', ()=>{ $('libOverlay').classList.add('open'); });
+    $('subBtn')?.addEventListener('click', ()=>{
+      if(!S.verdict||!S.citation||!S.pattern) return;
+      const c = CLAIMS[S.claimIndex];
+      const r = scoreRound(c, S.verdict, S.citation, S.pattern);
+      S.roundResult = r;
+      S.totalScore  += r.total;
+      S.maxPossible += r.maxTotal;
+      S.answers.push({ claimId:c.id, verdict:S.verdict, citation:S.citation, pattern:S.pattern, result:r });
+      if(r.total/r.maxTotal < 0.5 || S.verdict !== c.correctVerdict){
+        pushHall({ act:'II', claimId:c.id, claimText:c.text.substring(0,90)+'…',
+          yourVerdict:S.verdict, correctVerdict:c.correctVerdict,
+          pts:r.total+'/'+r.maxTotal, ts:Date.now() });
+      }
+      S.screen='result'; render();
+    });
+  }
+  if(S.screen === 'result'){
+    $('nextBtn')?.addEventListener('click', ()=>{
+      if(S.claimIndex+1 < CLAIMS.length){
+        S.claimIndex++; S.verdict=null; S.citation=null; S.pattern=null; S.screen='game';
+      } else {
+        S.screen='final'; saveS();
+      }
+      render();
+    });
+  }
+  if(S.screen === 'final'){
+    $('replayBtn')?.addEventListener('click', ()=>{
+      localStorage.removeItem(STORAGE_KEY);
+      S={ screen:'intro', difficulty:null, claimIndex:0, totalScore:0, maxPossible:0,
+          answers:[], verdict:null, citation:null, pattern:null, roundResult:null };
+      render();
+    });
+  }
+  // Library overlay
+  $('closeLib')?.addEventListener('click', ()=>{ $('libOverlay').classList.remove('open'); });
+  $('libOverlay')?.addEventListener('click', (e)=>{ if(e.target===$('libOverlay')) $('libOverlay').classList.remove('open'); });
+}
+
+function populateLib(){
+  const el = $('libEntries');
+  if(!el) return;
+  el.innerHTML = PATTERNS.map(p=>`<div class="lib-entry"><div class="lib-name">${p.name}</div><div class="lib-def">${p.def}</div></div>`).join('');
+}
+
+function render(){
+  const m = { intro:renderIntro, game:renderGame, result:renderResult, final:renderFinal };
+  $a().innerHTML = (m[S.screen]||renderIntro)();
+  bind(); populateLib(); window.scrollTo(0,0);
+}
+
+loadS(); render();
+</script>
+</body>
+</html>

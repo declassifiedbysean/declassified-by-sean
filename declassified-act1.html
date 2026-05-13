@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DECLASSIFIED — Act I: The Outsider (2015–2016)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<meta name="description" content="Fact-check claims from the 2015–2016 campaign. Assess evidence, identify rhetorical patterns, and learn how misinformation spreads.">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678" crossorigin="anonymous"></script>
+<style>
+  :root {
+    --bg: #00060e;
+    --bg2: #041228;
+    --bg3: #081a38;
+    --bg4: #0d2248;
+    --accent: #2255bb;
+    --accent-dim: #14306e;
+    --green: #2dff6e;
+    --red: #ff3c3c;
+    --amber: #FFCB05;
+    --amber-bright: #FFD740;
+    --amber-dim: #C9A000;
+    --blue: #5bb4ff;
+    --orange: #ff9933;
+    --text: #F0EAD2;
+    --text-dim: #6a7890;
+    --text-mid: #9aacbc;
+    --border: #0a1e3c;
+    --classify: #00274C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:14px;line-height:1.5;overflow-x:hidden;}
+  body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px);pointer-events:none;z-index:9999;}
+  body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.6) 100%);pointer-events:none;z-index:9998;}
+  #app{max-width:660px;margin:0 auto;min-height:100vh;padding-bottom:80px;}
+  .classbar{background:var(--classify);color:#aabcee;font-family:'Oswald',sans-serif;font-size:11px;font-weight:700;letter-spacing:.25em;text-align:center;padding:6px 12px;text-transform:uppercase;user-select:none;border-bottom:1px solid var(--accent);}
+  .act-header{padding:22px 20px 14px;border-bottom:1px solid var(--border);}
+  .act-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--accent-dim);text-transform:uppercase;margin-bottom:5px;}
+  .act-title{font-family:'Special Elite',serif;font-size:22px;color:var(--amber);line-height:1.2;margin-bottom:3px;}
+  .act-sub{font-size:11px;color:var(--text-dim);letter-spacing:.08em;}
+  .intro-body{padding:18px 20px;}
+  .info-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--accent);padding:14px 16px;margin-bottom:14px;font-size:12px;line-height:1.6;}
+  .info-block p+p{margin-top:8px;}
+  .sec-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--amber);text-transform:uppercase;margin-bottom:8px;display:block;}
+  .hall-import{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--red);margin-bottom:14px;}
+  .hall-import-hdr{padding:9px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase;border-bottom:1px solid var(--border);}
+  .hi-entry{padding:8px 14px;border-bottom:1px solid var(--border);font-size:11px;}
+  .hi-entry:last-child{border-bottom:none;}
+  .hi-text{color:var(--text-dim);font-style:italic;margin-bottom:2px;}
+  .hi-wrong{color:var(--red);}
+  .hi-none{padding:10px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  .diff-wrap{background:var(--bg2);border:1px solid var(--border);padding:14px 16px;margin-bottom:14px;}
+  .diff-note{font-size:11px;color:var(--text-dim);margin-bottom:12px;line-height:1.5;}
+  .diff-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .diff-btn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:13px;font-weight:600;letter-spacing:.08em;padding:14px 10px;cursor:pointer;text-align:center;transition:all .14s;-webkit-tap-highlight-color:transparent;min-height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;}
+  .diff-btn .dn{font-size:14px;color:var(--amber);}
+  .diff-btn .dd{font-size:10px;color:var(--text-dim);font-family:'Share Tech Mono',monospace;font-weight:400;letter-spacing:0;}
+  .diff-btn.sel{border-color:var(--amber);background:#1a1408;}
+  .diff-btn:active{opacity:.65;}
+  .start-btn{display:block;width:100%;background:var(--amber);color:var(--classify);font-family:'Oswald',sans-serif;font-size:16px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:18px;border:none;cursor:pointer;margin-top:18px;-webkit-tap-highlight-color:transparent;transition:opacity .14s;}
+  .start-btn:active{opacity:.7;}
+  .start-btn:disabled{background:var(--bg3);color:var(--text-dim);cursor:not-allowed;}
+  .prog-rail{background:var(--bg3);height:3px;}
+  .prog-fill{background:var(--accent);height:3px;transition:width .3s;}
+  .prog-meta{display:flex;justify-content:space-between;padding:7px 20px;font-size:11px;color:var(--text-dim);border-bottom:1px solid var(--border);}
+  .prog-meta .sv{color:var(--amber);font-weight:bold;}
+  .claim-card{margin:14px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .claim-id{background:var(--border);padding:6px 12px;font-size:10px;letter-spacing:.18em;color:var(--text-dim);display:flex;justify-content:space-between;}
+  .claim-id .wb{color:var(--accent-dim);}
+  .claim-text{font-family:'Special Elite',serif;font-size:17px;line-height:1.55;padding:14px 16px;color:#dce4f0;border-left:3px solid var(--accent-dim);font-style:italic;}
+  .step-box{margin:10px 20px 0;background:var(--bg2);border:1px solid var(--border);}
+  .step-hdr{background:var(--bg3);padding:8px 14px;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.18em;color:var(--text-dim);text-transform:uppercase;display:flex;justify-content:space-between;align-items:center;}
+  .step-hdr .ss{font-size:10px;}
+  .step-hdr .ss.done{color:var(--green);}
+  .step-body{padding:12px 14px;}
+  .step-locked{padding:12px 14px;font-size:11px;color:var(--text-dim);font-style:italic;}
+  .verdict-grid{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;}
+  .vbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Oswald',sans-serif;font-size:12px;font-weight:600;letter-spacing:.08em;padding:12px 6px;cursor:pointer;text-align:center;transition:all .12s;-webkit-tap-highlight-color:transparent;min-height:50px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
+  .vbtn:active{opacity:.6;}
+  .vbtn.sv-TRUE{border-color:var(--green);color:var(--green);background:#0a1f0f;}
+  .vbtn.sv-FALSE{border-color:var(--red);color:var(--red);background:#1f0a0a;}
+  .vbtn.sv-MISLEADING{border-color:var(--amber);color:var(--amber);background:#1a1408;}
+  .vbtn.sv-INSUFFICIENT{border-color:var(--blue);color:var(--blue);background:#0a1220;}
+  .v-hint{margin-top:8px;font-size:10px;color:var(--text-dim);line-height:1.4;padding-top:6px;border-top:1px solid var(--border);}
+  .bogost-lbl{font-family:'Oswald',sans-serif;font-size:10px;color:var(--accent-dim);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;}
+  .cit-grid{display:flex;flex-direction:column;gap:6px;}
+  .cbtn{background:var(--bg3);border:2px solid var(--border);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:11px;padding:10px 12px;cursor:pointer;text-align:left;transition:all .12s;-webkit-tap-highlight-color:transparent;display:grid;grid-template-columns:90px 1fr 36px;gap:8px;align-items:start;}
+  .cbtn .cn{font-weight:bold;font-size:12px;}
+  .cbtn .cd{font-size:10px;color:var(--text-dim);line-height:1.3;}
+  .cbtn .cp{font-size:11px;color:var(--accent-dim);text-align:right;}
+  .cbtn:active{opacity:.6;}
+  .cbtn.sc-STRONG{border-color:var(--green);background:#0a1a0f;} .cbtn.sc-STRONG .cn{color:var(--green);}
+  .cbtn.sc-CAREFUL{border-color:var(--amber);background:#1a1408;} .cbtn.sc-CAREFUL .cn{color:var(--amber);}
+  .cbtn.sc-WEAK{border-color:var(--orange);background:#1a1008;} .cbtn.sc-WEAK .cn{color:var(--orange);}
+  .cbtn.sc-INSUF_CIT{border-color:var(--red);background:#1a0808;} .cbtn.sc-INSUF_CIT .cn{color:var(--red);}
+  .cit-note{margin-top:7px;font-size:10px;color:var(--text-dim);line-height:1.4;border-top:1px solid var(--border);padding-top:6px;}
+  .lib-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:10000;display:none;align-items:center;justify-content:center;padding:20px;}
+  .lib-overlay.show{display:flex;}
+  .lib-sheet{background:var(--bg);border:1px solid var(--border);max-width:500px;max-height:80vh;overflow-y:auto;border-radius:2px;position:relative;}
+  .lib-sheet-hdr{background:var(--classify);color:var(--amber);font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:.2em;text-transform:uppercase;padding:14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;}
+  .close-lib{background:transparent;border:none;color:var(--amber);font-size:18px;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .lib-intro{padding:12px 14px;font-size:11px;color:var(--text-dim);border-bottom:1px solid var(--border);line-height:1.5;}
+  .lib-entry{padding:12px 14px;border-bottom:1px solid var(--border);}
+  .lib-entry-name{font-family:'Oswald',sans-serif;font-size:12px;color:var(--amber);letter-spacing:.1em;margin-bottom:5px;text-transform:uppercase;}
+  .lib-entry-def{font-size:11px;color:var(--text-dim);line-height:1.6;}
+  .lib-entry-tag{font-size:9px;color:var(--orange);margin-top:4px;}
+  .result-screen{padding:20px;}
+  .result-title{font-family:'Special Elite',serif;font-size:20px;color:var(--amber);margin-bottom:14px;}
+  .result-box{background:var(--bg2);border:1px solid var(--border);padding:12px;margin-bottom:12px;font-size:12px;line-height:1.6;}
+  .result-label{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.15em;color:var(--blue);text-transform:uppercase;margin-bottom:5px;}
+  .result-pts{font-family:'Oswald',sans-serif;font-size:28px;color:var(--amber);margin:5px 0;}
+  .final-wrap{margin-top:20px;padding:16px;background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--amber);}
+  .final-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase;margin-bottom:8px;}
+  .final-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .fstat{background:var(--bg3);padding:10px;text-align:center;}
+  .fstat-num{font-family:'Oswald',sans-serif;font-size:24px;color:var(--amber);font-weight:700;}
+  .fstat-label{font-size:9px;color:var(--text-dim);letter-spacing:.1em;margin-top:3px;}
+  .restart-btn{display:block;width:100%;background:var(--amber);color:var(--classify);font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:14px;border:none;cursor:pointer;margin-top:16px;-webkit-tap-highlight-color:transparent;transition:opacity .14s;}
+  .restart-btn:active{opacity:.7;}
+  .nav-bar{display:flex;gap:6px;margin-bottom:10px;}
+  .nav-btn{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:8px 12px;cursor:pointer;transition:all .12s;-webkit-tap-highlight-color:transparent;}
+  .nav-btn.active{border-color:var(--amber);color:var(--amber);background:var(--bg3);}
+  .nav-btn:active{opacity:.6;}
+  @media(max-width:480px){
+    .diff-options{grid-template-columns:1fr;}
+    .verdict-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div class="lib-overlay" id="libOverlay">
+  <div class="lib-sheet">
+    <div class="lib-sheet-hdr">PATTERN LIBRARY — PHILLIPS EDITION (ACT I)<button class="close-lib" id="closeLib">✕</button></div>
+    <div class="lib-intro">Act I introduces the foundational Phillips patterns from campaign rhetoric. All definitions describe rhetorical mechanisms, not intent.</div>
+    <div id="libEntries"></div>
+  </div>
+</div>
+<script>
+const PATTERNS = [
+  {id:'INFLATED_METRIC',         name:'Inflated Metric',             tag:'CAMPAIGN', def:'Citing a numerical figure accurate in isolation but systematically overstated through definitional expansion, projection, or selective counting. The number is real; what it purports to represent is not.'},
+  {id:'SELECTIVE_SUMMARY',       name:'Selective Summary',           tag:'CAMPAIGN', def:'A technically sourced claim that omits material context, contradicting evidence, or disqualifying information — such that the overall impression differs from the documented record.'},
+  {id:'FALSE_EQUIVALENCE',       name:'False Equivalence',           tag:'CAMPAIGN', def:'Treating two unlike situations as structurally identical to neutralize a criticism or deflect accountability. The comparison ignores material differences.'},
+  {id:'INSTITUTIONAL_DELEGIT',   name:'Institutional Delegitimization', tag:'CAMPAIGN', def:'Framing a legitimate oversight body or institution as inherently corrupt or conspiratorial without specific evidence — to preemptively discredit its findings.'},
+  {id:'PERSONAL_ATTACK',         name:'Personal Attack',             tag:'CAMPAIGN', def:'Shifting focus from a substantive claim or action to attacking the character, identity, or appearance of the person making the criticism — rather than addressing the substance.'},
+  {id:'MANDATE_OVERCLAIM',       name:'Mandate Overclaim',           tag:'CAMPAIGN', def:'Claiming support, polls, or election results as sweeping authorization when the actual margin or evidence does not support the scope of authority claimed.'},
+];
+
+const CITATION_TIERS = [
+  {id:'STRONG',    name:'STRONG',       desc:'Primary source, official record, or direct documentation',         pts:25},
+  {id:'CAREFUL',   name:'CAREFUL',      desc:'Expert consensus, major institutional or multi-source reporting',   pts:15},
+  {id:'WEAK',      name:'WEAK',         desc:'Contested, partisan, or secondary-source basis only',               pts:5},
+  {id:'INSUF_CIT', name:'INSUFFICIENT', desc:'No credible or identifiable evidentiary basis',                    pts:0},
+];
+
+const CLAIMS = [
+  {
+    id:'a1_01', year:'2016',
+    text:'"Obama was born in Kenya. I have investigators and they\'re finding things."',
+    correctVerdict:'FALSE', weight:1.8,
+    expectedCitation:'STRONG', correctPattern:'INSTITUTIONAL_DELEGIT',
+    annotation:'President Obama\'s birth certificate was released publicly in 2008 and again in 2011. Multiple news organizations verified the Hawaiian vital records. Fact-checkers from PolitiFact to FactCheck.org reviewed the documentation. The claim was that Obama was not a natural-born citizen — disqualifying him from the presidency. No evidence ever supported this. The statement itself (claiming "investigators are finding things") was false: no credible investigation of this nature existed.',
+    truthNote:'Obama was born in Hawaii. His birth certificate was released publicly and verified by news organizations. No credible investigation found evidence to the contrary.',
+    citationNote:'Obama\'s birth certificate, Hawaiian vital records, and major news organization reporting are STRONG documentation of his birthplace.'
+  },
+  {
+    id:'a1_02', year:'2015',
+    text:'"Judge Curiel cannot be impartial because he is Mexican. I assume he is Mexican."',
+    correctVerdict:'MISLEADING', weight:1.6,
+    expectedCitation:'WEAK', correctPattern:'PERSONAL_ATTACK',
+    annotation:'Judge Gonzalo Curiel is a U.S. citizen born in Indiana, though his parents were Mexican immigrants. The statement that a judge cannot be impartial based on ethnic origin contradicts judicial ethics and the Constitution\'s guarantee of impartial courts. The claim assumes national origin without factual basis and attacks the judge\'s impartiality on ethnic grounds. Courts rejected the motion to recuse, and the judge\'s conduct was not found to be biased. The broader implication — that judges of certain ethnic backgrounds cannot be impartial — is a delegitimization attack on the judiciary.',
+    truthNote:'Judge Curiel is a U.S. citizen born in Indiana. Judges cannot be recused on the basis of ethnicity. Multiple courts upheld his impartiality.',
+    citationNote:'WEAK is appropriate: this is a personal attack rather than a verifiable claim with documentary evidence. The ethical principle (judges cannot be recused on ethnic grounds) is settled law.'
+  },
+  {
+    id:'a1_03', year:'2015',
+    text:'"We will have blood hounds and horses hunting people at the southern border."',
+    correctVerdict:'MISLEADING', weight:1.4,
+    expectedCitation:'CAREFUL', correctPattern:'SELECTIVE_SUMMARY',
+    annotation:'In context, this statement was from a campaign rally and was widely reported as a comparison to El Salvador\'s crime enforcement approach. However, the statement itself — without immediate context — implied a literal approach to border enforcement that the U.S. does not legally conduct. Some fact-checkers rated it as taken out of context, while others noted it was misleading about actual border enforcement practices. The claim emerged from campaign rhetoric comparing crime policy approaches; courts and law would not permit such enforcement.',
+    truthNote:'The statement was made during a campaign rally discussion of border enforcement. It does not describe actual U.S. policy and was hyperbolic campaign rhetoric.',
+    citationNote:'CAREFUL: this requires context from campaign reporting and fact-checker analysis of what was actually meant versus what was literally said.'
+  },
+  {
+    id:'a1_04', year:'2016',
+    text:'"I will refuse to accept the election results if they don\'t go my way."',
+    correctVerdict:'MISLEADING', weight:1.9,
+    expectedCitation:'CAREFUL', correctPattern:'MANDATE_OVERCLAIM',
+    annotation:'Before the 2016 election, Trump stated he would not necessarily accept election results if he lost. This statement posed a direct challenge to electoral legitimacy and constitutional transition of power. After winning, he did accept (and won), making this claim temporally bounded. However, the threat to reject results if they did not favor him — made during a functioning election — constituted a delegitimization of the electoral process and a claim to authority he does not constitutionally possess. Rated MISLEADING rather than FALSE because he ultimately did accept winning results, but the contingency itself (reject unfavorable results) was a constitutionally unsustainable position.',
+    truthNote:'Trump threatened to reject unfavorable election results. After winning in 2016, he accepted the result. The threat itself contradicted constitutional procedure.',
+    citationNote:'CAREFUL: campaign statements and reporting from October 2016 document this claim and its implications.'
+  },
+  {
+    id:'a1_05', year:'2015',
+    text:'"I have written many bestselling books. I\'m one of the best businessmen."',
+    correctVerdict:'MISLEADING', weight:1.2,
+    expectedCitation:'WEAK', correctPattern:'INFLATED_METRIC',
+    annotation:'Trump has written or had ghostwritten books, including "The Art of the Deal" (1987). Some books were bestsellers. However, the claim to be "one of the best businessmen" is assessed against his record: six bankruptcies (Atlantic City casinos), failed ventures (Trump University, Trump Steaks), and significant creditor losses. His business record, while including substantial real estate holdings, is also marked by bankruptcy and creditor litigation. The claim is hyperbolic campaign rhetoric rather than a verifiable assertion of business performance.',
+    truthNote:'Trump has written books, some bestselling. His business record includes substantial holdings but also six bankruptcies and litigated creditor disputes.',
+    citationNote:'WEAK: "best businessman" is subjective rhetoric. Documentable facts (bankruptcy filings, business ventures) are a matter of public record but require interpretation.'
+  },
+  {
+    id:'a1_06', year:'2015',
+    text:'"The crowd at my rally is enormous — I\'ve never seen anything like it. The biggest crowd in history."',
+    correctVerdict:'MISLEADING', weight:1.5,
+    expectedCitation:'STRONG', correctPattern:'INFLATED_METRIC',
+    annotation:'Rally crowds are often estimated in the tens of thousands. Aerial photographs from major rallies show significant attendance but not historically unprecedented crowds — conventions and music festivals regularly draw larger crowds. Estimates of Trump rally attendance ranged from 10,000 to 20,000 at most major venues. The claim of "biggest crowd in history" contradicts documented crowd photography and historical attendance figures at political rallies, which have exceeded these numbers (Kennedy in 1963, Obama in 2008).',
+    truthNote:'Trump rallies drew tens of thousands of attendees. Aerial photos and independent crowd estimates show significant but not historically unprecedented attendance.',
+    citationNote:'STRONG: aerial rally photographs, news organization crowd estimates, and historical attendance data are primary documentation.'
+  },
+  {
+    id:'a1_07', year:'2016',
+    text:'"I know nothing about the Central Park Five case or my full statements about it."',
+    correctVerdict:'FALSE', weight:1.7,
+    expectedCitation:'STRONG', correctPattern:'SELECTIVE_SUMMARY',
+    annotation:'In 1989, Trump took out a full-page newspaper ad calling for the execution of the Central Park Five — young men later exonerated by DNA evidence and a confession from the actual perpetrator. Trump\'s involvement in the case was documented through these public statements. In 2016, when the case was revisited, Trump claimed he either never made the statements or was operating on information available at the time. The public record directly contradicts this: the ad, statements, and reporting were all documented. The selective account — not mentioning the ad, downplaying his involvement — is false about the historical record.',
+    truthNote:'Trump took out a full-page ad calling for execution of the Central Park Five. DNA evidence exonerated them years later. Trump\'s involvement in the public calls for execution was documented.',
+    citationNote:'STRONG: the original newspaper ad, New York Times archives, and multiple fact-checker documentation are primary sources.'
+  },
+  {
+    id:'a1_08', year:'2016',
+    text:'"The Apprentice was the most watched show on television. I was the most popular person on TV."',
+    correctVerdict:'MISLEADING', weight:1.3,
+    expectedCitation:'CAREFUL', correctPattern:'INFLATED_METRIC',
+    annotation:'"The Apprentice" was a successful reality show, running from 2004–2015 with solid ratings. However, it was not "the most watched show" — it competed with dramas like "Game of Thrones," "Breaking Bad," and "The Big Bang Theory," which frequently exceeded its viewership. Peak Apprentice episodes (season premieres) drew 10–15 million viewers; the show\'s average was often lower. The claim to be "most popular person on TV" is hyperbolic and unsupported by viewership data. Successful ≠ most watched.',
+    truthNote:'The Apprentice was a popular show with solid ratings. It was not the most-watched show on television — other shows regularly exceeded its viewership.',
+    citationNote:'CAREFUL: Nielsen ratings, TV guide archives, and seasonal ratings comparisons document viewership. The "most watched" claim is not supported by these data.'
+  },
+  {
+    id:'a1_09', year:'2016',
+    text:'"The election is rigged. The media is rigged. You can\'t trust any of them."',
+    correctVerdict:'MISLEADING', weight:1.9,
+    expectedCitation:'WEAK', correctPattern:'INSTITUTIONAL_DELEGIT',
+    annotation:'This statement delegitimizes multiple institutions — electoral systems, media organizations — without specific evidence of widespread rigging. Election security is monitored by state and federal authorities, and U.S. elections have historically had very low rates of detected fraud (documented by election security researchers and the Heritage Foundation, though conservative by design). Media bias is a documented phenomenon, but the claim that media is "rigged" (suggesting coordinated conspiracy) is unsubstantiated. The delegitimization strategy is to create blanket distrust without addressing specific mechanisms.',
+    truthNote:'U.S. elections are monitored by state and federal authorities. Documented fraud rates are historically low. Media bias exists, but "rigging" suggests coordinated conspiracy without evidence.',
+    citationNote:'WEAK: this is institutional delegitimization without specific evidence of the mechanisms claimed.'
+  },
+  {
+    id:'a1_10', year:'2015',
+    text:'"I will make America great again. We\'ll win so much you\'ll get tired of winning."',
+    correctVerdict:'INSUFFICIENT', weight:1.0,
+    expectedCitation:'INSUF_CIT', correctPattern:'MANDATE_OVERCLAIM',
+    annotation:'"Make America Great Again" is a campaign slogan that does not make a specific falsifiable claim about documented fact. It expresses an aspirational vision. "Winning so much you\'ll get tired of winning" is hyperbolic campaign rhetoric. These statements are campaign messaging designed to inspire, not claims that can be fact-checked against evidence. They are not FALSE (they do not assert something contradicted by evidence); they are INSUFFICIENT because they do not specify measurable outcomes that could be verified or refuted.',
+    truthNote:'This is campaign vision rhetoric, not a factual claim about historical events or documented performance metrics.',
+    citationNote:'INSUFFICIENT: campaign slogans and aspirational rhetoric cannot be fact-checked against evidence. They are messaging, not claims.'
+  },
+];
+
+const STORAGE_KEY = 'declassified_act1_v1';
+const HALL_KEY = 'declassified_hall_of_shame';
+
+let state = {
+  screen: 'intro',
+  difficulty: null,
+  currentClaim: 0,
+  scores: { verdictScore: 0, citationScore: 0, patternScore: 0, totalScore: 0 },
+  claimScores: [],
+  verdictChosen: null,
+  citationChosen: null,
+  patternChosen: null,
+  hall: []
+};
+
+function loadState(){
+  try{
+    const s = localStorage.getItem(STORAGE_KEY);
+    if(s) state = JSON.parse(s);
+    const h = localStorage.getItem(HALL_KEY);
+    if(h) state.hall = JSON.parse(h);
+  }catch(e){}
+}
+
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(HALL_KEY, JSON.stringify(state.hall));
+  }catch(e){}
+}
+
+function render(){
+  const app = document.getElementById('app');
+  if(state.screen === 'intro') renderIntro(app);
+  else if(state.screen === 'game') renderGame(app);
+  else if(state.screen === 'result') renderResult(app);
+}
+
+function renderIntro(app){
+  const hallHtml = state.hall.length > 0 ? `
+    <div class="hall-import">
+      <div class="hall-import-hdr">⚠ Hall of Shame — Your Record</div>
+      ${state.hall.map(h => `
+        <div class="hi-entry">
+          <div class="hi-text">${h.claim}</div>
+          <div style="font-size:10px;margin-top:4px;color:var(--red);">You answered: ${h.answered} | Correct: ${h.correct}</div>
+        </div>
+      `).join('')}
+    </div>
+  ` : `
+    <div class="hall-import">
+      <div class="hi-none">No errors yet. Start the game to begin building your record.</div>
+    </div>
+  `;
+
+  app.innerHTML = `
+    <div class="classbar">DECLASSIFIED — ACT I</div>
+    <div class="act-header">
+      <div class="act-label">ACT I — THE OUTSIDER</div>
+      <h1 class="act-title">2015–2016 Campaign</h1>
+      <div class="act-sub">The rise: false claims, crowd sizes, personal attacks, and institutional delegitimization</div>
+    </div>
+    <div class="intro-body">
+      <div class="info-block">
+        <span class="sec-label">Context</span>
+        <p>The 2015–2016 campaign introduced patterns that would persist: inflated metrics, selective summaries, attacks on judges and institutions. Ten claims from the campaign trail. Assess each against the documented record.</p>
+      </div>
+      ${hallHtml}
+      <div class="diff-wrap">
+        <div class="diff-note">Two difficulty levels. SYMMETRIC treats all claims equally. ASYMMETRIC weights claims by historical impact.</div>
+        <div class="diff-options">
+          <button class="diff-btn${state.difficulty === 'SYMMETRIC' ? ' sel' : ''}" onclick="chooseDifficulty('SYMMETRIC')">
+            <span class="dn">SYMMETRIC</span>
+            <span class="dd">All claims weighted equally</span>
+          </button>
+          <button class="diff-btn${state.difficulty === 'ASYMMETRIC' ? ' sel' : ''}" onclick="chooseDifficulty('ASYMMETRIC')">
+            <span class="dn">ASYMMETRIC</span>
+            <span class="dd">Weighted by impact</span>
+          </button>
+        </div>
+      </div>
+      <button class="start-btn" onclick="startGame()" ${state.difficulty ? '' : 'disabled'}>Begin Act I</button>
+    </div>
+  `;
+}
+
+function chooseDifficulty(d){
+  state.difficulty = d;
+  render();
+}
+
+function startGame(){
+  state.screen = 'game';
+  state.currentClaim = 0;
+  state.claimScores = [];
+  state.scores = { verdictScore: 0, citationScore: 0, patternScore: 0, totalScore: 0 };
+  state.verdictChosen = null;
+  state.citationChosen = null;
+  state.patternChosen = null;
+  saveState();
+  render();
+}
+
+function renderGame(app){
+  const claim = CLAIMS[state.currentClaim];
+  const progress = Math.round((state.currentClaim / CLAIMS.length) * 100);
+  const score = state.scores.totalScore;
+
+  app.innerHTML = `
+    <div class="classbar">DECLASSIFIED — ACT I — CLAIM ${state.currentClaim + 1} / ${CLAIMS.length}</div>
+    <div class="prog-rail"><div class="prog-fill" style="width:${progress}%"></div></div>
+    <div class="prog-meta">
+      <span>${state.currentClaim + 1} of ${CLAIMS.length}</span>
+      <span class="sv">${score} pts</span>
+    </div>
+    <div class="claim-card">
+      <div class="claim-id">
+        <span>CLAIM ${state.currentClaim + 1}</span>
+        <span class="wb">${claim.year}</span>
+      </div>
+      <div class="claim-text">${claim.text}</div>
+    </div>
+    <div class="step-box">
+      <div class="step-hdr">
+        <span>STEP 1: VERDICT</span>
+        <span class="ss${state.verdictChosen ? ' done' : ''}">→ Assess the claim</span>
+      </div>
+      <div class="step-body">
+        <div class="verdict-grid">
+          <button class="vbtn sv-TRUE${state.verdictChosen === 'TRUE' ? ' sel' : ''}" onclick="setVerdict('TRUE')">
+            <span style="font-size:14px;">✓</span>
+            <span>TRUE</span>
+          </button>
+          <button class="vbtn sv-FALSE${state.verdictChosen === 'FALSE' ? ' sel' : ''}" onclick="setVerdict('FALSE')">
+            <span style="font-size:14px;">✗</span>
+            <span>FALSE</span>
+          </button>
+          <button class="vbtn sv-MISLEADING${state.verdictChosen === 'MISLEADING' ? ' sel' : ''}" onclick="setVerdict('MISLEADING')">
+            <span style="font-size:12px;">≈</span>
+            <span>MISLEADING</span>
+          </button>
+          <button class="vbtn sv-INSUFFICIENT${state.verdictChosen === 'INSUFFICIENT' ? ' sel' : ''}" onclick="setVerdict('INSUFFICIENT')">
+            <span style="font-size:12px;">?</span>
+            <span>INSUFFICIENT</span>
+          </button>
+        </div>
+        <div class="v-hint">Choose the verdict that best matches the claim against the documented record.</div>
+      </div>
+    </div>
+    ${state.verdictChosen ? `
+      <div class="step-box">
+        <div class="step-hdr">
+          <span>STEP 2: EVIDENCE TIER</span>
+          <span class="ss${state.citationChosen ? ' done' : ''}">→ Assess the source</span>
+        </div>
+        <div class="step-body">
+          <div class="bogost-lbl">Bogost Citation Scale</div>
+          <div class="cit-grid">
+            ${CITATION_TIERS.map(t => `
+              <button class="cbtn sc-${t.id}${state.citationChosen === t.id ? ' sel' : ''}" onclick="setCitation('${t.id}')">
+                <div class="cn">${t.name}</div>
+                <div class="cd">${t.desc}</div>
+                <div class="cp">+${t.pts}</div>
+              </button>
+            `).join('')}
+          </div>
+          <div class="cit-note">You can assess whether the documented evidence is primary, expert consensus, contested, or insufficient.</div>
+        </div>
+      </div>
+    ` : ''}
+    ${state.citationChosen ? `
+      <div class="step-box">
+        <div class="step-hdr">
+          <span>STEP 3: PATTERN</span>
+          <span class="ss${state.patternChosen ? ' done' : ''}">→ Identify mechanism</span>
+        </div>
+        <div class="step-body">
+          <button onclick="openLibrary()" style="background:transparent;border:1px solid var(--border);color:var(--text-dim);padding:8px 12px;cursor:pointer;font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px;-webkit-tap-highlight-color:transparent;">📚 Open Pattern Library</button>
+          <div style="display:grid;grid-template-columns:1fr;gap:6px;">
+            ${PATTERNS.map(p => `
+              <button class="cbtn${state.patternChosen === p.id ? ' sel' : ''}" onclick="setPattern('${p.id}')" style="grid-template-columns:auto 1fr;padding:8px 12px;">
+                <div class="cn" style="color:var(--amber);">${p.name}</div>
+              </button>
+            `).join('')}
+          </div>
+          <div class="cit-note">Identify the rhetorical mechanism by which this claim misleads — not just that it's wrong, but how.</div>
+        </div>
+      </div>
+    ` : ''}
+    ${state.patternChosen ? `
+      <div style="margin:10px 20px 0;padding:14px;background:var(--bg2);border:1px solid var(--border);text-align:center;">
+        <button onclick="submitClaim()" style="background:var(--accent);color:#fff;border:none;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;padding:12px 16px;cursor:pointer;text-transform:uppercase;-webkit-tap-highlight-color:transparent;width:100%;">→ SUBMIT & NEXT</button>
+      </div>
+    ` : ''}
+  `;
+}
+
+function setVerdict(v){
+  state.verdictChosen = v;
+  render();
+}
+
+function setCitation(c){
+  state.citationChosen = c;
+  render();
+}
+
+function setPattern(p){
+  state.patternChosen = p;
+  render();
+}
+
+function openLibrary(){
+  document.getElementById('libOverlay').classList.add('show');
+}
+
+function closeLibrary(){
+  document.getElementById('libOverlay').classList.remove('show');
+}
+
+function submitClaim(){
+  const claim = CLAIMS[state.currentClaim];
+  const correct = state.verdictChosen === claim.correctVerdict;
+  
+  let pts = 0;
+  if(correct) pts += 50;
+  
+  const citTier = CITATION_TIERS.find(t => t.id === state.citationChosen);
+  pts += citTier.pts;
+  
+  if(state.patternChosen === claim.correctPattern) pts += 25;
+  
+  if(state.difficulty === 'ASYMMETRIC') pts = Math.round(pts * claim.weight);
+  
+  state.claimScores.push({ claimId: claim.id, points: pts, correct });
+  state.scores.totalScore += pts;
+  
+  if(!correct){
+    state.hall.push({
+      claim: claim.text.substring(0, 60) + '...',
+      answered: state.verdictChosen,
+      correct: claim.correctVerdict
+    });
+  }
+  
+  state.currentClaim++;
+  state.verdictChosen = null;
+  state.citationChosen = null;
+  state.patternChosen = null;
+  
+  if(state.currentClaim >= CLAIMS.length){
+    state.screen = 'result';
+  }
+  
+  saveState();
+  render();
+}
+
+function renderResult(app){
+  const correct = state.claimScores.filter(c => c.correct).length;
+  const accuracy = Math.round((correct / CLAIMS.length) * 100);
+  
+  app.innerHTML = `
+    <div class="classbar">DECLASSIFIED — ACT I COMPLETE</div>
+    <div class="result-screen">
+      <div class="result-title">Act I: Final Assessment</div>
+      <div class="result-box">
+        <div class="result-label">Total Score</div>
+        <div class="result-pts">${state.scores.totalScore}</div>
+      </div>
+      <div class="result-box">
+        <div class="result-label">Accuracy</div>
+        <div style="font-size:20px;color:var(--amber);margin:5px 0;">${accuracy}% (${correct}/${CLAIMS.length} correct)</div>
+      </div>
+      <div class="final-wrap">
+        <div class="final-label">Act I Statistics</div>
+        <div class="final-stats">
+          <div class="fstat">
+            <div class="fstat-num">${correct}</div>
+            <div class="fstat-label">Correct Verdicts</div>
+          </div>
+          <div class="fstat">
+            <div class="fstat-num">${accuracy}%</div>
+            <div class="fstat-label">Verdict Accuracy</div>
+          </div>
+        </div>
+      </div>
+      <button class="restart-btn" onclick="restartAct()">→ Next: Act II (Coming Soon)</button>
+    </div>
+  `;
+}
+
+function restartAct(){
+  state = { screen: 'intro', difficulty: null, currentClaim: 0, scores: { verdictScore: 0, citationScore: 0, patternScore: 0, totalScore: 0 }, claimScores: [], verdictChosen: null, citationChosen: null, patternChosen: null, hall: state.hall };
+  saveState();
+  render();
+}
+
+document.getElementById('closeLib').addEventListener('click', closeLibrary);
+document.getElementById('libOverlay').addEventListener('click', (e) => { if(e.target.id === 'libOverlay') closeLibrary(); });
+
+// Build pattern library
+const libEntries = document.getElementById('libEntries');
+PATTERNS.forEach(p => {
+  const el = document.createElement('div');
+  el.className = 'lib-entry';
+  el.innerHTML = `
+    <div class="lib-entry-name">${p.name}</div>
+    <div class="lib-entry-def">${p.def}</div>
+    <div class="lib-entry-tag">${p.tag}</div>
+  `;
+  libEntries.appendChild(el);
+});
+
+loadState();
+render();
+</script>
+</body>
+</html>
