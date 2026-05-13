@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Dossier — DECLASSIFIED by Sean McKendry</title>
+<meta name="description" content="The Dossier: a visual archive of the documented record. 16 images spanning 1973–2028. No faces. Only the artifacts.">
+<meta property="og:title" content="The Dossier — DECLASSIFIED">
+<meta property="og:description" content="A visual archive of the documented record. 16 images. No faces. Only the artifacts.">
+<meta property="og:url" content="https://declassifiedbysean.com/dossier.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678" crossorigin="anonymous"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+<style>
+:root{
+  --bg:#00060e;--bg2:#041228;--bg3:#081a38;
+  --amber:#FFCB05;--amber-dim:#C9A000;
+  --red:#ff3c3c;--text:#F0EAD2;--text-dim:#6a7890;--text-mid:#9aacbc;
+  --border:#0a1e3c;--classify:#00274C;--sepia:#c8a97a;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:14px;line-height:1.6;overflow-x:hidden;}
+body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);pointer-events:none;z-index:9999;}
+a{color:var(--amber);text-decoration:none;}
+a:hover{text-decoration:underline;}
+nav{background:var(--classify);padding:0 24px;display:flex;justify-content:space-between;align-items:center;min-height:44px;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;}
+.nav-brand{font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:.2em;color:#FFCB05;text-transform:uppercase;padding:10px 0;}
+.nav-links{display:flex;gap:20px;flex-wrap:wrap;}
+.nav-links a{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.15em;color:rgba(255,255,255,.7);text-transform:uppercase;padding:10px 0;transition:color .15s;}
+.nav-links a:hover{color:#fff;}
+
+/* Hero */
+.hero{background:linear-gradient(180deg,#080010 0%,var(--bg2) 100%);border-bottom:1px solid var(--border);padding:52px 24px 40px;text-align:center;}
+.classify-bar{display:inline-block;background:var(--classify);color:#aabcee;font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:.35em;padding:5px 18px;text-transform:uppercase;margin-bottom:20px;border:1px solid #1a3060;}
+.hero h1{font-family:'Special Elite',serif;font-size:clamp(32px,7vw,52px);color:var(--amber);line-height:1.1;margin-bottom:14px;}
+.hero-rule{width:60px;height:2px;background:var(--amber-dim);margin:0 auto 18px;}
+.hero-sub{font-size:12px;color:var(--text-dim);max-width:520px;margin:0 auto;line-height:1.8;}
+.hero-note{display:inline-block;margin-top:16px;font-size:11px;color:var(--red);border:1px solid var(--red);padding:4px 12px;letter-spacing:.15em;}
+
+/* Act dividers */
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px 80px;}
+.act-divider{padding:44px 0 20px;border-bottom:1px solid var(--border);margin-bottom:32px;}
+.act-stamp{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.35em;color:var(--amber-dim);text-transform:uppercase;margin-bottom:8px;}
+.act-title{font-family:'Special Elite',serif;font-size:28px;color:var(--amber);margin-bottom:6px;}
+.act-period{font-size:11px;color:var(--text-dim);letter-spacing:.1em;}
+.act-desc{font-size:12px;color:var(--text-dim);line-height:1.75;margin-top:10px;max-width:680px;}
+
+/* Grid */
+.image-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:48px;}
+.image-grid.cover-first .img-card:first-child{grid-column:1/-1;}
+
+/* Image cards */
+.img-card{background:var(--bg2);border:1px solid var(--border);overflow:hidden;transition:border-color .2s;}
+.img-card:hover{border-color:var(--amber-dim);}
+.img-card.cover{border-top:2px solid var(--amber);}
+
+.img-frame{position:relative;overflow:hidden;background:#030810;}
+.img-frame.ratio-16-9{padding-top:56.25%;}
+.img-frame.ratio-3-2{padding-top:66.66%;}
+
+/* Placeholder state */
+.img-placeholder{position:absolute;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;background:repeating-linear-gradient(45deg,#030810,#030810 10px,#040d1c 10px,#040d1c 20px);}
+.ph-icon{font-size:28px;opacity:.3;}
+.ph-label{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.3em;color:var(--text-dim);text-transform:uppercase;}
+.ph-status{font-size:9px;color:var(--amber-dim);border:1px solid var(--amber-dim);padding:2px 8px;letter-spacing:.15em;margin-top:4px;}
+
+/* Actual image (hidden until generated) */
+.img-frame img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;display:none;}
+.img-frame img.loaded{display:block;}
+
+/* Card meta */
+.img-meta{padding:14px 16px;}
+.img-id{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.25em;color:var(--amber-dim);text-transform:uppercase;margin-bottom:5px;}
+.img-title{font-family:'Special Elite',serif;font-size:15px;color:var(--text);margin-bottom:4px;line-height:1.3;}
+.img-period{font-size:10px;color:var(--text-dim);letter-spacing:.08em;margin-bottom:10px;}
+.img-prompt-toggle{background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:5px 10px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent;}
+.img-prompt-toggle:hover{border-color:var(--amber-dim);color:var(--amber-dim);}
+.img-prompt{display:none;margin-top:10px;font-size:10px;color:var(--text-dim);line-height:1.7;background:var(--bg3);border:1px solid var(--border);padding:10px 12px;border-left:2px solid var(--amber-dim);}
+.img-prompt.open{display:block;}
+
+/* Methodology note */
+.method-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--amber);padding:20px 24px;margin:40px 0 0;font-size:12px;color:var(--text-dim);line-height:1.8;}
+.method-block strong{color:var(--text);}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px;}
+.footer-links{max-width:1100px;margin:0 auto;display:flex;flex-wrap:wrap;gap:16px;}
+.footer-links a{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.2em;color:var(--text-dim);text-transform:uppercase;}
+.footer-links a:hover{color:var(--amber);}
+
+@media(max-width:600px){
+  .image-grid{grid-template-columns:1fr;}
+  .image-grid.cover-first .img-card:first-child{grid-column:auto;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-brand">DECLASSIFIED by Sean</a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="dossier.html">Dossier</a>
+    <a href="about.html">About</a>
+    <a href="press.html">Press</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="classify-bar">Visual Archive — The Dossier</div>
+  <h1>The Dossier</h1>
+  <div class="hero-rule"></div>
+  <p class="hero-sub">A visual record of documented history. 16 images spanning 1973 to 2028. Symbolic objects, locations, and documents only. The dossier shows the record — not the subject.</p>
+  <div class="hero-note">NO FACES · PRIMARY SOURCES ONLY · ARTIFACTS OF THE RECORD</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ACT I -->
+  <div class="act-divider">
+    <div class="act-stamp">Act I — Visual Record</div>
+    <div class="act-title">The Origin Record</div>
+    <div class="act-period">1973 – 2016</div>
+    <div class="act-desc">Eight images documenting the arc from the 1973 federal housing complaint through the 2015 escalator descent. Archival dossier aesthetic — sepia, tungsten, film grain. Each image is an artifact of the documented record.</div>
+  </div>
+
+  <div class="image-grid cover-first" id="act1-grid">
+
+    <div class="img-card cover">
+      <div class="img-frame ratio-16-9">
+        <div class="img-placeholder">
+          <div class="ph-icon">📁</div>
+          <div class="ph-label">I.1 · Cover · 16:9</div>
+          <div class="ph-status">Pending Generation</div>
+        </div>
+        <img src="assets/dossier/I1-cover.jpg" alt="The First File" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.1 · COVER</div>
+        <div class="img-title">"The First File"</div>
+        <div class="img-period">1973 · Civil Action 73-1529</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a cinematic top-down photograph of a weathered manila folder labeled "UNITED STATES v. FRED C. TRUMP CO. — 1973 — CIVIL ACTION 73-1529" with a red "DECLASSIFIED" stamp across it, lying open on a dark walnut desk under amber tungsten lamp light. Inside the folder: black-and-white aerial reconnaissance photographs of Brooklyn apartment complexes, typewritten federal complaint pages with key clauses circled in red pen, and a bakelite rotary telephone visible in the corner of the frame. Style: 1970s FBI dossier photography, archival aesthetic, slight film grain, kodachrome saturation faded. Color palette: sepia, ivory, manila tan, classified red, ink black. Mood: prosecutorial, evidentiary, somber. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🥃</div><div class="ph-label">I.2 · 3:2</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/I2-cohn.jpg" alt="The Cohn Era" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.2</div>
+        <div class="img-title">The Cohn Era</div>
+        <div class="img-period">1973 – 1986</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a photograph of an empty leather booth in a wood-paneled Manhattan steakhouse circa 1978. On the table: two crystal glasses of brown liquor on white linen, a leather briefcase open beside the table revealing yellow legal pads with handwritten notes, a smoldering ashtray, and a black corded telephone brought to the table on a silver tray. Dim tungsten lighting, deep shadows, smoke-haze atmosphere. Style: 35mm film grain, 1970s power-lunch aesthetic, cinematic chiaroscuro. Color palette: sepia, umber, ivory. No people in frame — only the artifacts of the meeting.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">⛸️</div><div class="ph-label">I.3 · 3:2</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/I3-wollman.jpg" alt="Wollman Rink" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.3</div>
+        <div class="img-title">Wollman Rink</div>
+        <div class="img-period">1986</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide architectural photograph of an empty Central Park ice rink at dusk in late autumn 1986. Construction scaffolding is still partially erected at the perimeter. The Manhattan skyline is in soft silhouette behind. In the foreground: a single hand-lettered sign reading "WOLLMAN RINK — RECONSTRUCTION COMPLETE," a stack of municipal construction permits on a folding table beside the sign, and a pair of work gloves discarded on the ice. Style: documentary archival photography, cold blue-amber dusk light, slight film grain. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🎰</div><div class="ph-label">I.4 · 3:2</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/I4-bankruptcies.jpg" alt="The Bankruptcies" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.4</div>
+        <div class="img-title">The Bankruptcies</div>
+        <div class="img-period">1991 – 2009</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide architectural photograph of a vacant casino floor at dawn. Dust-sheeted slot machines line up in long rows. A Trump Plaza marquee is visible through a dirty window with three letters burned out. The carpet is faded gold. On a craps table in the foreground: a stack of bankruptcy court filings, with a Chapter 11 petition visible on top, case caption reading "In re: Trump Taj Mahal Associates." A janitor's mop bucket sits in the foreground. Style: documentary realism, atmospheric and mournful, cold blue morning light. Color palette: faded gold, sepia, slate gray. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">📰</div><div class="ph-label">I.5 · 3:2</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/I5-tabloid.jpg" alt="The Tabloid Construct" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.5</div>
+        <div class="img-title">The Tabloid Construct</div>
+        <div class="img-period">1980s – 1990s</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a top-down photograph of a 1988 Manhattan tabloid newsroom desk, yellow and stained with coffee rings. On the desk: a rotary phone receiver lying off the hook, a spiral notepad covered in shorthand reading "Source: John Barron — DJT spokesman — confirms," and a stack of NY Post and Daily News front pages. A cigarette burns in a glass ashtray. Ink-stained fingertips are visible at the edge of the frame but no identifiable face. Style: 1980s newsroom realism, fluorescent overhead light, slight film grain. Color palette: yellowed newsprint, ink black, sepia, classified red.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">📺</div><div class="ph-label">I.6 · 3:2</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/I6-apprentice.jpg" alt="The Apprentice" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.6</div>
+        <div class="img-title">The Apprentice</div>
+        <div class="img-period">2004 – 2015</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide photograph of an empty network television soundstage at 2 AM. An Apprentice-style boardroom set is struck but not yet dismantled — long mahogany table, three high-backed leather chairs, a single "YOU'RE FIRED" prop placard discarded on the table, studio cables coiled on the polished floor. Overhead service lighting only — half the set in shadow. Style: documentary still photography, the illusion of authority revealed as stagecraft. Color palette: mahogany brown, slate gray, black, single warm tungsten highlight. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">📜</div><div class="ph-label">I.7 · 3:2</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/I7-birtherism.jpg" alt="Birtherism" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.7</div>
+        <div class="img-title">Birtherism</div>
+        <div class="img-period">2008 – 2016</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a top-down forensic photograph of a Hawaiian long-form birth certificate document with the official state seal embossed, laid flat on a gray forensic-table surface. Surrounding the certificate: a fan of newspaper clippings dated across 2008, 2011, and 2016. Beside it: a red rubber stamp reading "AUTHENTIC — STATE OF HAWAII DOH." Style: cold fluorescent forensic-table lighting, evidentiary documentary photography. Color palette: gray, ivory, classified red, official seal blue.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🛗</div><div class="ph-label">I.8 · 3:2</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/I8-escalator.jpg" alt="The Escalator" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">I.8</div>
+        <div class="img-title">The Escalator</div>
+        <div class="img-period">June 16, 2015</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide architectural photograph of the iconic gold-railed escalator inside a Manhattan luxury tower atrium, photographed empty mid-descent. Polished brass handrails reflect amber atrium light. Pink-veined marble walls rise on either side. A single discarded newspaper lies on the floor at the base. Style: architectural documentary photography, late morning natural light. Color palette: aged gold, ivory marble, soft pink stone, brass. No people anywhere in frame.</div>
+      </div>
+    </div>
+
+  </div><!-- /act1-grid -->
+
+  <!-- ACT V -->
+  <div class="act-divider">
+    <div class="act-stamp">Act V — Visual Record</div>
+    <div class="act-title">Nuclear Liquidation</div>
+    <div class="act-period">2026 – 2028 (Projected)</div>
+    <div class="act-desc">Eight projected images documenting a speculative-evidentiary timeline. All images are clearly marked PROJECTED. These images apply the Dossier methodology to documented statutory frameworks and institutional structures — not specific predictions. The record shows what the law requires; the projection asks what it produces.</div>
+  </div>
+
+  <div class="image-grid cover-first" id="act5-grid">
+
+    <div class="img-card cover">
+      <div class="img-frame ratio-16-9">
+        <div class="img-placeholder"><div class="ph-icon">📁</div><div class="ph-label">V.1 · Cover · 16:9</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V1-cover.jpg" alt="The Projected File" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.1 · COVER · PROJECTED</div>
+        <div class="img-title">"The Projected File"</div>
+        <div class="img-period">2026 / 2027 / 2028</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a cinematic top-down photograph of a manila folder stamped "CLASSIFIED — PROJECTED DISCLOSURE — 2026 / 2027 / 2028" in red ink, with the word PROJECTED clearly visible, lying on a steel filing cabinet drawer. Inside the folder: a forecast chart with timeline markers reading JUN 2026, NOV 2026, MAR 2027, JAN 2028, with cells partially blacked out by redaction bars. A red wax seal sits at the corner. Style: cold institutional fluorescent lighting, forensic evidence-room aesthetic. Color palette: manila tan, slate gray, classified red, black. Mood: speculative-evidentiary. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🔒</div><div class="ph-label">V.2 · 3:2 · PROJECTED</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V2-june2026.jpg" alt="June 2026 Entry Point" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.2 · PROJECTED</div>
+        <div class="img-title">June 2026 Entry Point</div>
+        <div class="img-period">Projected — June 2026</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a photograph of a document evidence bag sealed with chain-of-custody tags marked "EVIDENCE — RECOVERED — PROJECTED INTAKE DATE: JUNE 2026," containing folded papers visibly marked "TOP SECRET / SCI" with partial redactions, sitting on a stainless steel evidence-room shelf. Style: FBI/DOJ evidence-room aesthetic, overhead fluorescent strip lighting, documentary forensic photography. Color palette: slate gray, manila tan, classified red. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">⚖️</div><div class="ph-label">V.3 · 3:2 · PROJECTED</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V3-793e.jpg" alt="The 793(e) File" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.3 · PROJECTED</div>
+        <div class="img-title">The 793(e) File — Espionage Act</div>
+        <div class="img-period">18 U.S.C. § 793(e)</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a top-down photograph of a bound prosecution brief lying open on a federal courtroom counsel table. The visible page shows a statute heading "18 U.S.C. § 793(e) — UNAUTHORIZED RETENTION" in clean serif type, with operative clauses underlined in red ink. A yellow tabbed sticky note reading "ELEMENT 3 — WILLFUL" protrudes from the margin. Beside the brief: a stack of redacted exhibits with black bars. Style: federal courtroom documentary photography, soft window light. Color palette: ivory, ink black, classified red, yellow sticky-note accent.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">📈</div><div class="ph-label">V.4 · 3:2 · PROJECTED</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V4-78u1.jpg" alt="The 78u-1 File" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.4 · PROJECTED</div>
+        <div class="img-title">The 78u-1 File — Securities Fraud</div>
+        <div class="img-period">15 U.S.C. § 78u-1</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a top-down photograph of an SEC enforcement file on a dark mahogany desk. The cover sheet reads "CIVIL ENFORCEMENT MATTER — 15 U.S.C. § 78u-1." Accompanying the file: a printed stock chart with vertical timestamp markers, a circled trading window highlighted in yellow, and a phone log printout with call times underlined in red. Style: Wall Street prosecutor's office aesthetic, late evening amber light. Color palette: mahogany brown, ivory, classified red, yellow highlight, amber.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🗳️</div><div class="ph-label">V.5 · 3:2 · PROJECTED</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V5-midterm.jpg" alt="November 2026 Midterm Projection" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.5 · PROJECTED</div>
+        <div class="img-title">November 2026 — Midterm Projection</div>
+        <div class="img-period">Projected — November 2026</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide architectural photograph of an empty polling-place gymnasium at 6 AM before opening. Folding tables in long rows. Voting privacy booths with American flag privacy curtains drawn back. A stack of unopened ballot boxes near the door. A folding chair holds a clipboard with "PROJECTED TURNOUT — SCENARIO MODEL" visible on the top page. Style: cold morning light through high windows, documentary realism, deliberate civic emptiness. Color palette: slate gray, ivory, cool morning light. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🏛️</div><div class="ph-label">V.6 · 3:2 · PROJECTED</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V6-constitutional.jpg" alt="2027 Constitutional Layer" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.6 · PROJECTED</div>
+        <div class="img-title">2027 Constitutional Layer</div>
+        <div class="img-period">Projected — 2027</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide architectural photograph of the Supreme Court of the United States interior at night. The bench is empty — nine high-backed leather chairs visible behind the mahogany dais. On the clerk's table at the front: a single bound petition with case caption reading "IN RE: [REDACTED] — EMERGENCY APPLICATION." Marble floors, neoclassical columns. Style: after-hours architectural photography, low warm lighting. Color palette: aged gold, slate gray, mahogany, ivory marble, deep red velvet. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🖊️</div><div class="ph-label">V.7 · 3:2 · PROJECTED</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V7-terminus.jpg" alt="January 2028 Terminus" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.7 · PROJECTED</div>
+        <div class="img-title">January 2028 — Terminus</div>
+        <div class="img-period">Projected — January 2028</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide architectural photograph of the Resolute Desk in an empty Oval Office at dawn. The desk surface is bare except for a single manila folder stamped "FINAL DISCLOSURE — TRANSITION PACKAGE" and a fountain pen uncapped beside it. The curtains are drawn back to show the south lawn in pale January light. The presidential seal medallion is visible on the carpet. Style: architecturally faithful, documentary stillness, pale dawn light. Color palette: pale gold, ivory, slate gray, classified red on the folder stamp. No people in frame.</div>
+      </div>
+    </div>
+
+    <div class="img-card">
+      <div class="img-frame ratio-3-2">
+        <div class="img-placeholder"><div class="ph-icon">🗄️</div><div class="ph-label">V.8 · 3:2 · PROJECTED</div><div class="ph-status">Pending Generation</div></div>
+        <img src="assets/dossier/V8-epilogue.jpg" alt="The File Closes" onload="this.classList.add('loaded')">
+      </div>
+      <div class="img-meta">
+        <div class="img-id">V.8 · PROJECTED</div>
+        <div class="img-title">"The File Closes"</div>
+        <div class="img-period">Epilogue — 2026–2028</div>
+        <button class="img-prompt-toggle" onclick="togglePrompt(this)">View Prompt</button>
+        <div class="img-prompt">Generate a wide architectural photograph of a government archive shelf at twilight. Deep rows of manila folders extend into shadow. The front-facing folder is labeled "DECLASSIFIED — NUCLEAR LIQUIDATION — 2026-2028 — CASE CLOSED" with a red wax seal partially broken. A single ceiling bulb illuminates the front row; dust is visible in the shaft of light. Style: federal records storage facility aesthetic, documentary stillness, single-source lighting. Color palette: sepia, umber, manila tan, classified red on the seal, deep shadow. No people in frame.</div>
+      </div>
+    </div>
+
+  </div><!-- /act5-grid -->
+
+  <div class="method-block">
+    <strong>Methodology Note:</strong> All Act V images are clearly labeled PROJECTED and represent a speculative-evidentiary application of the Dossier aesthetic to documented statutory frameworks — not predictions about specific individuals or events. The statute numbers (18 U.S.C. § 793(e), 15 U.S.C. § 78u-1) are real federal statutes included for documentary accuracy. No real faces appear in any image. The Dossier shows the record and the artifacts — not the subject.
+  </div>
+
+</div><!-- /wrap -->
+
+<footer>
+  <div class="footer-links">
+    <a href="index.html">Home</a>
+    <a href="dossier.html">Dossier</a>
+    <a href="about.html">About</a>
+    <a href="press.html">Press</a>
+    <a href="glossary.html">Glossary</a>
+    <a href="disclaimer.html">Disclaimer</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<script>
+function togglePrompt(btn){
+  const prompt = btn.nextElementSibling;
+  const isOpen = prompt.classList.contains('open');
+  prompt.classList.toggle('open');
+  btn.textContent = isOpen ? 'View Prompt' : 'Hide Prompt';
+}
+</script>
+
+</body>
+</html>
