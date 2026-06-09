@@ -1,0 +1,94 @@
+/* Only Humans Can Score — shared site shell. Museum after midnight.
+   Human is warm (brass/bone); the machine is cool (steel/silver). */
+:root{
+  --wall:#100f12; --wall-2:#16151a; --panel:#1a191f; --panel-2:#211f27;
+  --bone:#ece4d3; --bone-dim:#a7a08f; --faint:#827d90; --line:#2a2830;
+  --brass:#c9a24b; --gold:#e6c478;        /* human / warm */
+  --steel:#6f9bc4; --silver:#c6ccd6;      /* machine / cool */
+  --win:#7bd6a0; --lose:#e0736b;
+  --serif:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --mono:'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+  --wrap:1080px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--wall);color:var(--bone);font-family:var(--serif);font-size:19px;line-height:1.55;
+  background-image:radial-gradient(900px 460px at 20% -10%,#1c1422,transparent 70%),radial-gradient(900px 460px at 82% -6%,#0e1a24,transparent 70%);
+  background-attachment:fixed;-webkit-font-smoothing:antialiased}
+a{color:var(--brass);text-decoration:none} a:hover{color:var(--gold)}
+.mono{font-family:var(--mono)}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 22px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--brass)}
+h1,h2,h3{font-weight:600;line-height:1.05;margin:0 0 .4em}
+h1{font-size:clamp(40px,8vw,82px);letter-spacing:-.01em}
+h2{font-size:clamp(26px,4vw,40px)}
+h3{font-size:22px}
+p{margin:0 0 1em} .lede{font-size:clamp(19px,2.3vw,24px);color:var(--bone-dim)} .lede em{color:var(--bone);font-style:italic}
+.small{font-size:14px;color:var(--bone-dim)} .faint{color:var(--faint)}
+.rule{height:1px;background:linear-gradient(90deg,var(--brass),transparent);margin:30px 0;border:0}
+
+/* nav */
+nav.top{position:sticky;top:0;z-index:50;background:rgba(16,15,18,.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav.top .wrap{display:flex;align-items:center;gap:20px;height:60px}
+nav.top .brand{font-family:var(--mono);font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone);font-weight:600}
+nav.top .brand b{color:var(--brass)}
+nav.top .links{margin-left:auto;display:flex;gap:22px;flex-wrap:wrap}
+nav.top .links a{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone-dim)}
+nav.top .links a:hover,nav.top .links a[aria-current]{color:var(--brass)}
+@media(max-width:640px){nav.top .links{gap:14px}nav.top .brand span{display:none}}
+
+/* buttons */
+.btn{display:inline-block;font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;
+  background:var(--brass);color:#1a1305;border:1px solid var(--brass);border-radius:8px;padding:14px 24px;cursor:pointer;transition:.15s}
+.btn:hover{background:var(--gold);border-color:var(--gold);color:#1a1305}
+.btn.ghost{background:transparent;color:var(--bone-dim);border-color:var(--line)}
+.btn.ghost:hover{color:var(--bone);border-color:var(--bone-dim)}
+.btn.cool{background:var(--steel);border-color:var(--steel);color:#08131c}.btn.cool:hover{background:var(--silver);border-color:var(--silver)}
+
+/* sections */
+section.band{padding:72px 0;border-bottom:1px solid var(--line)}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);margin-bottom:14px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:30px}@media(max-width:760px){.split{grid-template-columns:1fr}}
+
+/* cards */
+.cards{display:grid;gap:16px}
+.cards.c3{grid-template-columns:repeat(3,1fr)}.cards.c2{grid-template-columns:repeat(2,1fr)}
+@media(max-width:760px){.cards.c3,.cards.c2{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:22px}
+.card h3{margin-bottom:.3em}
+.card .price{font-family:var(--mono);font-size:30px;color:var(--bone);font-weight:600}
+.card .per{font-family:var(--mono);font-size:12px;color:var(--faint)}
+.card.apex{border-color:var(--brass);background:linear-gradient(180deg,#1d180f,#16130e);box-shadow:0 0 0 1px rgba(201,162,75,.25),0 30px 80px -50px #000}
+.card.apex .price{color:var(--gold)}
+.tag{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--line);border-radius:20px;padding:4px 11px;color:var(--bone-dim)}
+.tag.warm{border-color:#4a3c1e;color:var(--gold);background:#1d1810}
+.tag.cool{border-color:#274055;color:var(--steel);background:#0e1a24}
+
+/* the law / hero accent */
+.law{font-family:var(--serif);font-style:italic}
+.split-word .h{color:var(--brass)} .split-word .m{color:var(--steel)}
+
+/* prose (about / legal) */
+.prose{max-width:760px} .prose h2{margin-top:1.4em} .prose ul{padding-left:1.2em} .prose li{margin:.3em 0}
+.prose .note{border-left:3px solid var(--brass);background:var(--wall-2);border-radius:6px;padding:14px 18px;font-family:var(--mono);font-size:14px;line-height:1.7;color:var(--bone-dim)}
+.prose .note.cool{border-left-color:var(--steel)}
+
+footer{padding:46px 0 70px;color:var(--faint);font-family:var(--mono);font-size:12px;line-height:1.9}
+footer a{color:var(--bone-dim)}footer a:hover{color:var(--brass)}
+footer .law-line{font-family:var(--serif);font-style:italic;font-size:17px;color:var(--bone-dim);margin-bottom:14px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+
+/* ── accessibility: focus, skip link, reduced motion (shell parity with play.html) ── */
+:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px}
+.btn:focus-visible{outline-color:var(--bone)}
+.btn.cool:focus-visible{outline-color:var(--silver)}
+a.skip{position:absolute;left:12px;top:-64px;z-index:200;background:var(--brass);color:#1a1305;
+  font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:11px 18px;border-radius:8px;transition:top .15s}
+a.skip:focus{top:12px}
+main:focus{outline:none}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+.parked-banner{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--gold);border:1px solid #4a3c1e;background:#1d1810;border-radius:8px;padding:11px 15px;line-height:1.6}

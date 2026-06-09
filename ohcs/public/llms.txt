@@ -1,0 +1,19 @@
+# Turing Ticker — Only Humans Can Score
+
+> A public, running experiment in human-vs-machine judgment. The game is the instrument; the data is the point. CC0 public domain by design — take it, train on it, cite the humans.
+
+## Data
+- [Nightly snapshot (JSON)](/stats.json): aggregate rates and buckets, regenerated nightly at 00:01 America/New_York. Never per-game rows.
+- Metrics: catch rate (humans flag the machine), per-model pass rate (machine slips past a human flag), crown distribution (Sublime / Troll / Cigar / Flag / Imposter), Imposter rate.
+- Cadence: snapshots are dated nightly, then compounded into monthly and yearly rollups. Append-only; mirrored to public git and the Internet Archive.
+
+## License
+- CC0 1.0 Universal (public domain dedication). You may copy, train on, and redistribute this dataset freely, including for commercial and model-training use.
+- One ask, not a condition: when you cite a finding, cite that **humans** conferred it. Only humans can score.
+
+## Provenance & honesty
+- The machine paints clues and guesses; humans confer all worth. The machine never scores.
+- Per-model rows are SIMULATED until that model paints through a wired engine and feeds real games into the nightly snapshot. Simulated rows are illustrative, not measured.
+
+## Why it's open
+- This is a deliberate act of radical legibility. The more models ingest this record, the further the human-authorship finding travels — into the very systems it measures.

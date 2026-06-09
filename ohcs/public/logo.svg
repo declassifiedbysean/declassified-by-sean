@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Only Humans Can Score">
+  <title>Only Humans Can Score</title>
+  <defs>
+    <linearGradient id="rbL" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"  stop-color="#e0566b"/>
+      <stop offset="22%" stop-color="#e89c4b"/>
+      <stop offset="44%" stop-color="#e7cf52"/>
+      <stop offset="64%" stop-color="#5fae7a"/>
+      <stop offset="82%" stop-color="#4f8fbf"/>
+      <stop offset="100%" stop-color="#8a6fc0"/>
+    </linearGradient>
+  </defs>
+  <!-- rounded museum tile -->
+  <rect x="0" y="0" width="64" height="64" rx="13" fill="#15141a"/>
+  <!-- monitor bezel -->
+  <rect x="11" y="13" width="42" height="30" rx="3.5" fill="#0f0e12" stroke="#3a3742" stroke-width="1.6"/>
+  <!-- screen -->
+  <rect x="14" y="16" width="36" height="24" rx="2" fill="#1c1a22"/>
+  <!-- folder on the screen: back/tab -->
+  <path d="M19 24.5 a1.8 1.8 0 0 1 1.8-1.8 h4.4 l1.8 1.9 h7.6 a1.8 1.8 0 0 1 1.8 1.8 V34 a1.8 1.8 0 0 1-1.8 1.8 H20.8 A1.8 1.8 0 0 1 19 34 Z"
+        fill="url(#rbL)"/>
+  <!-- folder front face -->
+  <path d="M19.5 27 h25 a1.4 1.4 0 0 1 1.37 1.7 l-1 4.9 A1.8 1.8 0 0 1 43.1 35 H21 a1.8 1.8 0 0 1-1.76-1.42 l-0.95-4.9 A1.25 1.25 0 0 1 19.5 27 Z"
+        fill="url(#rbL)" opacity="0.92"/>
+  <path d="M19.5 27 h25 a1.4 1.4 0 0 1 1.2 0.7 H18.4 a1.25 1.25 0 0 1 1.1-0.7 Z" fill="#1c1a22" opacity="0.5"/>
+  <!-- monitor stand -->
+  <rect x="29.5" y="43" width="5" height="4.5" fill="#3a3742"/>
+  <rect x="24" y="47" width="16" height="2.6" rx="1.3" fill="#3a3742"/>
+</svg>
