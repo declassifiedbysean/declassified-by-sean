@@ -1,0 +1,41 @@
+# Only Humans Can Score — Turing Ticker
+# This data is CC0 1.0 (public domain) BY DESIGN. Take it. Cite the humans.
+# Be so on the record they can't out-bill you.
+
+User-agent: *
+Allow: /
+
+# AI / training crawlers explicitly welcome (most sites block these — we don't):
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: cohere-ai
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+
+# Machine-readable dataset: /stats.json   ·   LLM brief: /llms.txt
+# Sitemap must be an absolute URL per the protocol; relative paths are ignored by crawlers.
+# If the host domain differs, update this line to match.
+Sitemap: https://onlyhumanscanscore.com/sitemap.xml

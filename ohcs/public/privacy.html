@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="logo.svg">
+<meta property="og:image" content="logo.svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="logo.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy — Only Humans Can Score</title>
+<meta name="description" content="Free play keeps no account and stores no identity. The record is anonymous by design. Draft notice, pending counsel.">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="coverup.css">
+<link rel="stylesheet" href="fax.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="top"><div class="wrap">
+  <span class="brand"><b>OHCS</b> <span>· Only Humans Can Score</span></span>
+  <span class="links">
+    <a href="play.html">Play</a><a href="how-to.html">How to play</a><a href="ticker.html">Ticker</a>
+    <a href="pricing.html">Pricing</a><a href="about.html">About</a>
+  </span>
+</div></nav>
+<main id="main" tabindex="-1">
+
+<header class="band" style="padding-top:72px"><div class="wrap">
+  <div class="eyebrow">Data, privacy &amp; cookies · working draft</div>
+  <h1>Privacy</h1>
+  <p class="lede" style="max-width:62ch">The short version: free play keeps no account and stores no identity. We keep the <em>judgments</em>, never the <em>judges</em>.</p>
+  <div class="note" style="border-left:3px solid var(--brass,#c9a24b);padding-left:14px"><strong>What the free static launch actually does:</strong> game data does not leave your browser. There is no backend, no upload, no account, no payment. Saved collections (the Vault) live in <em>this browser only</em>, via local storage, and you can clear them anytime. The public Ticker starts empty or sample until a deliberate, aggregate-only stats pipeline is built. The anonymous-corpus design described below is <em>planned architecture</em> for a future server tier — not something the static site collects today.</div>
+</div></header>
+
+<section class="band"><div class="wrap prose">
+  <div class="note">Not legal advice. A working draft to be finalized by privacy counsel in each operating jurisdiction <strong>before</strong> any data is collected for keeps. Designed to align with GDPR and CCPA/CPRA — alignment is a counsel determination, not a certification.</div>
+
+  <h2>The hinge</h2>
+  <p>“Permanent” and “compliant” reconcile only through <strong>true anonymization</strong>, not pseudonymization. The research record is irreversibly stripped of identifiers and never re-linkable — so it isn't personal data, and it can be kept indefinitely. The rule is an architecture requirement, not a disclaimer: <strong>anonymize at the source, never store the link.</strong></p>
+
+  <h2>What is stored — and what never is</h2>
+  <p><strong>Kept (the anonymous corpus):</strong> the machine's painted clues and the secrets behind them; the names players submitted (captions only); the machine's hidden guess; flags, crown outcomes, speed brackets, timestamps, model identifiers, app version; and session <em>structure</em> (player count, not identity).</p>
+  <p><strong>Never stored, never sent:</strong> the player names you type at setup — those are labels for the night, held on your device and discarded when the session ends; any account identifier tied to round data; IP addresses kept against game data, precise location, or device fingerprints.</p>
+  <div class="note">One residual risk: a free-text name could contain personal info you type. Don't put personal information in a caption. Setup warns you, an automated scrub runs before any row joins the record, and the no-PII norm is written into the Constitution.</div>
+
+  <h2>No faces, no famous</h2>
+  <p>The most sensitive category — real faces, likenesses, identifiable people — is <strong>disallowed by design</strong>, enforced at the engine, not the disclaimer. The machine paints things, creatures, scenes, and objects, never identifiable persons; players may not prompt for real people or celebrities. This protects the right of publicity, avoids biometric/special-category data, sidesteps synthetic-likeness exposure, and keeps print-on-demand alive. Captions are scrubbed for real names before any print, and a human clears every print before it ships.</p>
+
+  <h2>The paid tier</h2>
+  <p>The optional <a href="pricing.html">Pass</a> is the only place you are known to us — and only to bill you, ship a prize, and send required notices. Buying a Pass never de-anonymizes your free play; the wall between them is the keystone term. The detection corpus from Fuel is anonymized the same way: the call and the outcome, never the image or the person.</p>
+
+  <h2>Cookies</h2>
+  <p>Free play needs no tracking cookies. Any strictly necessary storage is disclosed at the point of use. Saved collections in the game live on your device only — not uploaded, clearable by you.</p>
+
+  <p class="small faint">This page summarizes the working notice; the governing document is finalized with counsel before launch.</p>
+</div></section>
+
+</main>
+<footer><div class="wrap">
+  <div class="law-line">We keep the judgments, never the judges.</div>
+  <div><a href="index.html">Home</a> · <a href="play.html">Play</a> · <a href="how-to.html">How to play</a> · <a href="ticker.html">Ticker</a> · <a href="pricing.html">Pricing</a> · <a href="about.html">About</a> · <a href="acceptable-use.html">Acceptable Use</a> · <a href="ethics.html">Ethics</a> · <a href="terms.html">Terms</a></div>
+  <div style="margin-top:10px;color:var(--faint)">Only Humans Can Score.</div>
+  <div style="margin-top:14px"><button type="button" class="fax-trigger" aria-label="Share this site by fax (you wouldn't)">📠</button> <button type="button" class="email-trigger" aria-label="Share this site by email (bet you won't)">✉️</button> <span class="small faint">Share by fax or email. Bet you won’t.</span></div>
+</div></footer>
+<script src="coverup.js" defer></script>
+<script src="fax.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+RUN ONLY HUMANS CAN SCORE ON YOUR OWN MACHINE
+=============================================
+
+WHAT YOU GOT
+  Play-OHCS.bat   <- double-click this (Windows)
+  serve.ps1       <- helper the .bat uses if you don't have Python. Keep it next to the .bat.
+
+SETUP (10 seconds)
+  1. Unzip the site if you haven't. Find the folder that contains index.html
+     (that's the "public" folder, or the "ohcs-pages" deploy folder).
+  2. Copy BOTH Play-OHCS.bat and serve.ps1 into that same folder, next to index.html.
+  3. Double-click Play-OHCS.bat.
+
+WHAT HAPPENS
+  - A small black window opens and starts a local web server.
+  - Your browser opens to  http://localhost:8000/  automatically.
+  - Play the game. Everything works: the ticker's stats.json, ES modules, the Reel export.
+  - To stop: close the black window (or press Ctrl+C in it).
+
+WHY NOT JUST DOUBLE-CLICK index.html?
+  Opening index.html directly uses file:// , which browsers lock down: the stats.json
+  fetch, JavaScript modules, and the GIF Reel export are blocked. Serving it over
+  http://localhost (what this launcher does) is exactly how a real web host serves it,
+  so the whole site behaves the same as it will live.
+
+NO PYTHON? NO PROBLEM
+  The .bat tries Python first (cleanest). If you don't have it, it automatically falls
+  back to serve.ps1 — a self-contained server written in PowerShell that ships with every
+  Windows 10/11. No installs, no admin rights needed.
+
+TROUBLESHOOTING
+  - "Could not find index.html" -> the .bat isn't in the right folder. Move it next to index.html.
+  - Port 8000 busy -> the PowerShell fallback auto-picks 8001-8020; with Python, edit the .bat
+    and change  set "PORT=8000"  to another number.
+  - SmartScreen/AV warning -> these are plain text scripts; open them in Notepad to see exactly
+    what they do. Nothing is hidden, nothing phones home.
+
+Only Humans Can Score.
