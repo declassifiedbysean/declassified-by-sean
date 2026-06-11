@@ -1,0 +1,96 @@
+{
+  "$comment": "DECLASSIFIED registry — single source of truth for every game, resource, and nav link. To add a game: add one entry to games[], then run tools/build-site.py. Do not hand-edit the generated regions in HTML.",
+  "site": {
+    "name": "DECLASSIFIED",
+    "author": "Sean McKendry",
+    "tagline": "Fact-check the record. The walk from headline to source, made playable.",
+    "url": "https://declassifiedbysean.com"
+  },
+  "nav": [
+    { "label": "Home", "href": "index.html" },
+    { "label": "About", "href": "about.html" },
+    { "label": "Glossary", "href": "glossary.html" },
+    { "label": "Dossier", "href": "dossier.html" },
+    { "label": "Press", "href": "press.html" },
+    { "label": "Contact", "href": "contact.html" }
+  ],
+  "games": [
+    {
+      "id": "act1",
+      "act": "Act I",
+      "title": "The Outsider",
+      "era": "2015–2016",
+      "blurb": "Campaign emergence, birtherism, crowd size claims, personal attacks on judges. The foundational Phillips patterns.",
+      "claims": 10,
+      "href": "declassified-act1.html",
+      "redirect": "/act1",
+      "status": "live"
+    },
+    {
+      "id": "act2",
+      "act": "Act II",
+      "title": "The Transition",
+      "era": "2016–2017",
+      "blurb": "Post-election claims, inauguration attendance, early executive orders, media attacks. Institutional delegitimization escalates.",
+      "claims": 10,
+      "href": "declassified-act2-v3.html",
+      "redirect": "/act2",
+      "status": "live"
+    },
+    {
+      "id": "act3",
+      "act": "Act III",
+      "title": "The Reckoning",
+      "era": "2021–2024",
+      "blurb": "January 6, the Big Lie, Mar-a-Lago, presidential immunity, and the 2024 campaign. Two new patterns: Victim Narrative and Preemptive Exoneration.",
+      "claims": 10,
+      "href": "declassified-act3.html",
+      "redirect": "/act3",
+      "status": "new"
+    },
+    {
+      "id": "act4",
+      "act": "Act IV",
+      "title": "The Return",
+      "era": "2024–2026",
+      "blurb": "Second term claims, Schedule F, tariff misinformation, Benkler Calibration (assess societal impact independent of truth value).",
+      "claims": 10,
+      "href": "declassified-act4.html",
+      "redirect": "/act4",
+      "status": "live"
+    },
+    {
+      "id": "act5",
+      "act": "Act V",
+      "title": "The Crisis",
+      "era": "2025–2026",
+      "blurb": "Constitutional and institutional claims, judicial attacks, executive overreach. The most advanced claims. Includes Benkler Calibration.",
+      "claims": 15,
+      "href": "declassified-act5.html",
+      "redirect": "/act5",
+      "status": "live"
+    },
+    {
+      "id": "record-forge",
+      "act": "Record Forge",
+      "title": "Pro Se Litigation",
+      "era": "Reference",
+      "blurb": "Fact-check claims about federal civil rights litigation (McKendry v. PNC Bank). Advanced evidence assessment. No time limit.",
+      "claims": 6,
+      "href": "record-forge-s6.html",
+      "redirect": "/record-forge",
+      "status": "live"
+    }
+  ],
+  "resources": [
+    { "label": "Glossary", "href": "glossary.html", "blurb": "Every pattern, scale, and term — the Phillips Pattern Library and the Bogost Citation Scale, defined." },
+    { "label": "Dossier", "href": "dossier.html", "blurb": "The visual image archive." },
+    { "label": "About", "href": "about.html" },
+    { "label": "Press Kit", "href": "press.html" },
+    { "label": "Contact", "href": "contact.html" }
+  ],
+  "legal": [
+    { "label": "Disclaimer", "href": "disclaimer.html" },
+    { "label": "Privacy", "href": "privacy.html" }
+  ]
+}

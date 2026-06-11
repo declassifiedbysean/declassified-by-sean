@@ -57,6 +57,16 @@
   status = 200
 
 [[redirects]]
+  from = "/act3"
+  to = "/declassified-act3.html"
+  status = 200
+
+[[redirects]]
+  from = "/dossier"
+  to = "/dossier.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404
@@ -65,10 +75,14 @@
   for = "/*"
   [headers.values]
     X-Frame-Options = "DENY"
-    X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
+    # R8: report-only first so it cannot break AdSense or the inline-handler games.
+    # Watch the browser console for violations, then rename this key to
+    # "Content-Security-Policy" to enforce.
+    Content-Security-Policy-Report-Only = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://pagead2.googlesyndication.com https://*.googlesyndication.com https://partner.googleadservices.com https://www.googletagservices.com https://adservice.google.com https://*.google.com https://*.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src https://*.doubleclick.net https://*.googlesyndication.com https://*.google.com; connect-src 'self' https://pagead2.googlesyndication.com https://*.google.com https://*.doubleclick.net; base-uri 'self'; object-src 'none'; form-action 'self'"
 
 [[headers]]
   for = "/*.html"

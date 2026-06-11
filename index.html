@@ -8,295 +8,98 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Oswald:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+<link rel="stylesheet" href="assets/site.css">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5212401863050678" crossorigin="anonymous"></script>
-<style>
-:root{
-  --bg:#00060e;--bg2:#041228;--bg3:#081a38;--bg4:#0d2248;
-  --amber:#FFCB05;--amber-bright:#FFD740;--amber-dim:#C9A000;
-  --blue:#5bb4ff;--red:#ff3c3c;--green:#2dff6e;--orange:#ff9933;
-  --text:#F0EAD2;--text-dim:#6a7890;--text-mid:#9aacbc;
-  --border:#0a1e3c;--classify:#00274C;
-}
-*{box-sizing:border-box;margin:0;padding:0;}
-html,body{background:var(--bg);color:var(--text);font-family:'Share Tech Mono',monospace;font-size:14px;line-height:1.6;}
-body::before{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.07) 2px,rgba(0,0,0,.07) 4px);pointer-events:none;z-index:9999;}
-body::after{content:'';position:fixed;top:0;left:0;right:0;bottom:0;background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.6) 100%);pointer-events:none;z-index:9998;}
-
-/* NAV */
-nav{background:var(--classify);border-bottom:1px solid var(--amber-dim);padding:0 20px;
-  display:flex;justify-content:space-between;align-items:center;min-height:50px;flex-wrap:wrap;gap:8px;position:sticky;top:0;z-index:100;}
-.nav-brand{font-family:'Oswald',sans-serif;font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--amber);text-transform:uppercase;padding:10px 0;}
-.nav-links{display:flex;gap:16px;flex-wrap:wrap;align-items:center;}
-.nav-links a{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.6);text-transform:uppercase;text-decoration:none;padding:8px 0;transition:color .12s;}
-.nav-links a:hover,.nav-links a.active{color:var(--amber);}
-
-/* MAIN CONTAINER */
-.page-container{max-width:900px;margin:0 auto;padding:0 20px;}
-
-/* HERO */
-.hero{padding:40px 20px;text-align:center;background:linear-gradient(135deg,var(--bg2) 0%,var(--bg3) 100%);border-bottom:1px solid var(--border);margin-bottom:28px;}
-.hero-tag{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.3em;color:var(--amber-dim);text-transform:uppercase;margin-bottom:10px;}
-.hero-title{font-family:'Special Elite',serif;font-size:clamp(28px,6vw,48px);color:var(--amber);line-height:1.1;margin-bottom:10px;}
-.hero-sub{font-size:13px;color:var(--text-mid);letter-spacing:.08em;max-width:600px;margin:0 auto;}
-
-/* INFO BLOCK */
-.info-block{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--amber);padding:18px 20px;margin-bottom:24px;line-height:1.7;}
-.info-block p+p{margin-top:12px;}
-
-/* GAMES GRID */
-.games-label{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;color:var(--amber-dim);text-transform:uppercase;margin:32px 0 16px;padding-bottom:10px;border-bottom:1px solid var(--border);}
-.games-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:32px;}
-
-.game-card{background:var(--bg2);border:1px solid var(--border);transition:all .15s;text-decoration:none;color:inherit;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent;}
-.game-card:hover:not(.coming){border-color:var(--amber);background:var(--bg3);}
-.game-card.coming{opacity:.6;}
-
-.game-header{background:var(--bg3);padding:14px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:start;gap:10px;}
-.game-title{font-family:'Special Elite',serif;font-size:16px;color:var(--amber);line-height:1.2;}
-.game-year{font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.15em;color:var(--text-dim);text-transform:uppercase;padding:2px 8px;border:1px solid var(--border);}
-
-.game-body{padding:14px;flex-grow:1;display:flex;flex-direction:column;}
-.game-desc{font-size:12px;color:var(--text-mid);margin-bottom:10px;flex-grow:1;}
-.game-meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:10px;border-top:1px solid var(--border);}
-.game-claims{font-size:10px;color:var(--text-dim);}
-.game-btn{display:inline-block;background:var(--amber);color:var(--classify);font-family:'Oswald',sans-serif;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;text-decoration:none;transition:opacity .12s;-webkit-tap-highlight-color:transparent;border:none;cursor:pointer;}
-.game-btn:hover{opacity:.85;}
-.game-btn.coming{background:var(--border);color:var(--text-dim);cursor:not-allowed;}
-.game-coming{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);text-align:center;padding:6px 10px;}
-
-/* SUPPLEMENTARY */
-.supplementary{background:var(--bg2);border:1px solid var(--border);border-left:3px solid var(--blue);padding:18px 20px;margin-bottom:32px;}
-.supp-title{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.3em;color:var(--blue);text-transform:uppercase;margin-bottom:14px;}
-.supp-item{margin-bottom:12px;}
-.supp-item:last-child{margin-bottom:0;}
-.supp-name{font-family:'Oswald',sans-serif;font-size:12px;color:var(--amber);letter-spacing:.08em;}
-.supp-desc{font-size:11px;color:var(--text-dim);margin:4px 0;}
-.supp-link{display:inline-block;background:transparent;border:1px solid var(--border);color:var(--text-dim);font-family:'Oswald',sans-serif;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:5px 8px;text-decoration:none;transition:all .12s;margin-top:4px;-webkit-tap-highlight-color:transparent;}
-.supp-link:hover{border-color:var(--blue);color:var(--blue);}
-
-/* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:32px;}
-.stat-card{background:var(--bg2);border:1px solid var(--border);padding:16px;text-align:center;}
-.stat-num{font-family:'Oswald',sans-serif;font-size:28px;color:var(--amber);font-weight:700;margin-bottom:5px;}
-.stat-label{font-size:10px;color:var(--text-dim);letter-spacing:.1em;text-transform:uppercase;}
-
-/* FOOTER */
-footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 20px;margin-top:40px;}
-.footer-content{max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;}
-.footer-section h3{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:.2em;color:var(--amber);text-transform:uppercase;margin-bottom:10px;}
-.footer-links{display:flex;flex-direction:column;gap:6px;}
-.footer-links a{color:var(--text-dim);text-decoration:none;font-size:11px;transition:color .12s;}
-.footer-links a:hover{color:var(--amber);}
-.footer-meta{grid-column:1/-1;padding-top:14px;border-top:1px solid var(--border);font-size:10px;color:var(--text-dim);text-align:center;}
-
-@media(max-width:600px){
-  .games-grid{grid-template-columns:1fr;}
-  nav{padding:0 12px;}
-  .page-container{padding:0 12px;}
-  .hero{padding:28px 12px;}
-  .stats-row{grid-template-columns:1fr 1fr;}
-}
-</style>
 </head>
-<body>
+<body class="fx">
+<a class="skip" href="#main">Skip to content</a>
+<!-- BEGIN:NAV -->
+<nav class="site" aria-label="Site"><div class="wrap"><a class="brand" href="index.html">📁 DECLASSIFIED</a><div class="links"><a href="index.html" aria-current="page">Home</a><a href="about.html">About</a><a href="glossary.html">Glossary</a><a href="dossier.html">Dossier</a><a href="press.html">Press</a><a href="contact.html">Contact</a></div></div></nav>
+<!-- END:NAV -->
+<main id="main">
 
-<nav>
-  <span class="nav-brand">📁 DECLASSIFIED</span>
-  <div class="nav-links">
-    <a href="index.html" class="active">Home</a>
-    <a href="about.html">About</a>
-    <a href="glossary.html">Glossary</a>
-    <a href="dossier.html">Dossier</a>
-    <a href="press.html">Press</a>
-    <a href="contact.html">Contact</a>
+<header class="hero">
+  <div class="wrap">
+    <span class="stamp">Field Intelligence — Game Platform</span>
+    <h1>Declassified</h1>
+    <p class="sub">Fact-check six acts of documented claims (2015–2026). Assess evidence, identify rhetorical patterns, learn how misinformation spreads.</p>
+    <p class="sub">DECLASSIFIED is a free, open-access fact-checking game series. No signup. No ads inside games. Each act covers a specific period, introduces new rhetorical patterns, and builds on previous learning. Start with Act I (2015–2016 campaign) or jump to any act.</p>
+    <div class="cta-row">
+      <a class="btn" href="declassified-act1.html">Start with Act I →</a>
+      <a class="btn ghost" href="glossary.html">Read the Glossary</a>
+    </div>
   </div>
-</nav>
+</header>
 
-<div class="hero">
-  <div class="hero-tag">Field Intelligence — Game Platform</div>
-  <h1 class="hero-title">DECLASSIFIED</h1>
-  <p class="hero-sub">Fact-check six acts of documented claims (2015–2026). Assess evidence, identify rhetorical patterns, learn how misinformation spreads.</p>
-</div>
-
-<div class="page-container">
-
-<div class="info-block">
-  <p>DECLASSIFIED is a free, open-access fact-checking game series. No signup. No ads inside games. Each act covers a specific period, introduces new rhetorical patterns, and builds on previous learning. Start with Act I (2015–2016 campaign) or jump to any act.</p>
-  <p><strong>How it works:</strong> Read a claim from the documented record. Assess whether it's TRUE, FALSE, MISLEADING, or INSUFFICIENT. Choose the evidence tier. Identify the rhetorical pattern. Get immediate feedback on your analysis. Your score persists across acts.</p>
-</div>
-
-<h2 class="games-label">🎮 The Game Series</h2>
-
-<div class="games-grid">
-  <a href="declassified-act1.html" class="game-card">
-    <div class="game-header">
-      <div class="game-title">Act I<br>The Outsider</div>
-      <div class="game-year">2015–2016</div>
-    </div>
-    <div class="game-body">
-      <div class="game-desc">Campaign emergence, birtherism, crowd size claims, personal attacks on judges. The foundational Phillips patterns.</div>
-      <div class="game-meta">
-        <span class="game-claims">10 claims</span>
-        <a href="declassified-act1.html" class="game-btn">Play</a>
-      </div>
-    </div>
+<section class="band" aria-labelledby="series-h">
+  <div class="wrap">
+    <h2 class="kicker" id="series-h">🎮 The Game Series</h2>
+    <div class="cards">
+<!-- BEGIN:GAMES -->
+  <a class="card" href="declassified-act1.html">
+    <div class="head"><span class="act">Act I</span><span class="era">2015–2016</span></div>
+    <h3>The Outsider</h3>
+    <p>Campaign emergence, birtherism, crowd size claims, personal attacks on judges. The foundational Phillips patterns.</p>
+    <div class="foot"><span class="claims">10 claims</span><span class="play">Play →</span></div>
   </a>
-
-  <a href="declassified-act2-v3.html" class="game-card">
-    <div class="game-header">
-      <div class="game-title">Act II<br>The Transition</div>
-      <div class="game-year">2016–2017</div>
-    </div>
-    <div class="game-body">
-      <div class="game-desc">Post-election claims, inauguration attendance, early executive orders, media attacks. Institutional delegitimization escalates.</div>
-      <div class="game-meta">
-        <span class="game-claims">10 claims</span>
-        <a href="declassified-act2-v3.html" class="game-btn">Play</a>
-      </div>
-    </div>
+  <a class="card" href="declassified-act2-v3.html">
+    <div class="head"><span class="act">Act II</span><span class="era">2016–2017</span></div>
+    <h3>The Transition</h3>
+    <p>Post-election claims, inauguration attendance, early executive orders, media attacks. Institutional delegitimization escalates.</p>
+    <div class="foot"><span class="claims">10 claims</span><span class="play">Play →</span></div>
   </a>
-
-  <a href="declassified-act3.html" class="game-card">
-    <div class="game-header">
-      <div class="game-title">Act III<br>The Reckoning</div>
-      <div class="game-year">2021–2024</div>
-    </div>
-    <div class="game-body">
-      <div class="game-desc">January 6, the Big Lie, Mar-a-Lago, presidential immunity, and the 2024 campaign. Two new patterns: Victim Narrative and Preemptive Exoneration.</div>
-      <div class="game-meta">
-        <span class="game-claims">10 claims</span>
-        <span class="game-new" style="color:var(--amber);font-size:10px;font-family:'Oswald',sans-serif;letter-spacing:.15em;">NEW</span>
-      </div>
-    </div>
+  <a class="card" href="declassified-act3.html">
+    <div class="head"><span class="act">Act III</span><span class="era">2021–2024</span></div>
+    <h3>The Reckoning</h3>
+    <p>January 6, the Big Lie, Mar-a-Lago, presidential immunity, and the 2024 campaign. Two new patterns: Victim Narrative and Preemptive Exoneration.</p>
+    <div class="foot"><span class="claims">10 claims</span><span class="badge new">New</span><span class="play">Play →</span></div>
   </a>
-
-  <a href="declassified-act4.html" class="game-card">
-    <div class="game-header">
-      <div class="game-title">Act IV<br>The Return</div>
-      <div class="game-year">2024–2026</div>
-    </div>
-    <div class="game-body">
-      <div class="game-desc">Second term claims, Schedule F, tariff misinformation, Benkler Calibration (assess societal impact independent of truth value).</div>
-      <div class="game-meta">
-        <span class="game-claims">10 claims</span>
-        <a href="declassified-act4.html" class="game-btn">Play</a>
-      </div>
-    </div>
+  <a class="card" href="declassified-act4.html">
+    <div class="head"><span class="act">Act IV</span><span class="era">2024–2026</span></div>
+    <h3>The Return</h3>
+    <p>Second term claims, Schedule F, tariff misinformation, Benkler Calibration (assess societal impact independent of truth value).</p>
+    <div class="foot"><span class="claims">10 claims</span><span class="play">Play →</span></div>
   </a>
-
-  <a href="declassified-act5.html" class="game-card">
-    <div class="game-header">
-      <div class="game-title">Act V<br>The Crisis</div>
-      <div class="game-year">2025–2026</div>
-    </div>
-    <div class="game-body">
-      <div class="game-desc">Constitutional and institutional claims, judicial attacks, executive overreach. The most advanced claims. Includes Benkler Calibration.</div>
-      <div class="game-meta">
-        <span class="game-claims">15 claims</span>
-        <a href="declassified-act5.html" class="game-btn">Play</a>
-      </div>
-    </div>
+  <a class="card" href="declassified-act5.html">
+    <div class="head"><span class="act">Act V</span><span class="era">2025–2026</span></div>
+    <h3>The Crisis</h3>
+    <p>Constitutional and institutional claims, judicial attacks, executive overreach. The most advanced claims. Includes Benkler Calibration.</p>
+    <div class="foot"><span class="claims">15 claims</span><span class="play">Play →</span></div>
   </a>
-
-  <a href="record-forge-s6.html" class="game-card">
-    <div class="game-header">
-      <div class="game-title">Record Forge<br>Pro Se Litigation</div>
-      <div class="game-year">Reference</div>
-    </div>
-    <div class="game-body">
-      <div class="game-desc">Fact-check claims about federal civil rights litigation (McKendry v. PNC Bank). Advanced evidence assessment. No time limit.</div>
-      <div class="game-meta">
-        <span class="game-claims">6 claims</span>
-        <a href="record-forge-s6.html" class="game-btn">Play</a>
-      </div>
-    </div>
+  <a class="card" href="record-forge-s6.html">
+    <div class="head"><span class="act">Record Forge</span><span class="era">Reference</span></div>
+    <h3>Pro Se Litigation</h3>
+    <p>Fact-check claims about federal civil rights litigation (McKendry v. PNC Bank). Advanced evidence assessment. No time limit.</p>
+    <div class="foot"><span class="claims">6 claims</span><span class="play">Play →</span></div>
   </a>
-</div>
-
-<div class="stats-row">
-  <div class="stat-card">
-    <div class="stat-num">61</div>
-    <div class="stat-label">Claims to Assess</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-num">12</div>
-    <div class="stat-label">Rhetorical Patterns</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-num">4</div>
-    <div class="stat-label">Verdict Types</div>
-  </div>
-  <div class="stat-card">
-    <div class="stat-num">0</div>
-    <div class="stat-label">Signup Required</div>
-  </div>
-</div>
-
-<div class="supplementary">
-  <h2 class="supp-title">📚 Field Reference</h2>
-  
-  <div class="supp-item">
-    <div class="supp-name">Field Glossary</div>
-    <div class="supp-desc">42 legal, constitutional, rhetorical, economic, and game-specific terms. Look up any term used in the acts. Tracks your lookups across sessions.</div>
-    <a href="glossary.html" class="supp-link">→ Open Glossary</a>
-  </div>
-
-  <div class="supp-item">
-    <div class="supp-name">About This Project</div>
-    <div class="supp-desc">Why DECLASSIFIED exists, how to use it, the methodology behind claim selection and evidence assessment, and the creator's background.</div>
-    <a href="about.html" class="supp-link">→ Read About</a>
-  </div>
-
-  <div class="supp-item">
-    <div class="supp-name">For Journalists & Educators</div>
-    <div class="supp-desc">Press kit, media materials, educator guides, and embedding options for classrooms. Use DECLASSIFIED in your work.</div>
-    <a href="press.html" class="supp-link">→ Press Kit</a>
-  </div>
-
-  <div class="supp-item">
-    <div class="supp-name">The Dossier — Visual Archive</div>
-    <div class="supp-desc">16 images spanning 1973–2028. Symbolic objects, locations, and documents only. No faces — only the artifacts of the record. Act I: The Origin Record. Act V: Nuclear Liquidation (Projected).</div>
-    <a href="dossier.html" class="supp-link">→ Open Dossier</a>
-  </div>
-</div>
-
-</div>
-
-<footer>
-  <div class="footer-content">
-    <div class="footer-section">
-      <h3>Games</h3>
-      <div class="footer-links">
-        <a href="declassified-act1.html">Act I: 2015–2016</a>
-        <a href="declassified-act2-v3.html">Act II: 2016–2017</a>
-        <a href="declassified-act4.html">Act IV: 2024–2026</a>
-        <a href="declassified-act5.html">Act V: 2025–2026</a>
-        <a href="record-forge-s6.html">Record Forge</a>
-      </div>
-    </div>
-    <div class="footer-section">
-      <h3>Resources</h3>
-      <div class="footer-links">
-        <a href="glossary.html">Glossary</a>
-    <a href="dossier.html">Dossier</a>
-        <a href="about.html">About</a>
-        <a href="press.html">Press Kit</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-    <div class="footer-section">
-      <h3>Legal</h3>
-      <div class="footer-links">
-        <a href="disclaimer.html">Disclaimer</a>
-        <a href="privacy.html">Privacy</a>
-      </div>
-    </div>
-    <div class="footer-meta">
-      DECLASSIFIED by Sean McKendry · Fact-Checking Game Series · 2015–2026 Political Claims
-      <br>Case No. 1:26-cv-00330-PLM-PJG, W.D. Mich.
+<!-- END:GAMES -->
     </div>
   </div>
-</footer>
+</section>
 
+<section class="band" aria-labelledby="how-h">
+  <div class="wrap prose">
+    <h2 class="kicker" id="how-h">How it works</h2>
+    <p>Read a claim from the documented record. Assess whether it's <b>TRUE</b>, <b>FALSE</b>, <b>MISLEADING</b>, or <b>INSUFFICIENT</b>. Choose the evidence tier. Identify the rhetorical pattern. Get immediate feedback on your analysis. Your score persists across acts.</p>
+  </div>
+</section>
+
+<section class="band" aria-labelledby="ref-h">
+  <div class="wrap">
+    <h2 class="kicker" id="ref-h">📚 Field Reference</h2>
+    <div class="res-grid">
+<!-- BEGIN:RESOURCES -->
+  <a class="res" href="glossary.html"><b>Glossary</b><span>Every pattern, scale, and term — the Phillips Pattern Library and the Bogost Citation Scale, defined.</span></a>
+  <a class="res" href="dossier.html"><b>Dossier</b><span>The visual image archive.</span></a>
+<!-- END:RESOURCES -->
+    </div>
+  </div>
+</section>
+
+</main>
+<!-- BEGIN:FOOTER -->
+<footer class="site"><div class="wrap"><div class="cols"><div><h3>Games</h3><a href="declassified-act1.html">Act I: 2015–2016</a><a href="declassified-act2-v3.html">Act II: 2016–2017</a><a href="declassified-act3.html">Act III: 2021–2024</a><a href="declassified-act4.html">Act IV: 2024–2026</a><a href="declassified-act5.html">Act V: 2025–2026</a><a href="record-forge-s6.html">Record Forge: Pro Se Litigation</a></div><div><h3>Resources</h3><a href="glossary.html">Glossary</a><a href="dossier.html">Dossier</a><a href="about.html">About</a><a href="press.html">Press Kit</a><a href="contact.html">Contact</a></div><div><h3>Legal</h3><a href="disclaimer.html">Disclaimer</a><a href="privacy.html">Privacy</a></div></div><div class="meta">DECLASSIFIED by Sean McKendry · Fact-Checking Game Series · Fact-check the record. The walk from headline to source, made playable.</div></div></footer>
+<!-- END:FOOTER -->
+<script src="assets/site.js" defer></script>
 </body>
 </html>
