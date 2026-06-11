@@ -150,7 +150,7 @@ document.getElementById('begin').onclick=()=>{
   S.players=S.players.filter(p=>p.name.trim()).map(p=>({name:p.name.trim(),score:0,subl:0,wret:0,flag:0,loop:0,sublPts:0,wretPts:0,flagPts:0,loopPts:0}));
   S.rounds=S.players.length+3; S.history=[]; S.heat={}; S.onFire={}; S.relaxed=document.getElementById('relaxed').checked;
   S.round=0; S.captainIdx=Math.floor(Math.random()*S.players.length);
-  if(window.OHCSMusic){ var gsel=document.getElementById('genre'); if(gsel) OHCSMusic.setGenre(gsel.value); OHCSMusic.on(); var vsel=document.getElementById('voiceMode'); if(window.OHCSVoice){ vsel&&vsel.checked?OHCSVoice.on():OHCSVoice.off(); } OHCSMusic.setScore(0); var mb=document.getElementById('musicToggle'); if(mb){mb.setAttribute('aria-pressed','true');mb.title='Background music: on';mb.style.color='#c9a24b';} }
+  if(window.OHCSMusic){ var gsel=document.getElementById('genre'); var FREE_GENRES=['ambient']; OHCSMusic.setGenre(gsel&&FREE_GENRES.indexOf(gsel.value)>=0?gsel.value:'ambient'); OHCSMusic.on(); var vsel=document.getElementById('voiceMode'); if(window.OHCSVoice){ vsel&&vsel.checked?OHCSVoice.on():OHCSVoice.off(); } OHCSMusic.setScore(0); var mb=document.getElementById('musicToggle'); if(mb){mb.setAttribute('aria-pressed','true');mb.title='Background music: on';mb.style.color='#c9a24b';} }
   startRound();
 };
 
