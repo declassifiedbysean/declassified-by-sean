@@ -50,7 +50,7 @@ h2.fax-title{ font-family:inherit; font-size:18px; letter-spacing:.22em; text-tr
 .fax-actions button:focus-visible{ outline:2px solid #8c2b22; outline-offset:3px; }
 .fax-status{ font-size:11px; letter-spacing:.14em; text-transform:uppercase; min-height:16px; margin-top:10px; color:#8c2b22; }
 
-/* the 📠 trigger button in the footer */
+/* the Fax trigger button in the footer */
 .fax-trigger, .email-trigger{
   background:none; border:1px solid var(--line,#2a2830); border-radius:8px; cursor:pointer;
   font-size:16px; line-height:1; padding:6px 10px; color:inherit;

@@ -213,8 +213,8 @@ function promptNamer(){
   document.getElementById('passTo').textContent=S.players[pi].name;
   const hs=document.getElementById('heatStatus');
   if(S.relaxed) hs.textContent='';
-  else if(S.onFire[pi]) hs.textContent='🔥 ON FIRE — ×3 locked. Win a crown to stay lit.';
-  else if((S.heat[pi]||0)===2) hs.textContent='🔥 HEAT 2 — one more lightning lock ignites you.';
+  else if(S.onFire[pi]) hs.textContent='ON FIRE — ×3 locked. Win a crown to stay lit.';
+  else if((S.heat[pi]||0)===2) hs.textContent='HEAT 2 — one more lightning lock ignites you.';
   else if((S.heat[pi]||0)===1) hs.textContent='HEAT 1 — lock under 20s to keep building.';
   else hs.textContent='';
   announce(S.players[pi].name+', your turn to name the piece.');
@@ -372,7 +372,7 @@ function renderLedger(elId){
     const p=S.players[idx];
     const row=document.createElement('div');row.className='lrow'+(p.score===top&&top>0?' lead':'');
     const tags=[]; if(p.subl)tags.push(p.subl+'◆'); if(p.wret)tags.push(p.wret+'▽'); if(p.flag)tags.push(p.flag+'⚑'); if(p.loop)tags.push(p.loop+'∞');
-    row.innerHTML=`<div class="who">${S.onFire[idx]?'🔥 ':''}${escapeHtml(p.name)} <span class="mini" style="color:#928d9e">${tags.join(' ')}</span></div><div class="pts">${p.score} pts</div>`;
+    row.innerHTML=`<div class="who">${S.onFire[idx]?'':''}${escapeHtml(p.name)} <span class="mini" style="color:#928d9e">${tags.join(' ')}</span></div><div class="pts">${p.score} pts</div>`;
     el.appendChild(row);
   });
 }
@@ -471,9 +471,9 @@ function renderPodium(){
   const silver=board.filter(p=>!goldSet.has(p)&&!bronzeSet.has(p));
   const li=arr=>arr.length?arr.map(p=>`${escapeHtml(p.name)}`).join('<br>'):'—';
   document.getElementById('podium').innerHTML=`<div class="podium">
-    <div class="tier silver"><div class="medal">🥈</div><div class="tname">Cigar</div><div class="tsub">the human · still here</div><div class="names">${li(silver)}</div></div>
-    <div class="tier gold"><div class="medal">🥇</div><div class="tname">Sublime</div><div class="tsub">best</div><div class="names">${li(gold)}</div></div>
-    <div class="tier bronze"><div class="medal">🥉</div><div class="tname">Troll</div><div class="tsub">worst</div><div class="names">${li(bronze)}</div></div>
+    <div class="tier silver"><div class="medal">◆</div><div class="tname">Cigar</div><div class="tsub">the human · still here</div><div class="names">${li(silver)}</div></div>
+    <div class="tier gold"><div class="medal">◆</div><div class="tname">Sublime</div><div class="tsub">best</div><div class="names">${li(gold)}</div></div>
+    <div class="tier bronze"><div class="medal">◆</div><div class="tname">Troll</div><div class="tsub">worst</div><div class="names">${li(bronze)}</div></div>
   </div>`;
 }
 

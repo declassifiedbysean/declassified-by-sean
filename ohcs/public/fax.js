@@ -1,4 +1,4 @@
-/* Fax Mode — pushing 📠 opens a CONFIDENTIAL cover sheet that dares you not to fax the URL.
+/* Fax Mode — pushing Fax opens a CONFIDENTIAL cover sheet that dares you not to fax the URL.
    Accessible modal: role=dialog, Esc closes, focus moved in and restored, scrim-click closes. */
 (function(){
   "use strict";
