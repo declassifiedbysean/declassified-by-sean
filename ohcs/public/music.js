@@ -6,7 +6,7 @@
      jazz     — brushed swing kit, walking bass, ii–V comp stabs            (painter: TODO)
    The score drives brightness, density/tempo, and layer thickness in every genre.
    Audio control is provided (toggle); nothing plays before a user gesture — WCAG 1.4.2.
-   API: window.OHCSMusic { on, off, toggle, isOn, setScore, setGenre, getGenre } */
+   API: window.OHSMusic { on, off, toggle, isOn, setScore, setGenre, getGenre } */
 (function(){
   "use strict";
   var ctx=null, master=null, bright=null, revGain=null, conv=null, busDry=null;
@@ -143,7 +143,7 @@
   }
   function OFF(){ if(!on) return; on=false; if(master) master.gain.setTargetAtTime(0.0, ctx.currentTime, 0.5); }
 
-  window.OHCSMusic = {
+  window.OHSMusic = {
     on: ON, off: OFF,
     toggle: function(){ on?OFF():ON(); return on; },
     isOn: function(){ return on; },

@@ -70,7 +70,7 @@ function runTimer(barEl,secs,onExpire){
 }
 function stopTimer(){ if(_to){clearTimeout(_to);_to=null;} }
 function speedMult(){ if(S.relaxed) return 1; const f=Math.min(1,(Date.now()-_t0)/_dur); return f<=0.34?3:(f<=0.67?2:1); }
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));const el=document.getElementById(id);el.classList.add('on');el.setAttribute('tabindex','-1');try{el.focus({preventScroll:true});}catch(e){}window.scrollTo({top:0,behavior:'instant'});try{if(window.OHCSVoice)OHCSVoice.say(id);}catch(e){}}
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));const el=document.getElementById(id);el.classList.add('on');el.setAttribute('tabindex','-1');try{el.focus({preventScroll:true});}catch(e){}window.scrollTo({top:0,behavior:'instant'});try{if(window.OHSVoice)OHSVoice.say(id);}catch(e){}}
 function announce(t){const l=document.getElementById('live');if(l){l.textContent='';setTimeout(()=>{l.textContent=t;},60);}}
 
 /* ---------- THE VAULT: persistent high scores + the permanent collection ---------- */
@@ -130,7 +130,7 @@ function renderRoster(){
     rosterEl.appendChild(row);
   });
   document.getElementById('addPlayer').disabled=S.players.length>=9;
-  document.getElementById('rosterNote').textContent=S.players.length>=9?'nine is the ceiling — Charlissian makes ten':'';
+  document.getElementById('rosterNote').textContent=S.players.length>=9?'nine is the ceiling — Rando Carlissian makes ten':'';
 }
 function validate(){
   const named=S.players.filter(p=>p.name.trim()).length;
@@ -144,13 +144,13 @@ function breakUnit(m){ if(m<=7)return "one cigarette"; if(m<=11)return "a cigare
 function updateRounds(){const n=S.players.filter(p=>p.name.trim()).length||S.players.length;const m=n+3;document.getElementById("roundsReadout").textContent=`Episodes: ${m}  —  a turn each, plus three (players + 3)  ·  ~${m} min  ·  about ${breakUnit(m)}`;}
 S.players=[{name:'',score:0},{name:'',score:0},{name:'',score:0}];
 renderRoster(); updateRounds();
-(function(){var b=document.getElementById('musicToggle'); if(!b)return; b.onclick=function(){ if(!window.OHCSMusic)return; var onNow=OHCSMusic.toggle(); b.setAttribute('aria-pressed',onNow); b.title='Background music: '+(onNow?'on':'off'); b.style.color=onNow?'#c9a24b':'#6c6678'; };})();
+(function(){var b=document.getElementById('musicToggle'); if(!b)return; b.onclick=function(){ if(!window.OHSMusic)return; var onNow=OHSMusic.toggle(); b.setAttribute('aria-pressed',onNow); b.title='Background music: '+(onNow?'on':'off'); b.style.color=onNow?'#c9a24b':'#6c6678'; };})();
 
 document.getElementById('begin').onclick=()=>{
   S.players=S.players.filter(p=>p.name.trim()).map(p=>({name:p.name.trim(),score:0,subl:0,wret:0,flag:0,loop:0,sublPts:0,wretPts:0,flagPts:0,loopPts:0}));
   S.rounds=S.players.length+3; S.history=[]; S.heat={}; S.onFire={}; S.relaxed=document.getElementById('relaxed').checked;
   S.round=0; S.captainIdx=Math.floor(Math.random()*S.players.length);
-  if(window.OHCSMusic){ var gsel=document.getElementById('genre'); var FREE_GENRES=['ambient']; OHCSMusic.setGenre(gsel&&FREE_GENRES.indexOf(gsel.value)>=0?gsel.value:'ambient'); OHCSMusic.on(); var vsel=document.getElementById('voiceMode'); if(window.OHCSVoice){ vsel&&vsel.checked?OHCSVoice.on():OHCSVoice.off(); } OHCSMusic.setScore(0); var mb=document.getElementById('musicToggle'); if(mb){mb.setAttribute('aria-pressed','true');mb.title='Background music: on';mb.style.color='#c9a24b';} }
+  if(window.OHSMusic){ var gsel=document.getElementById('genre'); var FREE_GENRES=['ambient']; OHSMusic.setGenre(gsel&&FREE_GENRES.indexOf(gsel.value)>=0?gsel.value:'ambient'); OHSMusic.on(); var vsel=document.getElementById('voiceMode'); if(window.OHSVoice){ vsel&&vsel.checked?OHSVoice.on():OHSVoice.off(); } OHSMusic.setScore(0); var mb=document.getElementById('musicToggle'); if(mb){mb.setAttribute('aria-pressed','true');mb.title='Background music: on';mb.style.color='#c9a24b';} }
   startRound();
 };
 
@@ -290,12 +290,12 @@ function promptFlagger(){
   const pi=S.flagQueue[S.flagTurn];
   document.getElementById('flagIdx').textContent=S.flagTurn+1;
   document.getElementById('flagTo').textContent=S.players[pi].name;
-  announce(S.players[pi].name+', secretly choose which name you believe Charlissian wrote.');
+  announce(S.players[pi].name+', secretly choose which name you believe Rando Carlissian wrote.');
   const wrap=document.getElementById('flagCards');wrap.innerHTML='';
   S.pool.forEach((n,i)=>{
     const c=document.createElement('button');c.type='button';c.className='namecard';c.style.animationDelay=(i*0.04)+'s';
     c.innerHTML=`<div class="nm">“${escapeHtml(n.text)}”</div>`;
-    c.setAttribute('aria-label','Flag as Charlissian: '+n.text);
+    c.setAttribute('aria-label','Flag as Rando Carlissian: '+n.text);
     c.onclick=()=>{ stopTimer(); S.flagMult[pi]=speedMult(); S.flags[pi]=i; advanceFlag(); };
     wrap.appendChild(c);
   });
@@ -335,13 +335,13 @@ function flagReveal(){
     } else { S.heat[pi]=0; }
   });
 
-  if(window.OHCSMusic) OHCSMusic.setScore(Math.max(0,...S.players.map(p=>p.score)));
+  if(window.OHSMusic) OHSMusic.setScore(Math.max(0,...S.players.map(p=>p.score)));
   S.history.push({ round:S.round, secret:S.secret, piece:S.piece.piece,
-    sublimeName:S.pool[S.best].text, sublimeBy: subA===MACHINE?'Charlissian':S.players[subA].name,
+    sublimeName:S.pool[S.best].text, sublimeBy: subA===MACHINE?'Rando Carlissian':S.players[subA].name,
     machineName:S.pool[S.machineEntry].text, caught:caughtBy.length>0 });
 
   document.getElementById('revMachineName').textContent='“'+S.pool[S.machineEntry].text+'”';
-  let line = caughtBy.length ? `Caught by ${caughtBy.map(escapeHtml).join(', ')}.` : `Nobody caught it. Charlissian walked free.`;
+  let line = caughtBy.length ? `Caught by ${caughtBy.map(escapeHtml).join(', ')}.` : `Nobody caught it. Rando Carlissian walked free.`;
   if(subA===MACHINE) line+=` It even stole the Sublime crown — no human earns it this round.`;
   if(wreA===MACHINE) line+=` The table judged it the Troll — no human earns that crown.`;
   if(looperMsg) line+='<br>'+looperMsg;
@@ -351,7 +351,7 @@ function flagReveal(){
   // values (player names, secret). Every user-derived value MUST pass through escapeHtml() before
   // it reaches here — this assignment writes raw HTML. Do not append an unescaped variable to `line`.
   document.getElementById('revLine').innerHTML=line;
-  announce('Charlissian wrote: '+S.pool[S.machineEntry].text+'. '+(caughtBy.length?'It was caught.':'It went uncaught.'));
+  announce('Rando Carlissian wrote: '+S.pool[S.machineEntry].text+'. '+(caughtBy.length?'It was caught.':'It went uncaught.'));
   show('s-flagrev');
 }
 document.getElementById('toScore').onclick=()=>{
@@ -406,7 +406,7 @@ function finale(){
     "Define the radius; the area reveals itself. Tonight you defined it in names — and in the one name that wasn't yours."
   ];
   document.getElementById('benediction').textContent=lines[Math.floor(Math.random()*lines.length)];
-  if(window.OHCSMusic) OHCSMusic.setScore(Math.max(0,...S.players.map(p=>p.score)));
+  if(window.OHSMusic) OHSMusic.setScore(Math.max(0,...S.players.map(p=>p.score)));
   show('s-final');
   rollCredits();
 }
@@ -426,7 +426,7 @@ function rollCredits(){
     <div class="ct">Only Humans Can Score</div>
     <div class="cn" style="font-size:24px">Episode ${roman(S.rounds)}</div>
     <div class="ct" style="margin-top:18px">The Curators</div>${crew}
-    <div class="ct" style="margin-top:18px">The Machine</div><div class="cn" style="color:var(--machine)">Charlissian</div>
+    <div class="ct" style="margin-top:18px">The Machine</div><div class="cn" style="color:var(--machine)">Rando Carlissian</div>
     <div class="ct" style="margin-top:18px">The Law</div><div class="cn">Only humans can score.</div>
   </div>`;
   const c=document.getElementById('credits'); c.innerHTML=html; c.classList.add('roll');

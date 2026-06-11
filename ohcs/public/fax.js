@@ -20,7 +20,7 @@
         '<h2 class="fax-title" id="faxTitle">Fax Cover Sheet</h2>' +
         '<dl class="fax-fields">' +
           '<dt>To</dt><dd>Everyone you were told not to tell</dd>' +
-          '<dt>From</dt><dd>The Records Office, OHCS</dd>' +
+          '<dt>From</dt><dd>The Records Office, OHS</dd>' +
           '<dt>Date</dt><dd>' + today() + '</dd>' +
           '<dt>Pages</dt><dd>1 of \u221e (it spreads)</dd>' +
           '<dt>Re</dt><dd>A website address you are forbidden to share</dd>' +

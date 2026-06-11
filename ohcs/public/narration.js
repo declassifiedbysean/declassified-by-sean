@@ -3,7 +3,7 @@
    audio was made: record it yourself, or clone-and-render — same manifest either way.
    No live TTS, no third-party request at runtime: clips are self-hosted under voice/.
    Keeps the CSP clean (media-src 'self'). Falls back silently if a clip is missing.
-   API: window.OHCSVoice { on, off, toggle, isOn, say(id), available } */
+   API: window.OHSVoice { on, off, toggle, isOn, say(id), available } */
 (function(){
   "use strict";
   var enabled=false, base="voice/", ext=".mp3", cache={}, current=null;
@@ -35,7 +35,7 @@
   function OFF(){ enabled=false; if(current){ try{current.pause();}catch(e){} } }
 
   load();
-  window.OHCSVoice = {
+  window.OHSVoice = {
     on: ON, off: OFF,
     toggle: function(){ enabled?OFF():ON(); return enabled; },
     isOn: function(){ return enabled; },
