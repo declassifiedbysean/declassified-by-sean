@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="logo.svg">
+<meta property="og:image" content="logo.svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="logo.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Only Humans Can Score</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  :root{
+    --wall:#100f12; --wall-2:#16151a; --bone:#ece4d3; --bone-dim:#a7a08f;
+    --brass:#c9a24b; --brass-deep:#8a6f2e; --gold:#e8c24a;
+    --oxblood:#7c2b2b; --oxblood-lit:#c2463f; --machine:#6f9bc4; --steel:#6f9bc4; --silver:#c6ccd6;
+    --serif:'Cormorant Garamond', Georgia, serif; --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--wall);color:var(--bone);font-family:var(--serif);min-height:100vh;overflow-x:hidden;position:relative}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");mix-blend-mode:overlay}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;background:radial-gradient(100% 60% at 50% 116%, rgba(111,155,196,0.08), transparent 60%),radial-gradient(120% 90% at 50% 18%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 100%)}
+  .stage{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:46px 24px 96px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+  .screen{display:none;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .screen.on{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.42em;text-transform:uppercase;color:var(--brass);margin-bottom:18px}
+  h1.title{font-weight:600;line-height:.92;letter-spacing:.01em;font-size:clamp(44px,9vw,92px);text-transform:uppercase}
+  h1.title .can{font-style:italic;font-weight:400;color:var(--brass);text-transform:none;letter-spacing:0}
+  .lede{font-size:clamp(18px,2.5vw,23px);color:var(--bone-dim);max-width:46ch;margin-top:22px;line-height:1.5;font-weight:400}
+  .lede em{color:var(--bone);font-style:italic}
+  .rule{height:1px;background:linear-gradient(90deg,transparent,var(--brass-deep),transparent);margin:32px 0;opacity:.6}
+  .constitution{font-family:var(--mono);font-size:13.5px;line-height:1.9;color:var(--bone-dim);margin:8px 0 6px}
+  .constitution b{color:var(--bone);font-weight:600}
+  .constitution .art{color:var(--brass);margin-right:8px}
+  .art8{margin-top:9px;font-family:var(--mono);font-size:13.5px;line-height:1.9}
+  .art8 summary{cursor:pointer;list-style:none;width:fit-content;color:var(--bone-dim);opacity:.62;transition:.2s}
+  .art8 summary::-webkit-details-marker{display:none}
+  .art8 .a8h{color:var(--faint);margin-left:6px}
+  .art8 summary:hover,.art8[open] summary{color:var(--brass);opacity:1}
+  .art8 b{color:var(--bone)} .art8[open]{color:var(--bone-dim)}
+  .clause{margin-top:12px;font-family:var(--mono);font-size:12.5px;line-height:1.8;color:var(--bone-dim);border-left:2px solid var(--brass);padding:8px 14px;background:rgba(201,162,75,.05);border-radius:0 6px 6px 0}
+  .clause b{color:var(--gold)}
+  .flip{color:var(--oxblood-lit)}
+  label.consent{display:flex;gap:12px;align-items:flex-start;font-family:var(--mono);font-size:13px;color:var(--bone);cursor:pointer;margin-top:18px;line-height:1.5}
+  label.consent input{appearance:none;width:20px;height:20px;border:1.5px solid var(--brass);border-radius:3px;flex:0 0 auto;margin-top:1px;cursor:pointer;transition:.2s;position:relative;background:transparent}
+  label.consent input:checked{background:var(--brass)}
+  label.consent input:checked::after{content:"";position:absolute;left:6px;top:2px;width:5px;height:10px;border:solid var(--wall);border-width:0 2px 2px 0;transform:rotate(45deg)}
+  .field{font-family:var(--mono);font-size:14px;color:var(--bone);background:var(--wall-2);border:1px solid #2a2830;border-radius:6px;padding:13px 15px;width:100%;transition:.2s}
+  .field:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px rgba(201,162,75,.12)}
+  .field::placeholder{color:#928d9e}
+  .label-mono{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--bone-dim);display:block;margin-bottom:9px}
+  .roster{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+  .roster-row{display:flex;gap:10px;align-items:center}
+  .roster-row .idx{font-family:var(--mono);font-size:12px;color:var(--brass);width:26px;flex:0 0 auto}
+  .x{font-family:var(--mono);color:#928d9e;cursor:pointer;padding:6px;flex:0 0 auto}
+  .x:hover{color:var(--oxblood-lit)}
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;padding:15px 26px;border:1px solid var(--brass);color:var(--brass);background:transparent;border-radius:6px;cursor:pointer;transition:.22s;display:inline-flex;align-items:center;gap:10px}
+  .btn:hover:not(:disabled){background:var(--brass);color:var(--wall)}
+  .btn:disabled{opacity:.32;cursor:not-allowed}
+  .btn.solid{background:var(--brass);color:var(--wall)}
+  .btn.solid:hover{background:var(--gold);border-color:var(--gold)}
+  .btn.ghost{border-color:#3a3742;color:var(--bone-dim)}
+  .btn.ghost:hover{border-color:var(--bone-dim);background:transparent;color:var(--bone)}
+  .btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px;align-items:center}
+  .mini{font-family:var(--mono);font-size:11px;color:#928d9e;letter-spacing:.04em}
+  .spotlight{position:relative;padding:48px 30px 36px;text-align:center}
+  .spotlight::before{content:"";position:absolute;inset:-40px;background:radial-gradient(60% 70% at 50% 30%, rgba(232,194,74,.10), transparent 70%);pointer-events:none}
+  .machine-line{font-family:var(--mono);font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:var(--brass)}
+  .painting-dots{font-family:var(--mono);color:var(--bone-dim);font-size:15px;letter-spacing:.3em;margin-top:26px;animation:pulse 1.3s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+  .piece{font-size:clamp(26px,4.6vw,42px);font-weight:500;line-height:1.18;max-width:20ch;margin:6px auto 0;font-style:italic;color:var(--bone);text-wrap:balance}
+  .placard{display:inline-block;margin-top:28px;border:1px solid var(--brass-deep);background:linear-gradient(160deg,#1c1a14,#13120f);border-radius:4px;padding:14px 22px;font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);box-shadow:0 14px 40px rgba(0,0,0,.5)}
+  .placard .by{color:var(--bone-dim)}
+  .pass{text-align:center;padding:26px 0}
+  .pass .to{font-size:clamp(30px,6vw,52px);font-weight:600;color:var(--brass)}
+  .pass .to.captain{color:var(--machine)}
+  .turnpiece{font-family:var(--mono);font-size:13px;color:var(--bone-dim);margin:14px auto 0;max-width:42ch;line-height:1.6}
+  .turnpiece em{color:var(--bone);font-style:normal;font-weight:600}
+  .turnpiece .secret{color:var(--machine);font-weight:600}
+  .cards{display:grid;gap:14px;margin-top:6px}
+  .namecard{border:1px solid #2a2830;background:var(--wall-2);border-radius:8px;padding:18px 22px;cursor:pointer;transition:.18s;position:relative;animation:rise .5s both}
+  .namecard:hover{border-color:#454150;transform:translateY(-1px)}
+  .namecard .nm{font-size:clamp(20px,3.2vw,27px);font-weight:500;font-style:italic;color:var(--bone);line-height:1.2}
+  .namecard .who{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:#928d9e;margin-top:10px}
+  .namecard.best{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 0 34px rgba(232,194,74,.18)}
+  .namecard.worst{border-color:var(--oxblood-lit);box-shadow:0 0 0 1px var(--oxblood-lit),0 0 34px rgba(194,70,63,.16)}
+  .namecard.flagged{border-color:var(--machine);box-shadow:0 0 0 1px var(--machine),0 0 30px rgba(95,174,155,.2)}
+  .namecard.isMachine{border-color:var(--machine)}
+  .stamp{position:absolute;top:-11px;right:18px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;padding:3px 9px;border-radius:3px}
+  .stamp.g{background:var(--gold);color:var(--wall)}
+  .stamp.o{background:var(--oxblood-lit);color:var(--bone)}
+  .stamp.m{background:linear-gradient(135deg,var(--silver),var(--steel));color:var(--wall)}
+  #revMachineName{text-shadow:0 0 26px rgba(111,155,196,.38), 0 0 2px rgba(198,204,214,.55)}
+  .judge-tabs{display:flex;gap:10px;margin:18px 0 22px;font-family:var(--mono);font-size:12px}
+  .jt{flex:1;text-align:center;padding:12px;border:1px solid #2a2830;border-radius:6px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim);cursor:pointer;transition:.2s}
+  .jt.act-best{border-color:var(--gold);color:var(--gold)}
+  .jt.act-worst{border-color:var(--oxblood-lit);color:var(--oxblood-lit)}
+  .jt .done{color:#928d9e}
+  .ledger{font-family:var(--mono);margin-top:14px;border-top:1px solid #2a2830}
+  .lrow{display:flex;align-items:center;justify-content:space-between;padding:14px 4px;border-bottom:1px solid #1e1c24}
+  .lrow .who{font-family:var(--serif);font-size:22px;font-weight:500}
+  .lrow .pts{font-size:14px;color:var(--brass);letter-spacing:.06em}
+  .lrow.lead .who{color:var(--gold)}
+  .lrow .delta{font-size:11px;color:var(--gold);margin-left:10px;letter-spacing:.1em}
+  .titlecard{border:1px solid var(--brass-deep);border-radius:10px;padding:20px 22px;margin-bottom:12px;background:linear-gradient(160deg,#1a1812,#121110);display:flex;justify-content:space-between;align-items:center;gap:16px}
+  .titlecard .crwn{font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase}
+  .titlecard .holder{font-size:clamp(24px,4vw,34px);font-weight:600}
+  .titlecard.sub{box-shadow:inset 0 0 0 1px rgba(232,194,74,.3)} .titlecard.sub .crwn{color:var(--gold)}
+  .titlecard.wre .crwn{color:var(--oxblood-lit)}
+  .titlecard.fla .crwn{color:var(--machine)}
+  .titlecard.loo .crwn{color:var(--silver)}
+  .benediction{font-style:italic;font-size:clamp(19px,2.6vw,25px);color:var(--bone-dim);max-width:42ch;margin:30px auto 0;line-height:1.5}
+  .foot{font-family:var(--mono);font-size:10.5px;color:#928d9e;letter-spacing:.08em;margin-top:36px;line-height:1.8}
+  .foot .law{color:var(--brass)}
+  .center{text-align:center}
+  .err{font-family:var(--mono);font-size:11.5px;color:var(--oxblood-lit);margin-top:12px}
+  .timerwrap{height:5px;background:#221f29;border-radius:3px;overflow:hidden;margin:16px auto 4px;max-width:520px}
+  .timerbar{height:100%;width:100%;background:linear-gradient(90deg,var(--gold),var(--oxblood-lit))}
+  .timerbar.flag{background:linear-gradient(90deg,var(--steel),var(--silver))}
+  .ti83{max-width:520px;margin:0 auto;background:#8a9a78;border:6px solid #2b2b2e;border-radius:12px;box-shadow:0 14px 40px rgba(0,0,0,.5), inset 0 0 0 2px #6f7d60;padding:14px}
+  .ti83 .lcd{background:#aeb89a;border-radius:3px;padding:12px 12px 8px;background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.05) 0 3px,transparent 3px 4px),repeating-linear-gradient(90deg,rgba(0,0,0,.05) 0 3px,transparent 3px 4px)}
+  .ti83 .hd{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:#23301c;margin-bottom:10px;display:flex;justify-content:space-between}
+  .ti83 .bars{display:flex;align-items:flex-end;justify-content:space-around;gap:7px;height:150px}
+  .ti83 .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+  .ti83 .col{width:84%;background-color:#2c3a22;background-image:repeating-linear-gradient(0deg,#2c3a22 0 3px,#46583a 3px 4px);min-height:2px}
+  .ti83 .val{font-family:var(--mono);font-size:11px;color:#1d2716;font-weight:600}
+  .ti83 .lbl{font-family:var(--mono);font-size:9px;color:#1d2716;text-transform:uppercase;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .sheet{font-family:var(--mono);max-width:640px;margin:0 auto;border-top:1px solid #2a2830}
+  .srow{border-bottom:1px solid #1e1c24;padding:13px 2px}
+  .srow .top{display:flex;justify-content:space-between;align-items:baseline}
+  .srow .nm{font-family:var(--serif);font-size:21px;font-weight:600}
+  .srow .tot{font-size:14px;color:var(--brass)}
+  .srow .work{font-size:11px;color:var(--bone-dim);margin-top:7px;line-height:1.85}
+  .srow .work .s{color:var(--gold)} .srow .work .w{color:var(--oxblood-lit)} .srow .work .f{color:var(--steel)} .srow .work .l{color:var(--silver)}
+  .compbar{display:flex;height:7px;border-radius:3px;overflow:hidden;margin-top:9px;background:#1e1c24}
+  .compbar i{display:block;height:100%}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;max-width:760px;margin:0 auto}
+  .gcard{border:1px solid #2a2830;border-radius:8px;padding:14px;background:var(--wall-2)}
+  .gcard .gnum{font-family:var(--mono);font-size:9px;color:var(--brass);letter-spacing:.2em;margin-bottom:6px}
+  .gcard .gpiece{font-family:var(--serif);font-style:italic;font-size:15px;line-height:1.3;color:var(--bone)}
+  .gcard .gwin{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-top:10px;color:var(--gold)}
+  .gcard .gsec{font-family:var(--mono);font-size:9.5px;color:#928d9e;margin-top:5px;line-height:1.5}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:4px}
+  .timerbar.flag ~ *:focus-visible, .jt:focus-visible{outline-color:var(--steel)}
+  button.namecard,button.jt{appearance:none;-webkit-appearance:none;font:inherit;color:inherit;width:100%;cursor:pointer}
+  button.namecard{text-align:left}
+  button.x{appearance:none;-webkit-appearance:none;background:none;border:0;min-width:32px;min-height:32px;font-size:14px}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+  .podium{display:flex;align-items:flex-end;justify-content:center;gap:8px;margin:8px 0 4px}
+  .tier{flex:1;max-width:33%;border:1px solid var(--line,#2a2830);border-radius:10px 10px 0 0;padding:14px 8px;text-align:center;background:#161419}
+  .tier .medal{font-size:30px;line-height:1}
+  .tier .tname{font-family:var(--mono,monospace);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;margin:6px 0 4px}
+  .tier .tsub{font-family:var(--mono,monospace);font-size:9.5px;color:#928d9e;letter-spacing:.06em;text-transform:uppercase}
+  .tier .names{font-size:16px;line-height:1.5;margin-top:6px}
+  .tier.gold{order:2;min-height:172px;border-color:var(--gold);box-shadow:inset 0 -60px 50px -50px rgba(232,194,74,.35)} .tier.gold .tname{color:var(--gold)}
+  .tier.silver{order:1;min-height:132px;border-color:var(--silver)} .tier.silver .tname{color:var(--silver)}
+  .tier.bronze{order:3;min-height:106px;border-color:#cf9b63} .tier.bronze .tname{color:#cf9b63}
+  /* end credits — the show rolls out like an episode */
+  .credits{overflow:hidden;height:0;transition:height .4s ease;margin:6px 0}
+  .credits.roll{height:230px;position:relative;border-top:1px solid var(--line,#2a2830);border-bottom:1px solid var(--line,#2a2830)}
+  .credits .crawl{position:absolute;left:0;right:0;bottom:0;text-align:center;animation:crawl 13s linear forwards}
+  .credits .ct{font-family:var(--mono,monospace);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#928d9e;margin:14px 0 4px}
+  .credits .cn{font-size:20px;color:var(--bone,#ece9e3);line-height:1.5}
+  @keyframes crawl{from{transform:translateY(100%)}to{transform:translateY(-115%)}}
+  @media(prefers-reduced-motion:reduce){.credits.roll{height:auto;max-height:320px;overflow:auto}.credits .crawl{position:static;transform:none;animation:none}}
+  #rematchArea{display:none}
+</style>
+</head>
+<body>
+<button id="musicToggle" type="button" aria-label="Background music" aria-pressed="false" title="Background music: off" style="position:fixed;top:12px;right:12px;z-index:60;background:rgba(16,15,18,.7);border:1px solid #2a2830;border-radius:999px;color:#6c6678;font-size:15px;line-height:1;padding:7px 11px;cursor:pointer;backdrop-filter:blur(6px)">♪</button>
+<a href="index.html" style="position:fixed;bottom:12px;left:12px;z-index:9999;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#a7a08f;background:rgba(16,15,18,.8);border:1px solid #2a2830;border-radius:6px;padding:6px 10px;text-decoration:none">← OHS</a>
+<div class="stage" id="main" role="main">
+  <div class="sr-only" id="live" role="status" aria-live="polite"></div>
+
+  <!-- SETUP -->
+  <section class="screen on" id="s-setup">
+    <div class="eyebrow">The machine paints in words &amp; guesses &nbsp;·&nbsp; only humans can score</div>
+    <h1 class="title">Only Humans<br><span class="can">can</span> Score</h1>
+    <p class="lede">A Captain feeds the machine a <em>secret.</em> The machine paints it. Everyone names what they see — even the Captain, who's <em>bluffing.</em> And the machine drops its own guess into the lineup, in disguise. You crown the best, the worst, and whoever caught the machine. <em>It can paint. It can guess. It can never score.</em> A machine always plays — even at the smallest table. This is always <em>AI versus human.</em></p>
+    <p style="margin-top:6px"><a href="how-to.html" style="color:var(--brass);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-decoration:none">New here? How to play ↗</a></p>
+    <div class="rule"></div>
+    <div class="label-mono">The Constitution &nbsp;—&nbsp; agreeing to play is agreeing to it</div>
+    <div class="constitution">
+      <span class="art">I.</span><b>The machine always plays. It paints and guesses. Only humans can score.</b><br>
+      <span class="art">II.</span><b>The naming is the value.</b> Name with conviction, or be forgotten.<br>
+      <span class="art">III.</span><b>Best and worst both ascend.</b> The mediocre middle is the only loss.<br>
+      <span class="art">IV.</span><b>Eighteen and over.</b> This is an adult table.<br>
+      <span class="art">V.</span><b class="flip">No porn. Cross the line and the table flips — everyone loses.</b><br>
+      <span class="art">VI.</span><b>No faces, no famous.</b> The machine paints things, not people — no real faces, no celebrities, no public figures. A likeness is a right that isn't yours to spend.<br>
+      <span class="art">VII.</span><b>The record is kept, depersonalized.</b> What was made and judged is kept anonymously and may be studied; who you are is never kept. Don't type personal details into a name.
+      <details class="art8"><summary><span class="art">VIII.</span><span class="a8h">⋯</span></summary><b>Unratified.</b> The curator's résumé is available upon request. Opening this counted as the request.</details>
+    </div>
+    <label class="consent"><input type="checkbox" id="agree"><span>We are all 18+ and we agree to the Constitution.</span></label>
+    <div class="rule"></div>
+    <div class="label-mono">The Curators &nbsp;—&nbsp; 3 to 9 humans &nbsp;(the Captain seat rotates; Rando Carlissian — the machine — always plays, for a table of up to ten)</div>
+    <div class="roster" id="roster"></div>
+    <div class="btn-row"><button class="btn ghost" id="addPlayer">+ add curator</button><span class="mini" id="rosterNote"></span></div>
+    <div class="mini" style="color:var(--machine,#6f9bc4);border:1px dashed var(--machine,#6f9bc4);border-radius:8px;padding:8px 12px;margin-top:8px">Rando Carlissian — the machine — is always at the table. It paints, it hides one name in the lineup, and it can never score. Always AI versus human.</div>
+    <div class="btn-row">
+      <div class="label-mono" id="roundsReadout" style="margin:0">Episodes — a turn each, plus three</div>
+      <div class="clause"><b>The Smoker’s Clause.</b> This show is engineered to last one cigarette, one coffee, or one watercolor — dealer’s choice. Step away from the desk. Confer worth. Be back before the ash is long.</div>
+    </div>
+    <label class="consent" style="margin-top:14px"><input type="checkbox" id="relaxed"><span>Relaxed mode — no timers. Trades the speed multiplier for an unrushed, accessible table.</span></label>
+    <div style="margin-top:14px">
+      <label for="genre" style="display:block;font-size:13px;color:#928d9e;margin-bottom:6px">Soundtrack — recompiles live from the score</label>
+      <select id="genre" style="background:#15141a;color:#cfc8d8;border:1px solid #2a2830;border-radius:8px;padding:8px 10px;font:inherit;font-size:14px">
+        <option value="ambient" selected>Ambient — museum after midnight (free)</option>
+        <option value="country" disabled>Country — fingerpicked &amp; brushed &nbsp;·&nbsp; Premium</option>
+        <option value="rap" disabled>Classic rap — boom-bap &nbsp;·&nbsp; Premium</option>
+        <option value="jazz" disabled>Jazz — brushed swing &nbsp;·&nbsp; Premium</option>
+      </select>
+      <div class="mini" style="margin-top:6px;color:#928d9e">Three more soundtracks recompile live too — they unlock with a Pass. <a href="pricing.html" style="color:var(--brass)">Coming soon ↗</a>. Free play ships with the Ambient backdrop.</div>
+    </div>
+    <label class="consent" style="margin-top:14px"><input type="checkbox" id="voiceMode"><span>Narration — “Sean reads the game files.” Plays the operator’s recorded voice when available.</span></label>
+    <div class="btn-row"><button class="btn solid" id="begin" disabled>Open the museum →</button><button class="btn ghost" id="openVault">The Vault ↗</button></div>
+    <div class="foot">
+      <span class="law">The four crowns.</span> Sublime (best name) · Troll (worst) · The Flag (caught the machine) · The Imposter (passed <i>as</i> the machine — enters at 4+).<br>
+      Live in Claude, the machine paints and guesses fresh. Elsewhere it runs a house deck so the full guess-and-flag loop still plays. No image engine in this canvas yet — the machine paints in <b>words</b>; the brush swaps in later.
+    </div>
+  </section>
+
+  <!-- SECRET (captain) -->
+  <section class="screen" id="s-secret">
+    <div class="pass">
+      <div class="machine-line">Episode <span id="secRound">I</span> &nbsp;·&nbsp; the hot seat</div>
+      <div class="to captain" id="secTo">—</div>
+      <div class="turnpiece">Everyone else, look away. Feed the machine a <span class="secret">secret</span> — a word, a name, a thing. It will paint it without saying it. Then you'll bluff a name like everyone else.</div>
+    </div>
+    <input class="field" id="secretInput" placeholder="the secret (only you see this)…" autocomplete="off" maxlength="60" aria-label="Your secret word or phrase for the machine to paint">
+    <div class="btn-row" style="justify-content:center"><button class="btn solid" id="lockSecret" disabled>Hand it to the machine →</button></div>
+  </section>
+
+  <!-- PAINTING -->
+  <section class="screen" id="s-paint">
+    <div class="center">
+      <div class="machine-line">Episode <span id="paintRound">I</span> &nbsp;·&nbsp; the machine paints</div>
+      <div class="painting-dots" id="paintDots">— rendering the secret —</div>
+      <div class="err" id="paintErr"></div>
+    </div>
+  </section>
+
+  <!-- PIECE REVEAL -->
+  <section class="screen" id="s-piece">
+    <div class="spotlight">
+      <div class="machine-line">The clue &nbsp;·&nbsp; Episode <span id="pieceRound">I</span></div>
+      <p class="piece" id="pieceText">—</p>
+      <div class="placard" id="placard"></div>
+    </div>
+    <div class="center"><div class="btn-row" style="justify-content:center"><button class="btn solid" id="toNaming">The curators approach →</button></div></div>
+  </section>
+
+  <!-- NAMING -->
+  <section class="screen" id="s-name">
+    <div class="pass">
+      <div class="machine-line">Curator <span id="nameIdx">1</span> of <span id="nameTot">4</span></div>
+      <div class="to" id="passTo">—</div>
+      <div class="machine-line" id="heatStatus" style="color:var(--oxblood-lit);margin-top:8px;min-height:14px"></div>
+      <div class="turnpiece" id="nameInstruct">Everyone else, look away. Name this piece with conviction:<br><em id="passPiece">—</em></div>
+    </div>
+    <div class="timerwrap" aria-hidden="true"><div class="timerbar" id="nameTimer"></div></div>
+    <input class="field" id="nameInput" placeholder="Give it its name…" autocomplete="off" maxlength="80" aria-label="Your name for this piece">
+    <div class="btn-row" style="justify-content:center"><button class="btn solid" id="lockName" disabled>Lock it in →</button></div>
+  </section>
+
+  <!-- CROWNS: sublime + troll -->
+  <section class="screen" id="s-judge">
+    <div class="eyebrow center">The wall is hung &nbsp;·&nbsp; only humans can score</div>
+    <p class="piece center" id="judgePiece" style="font-size:clamp(20px,3vw,30px);margin-bottom:8px">—</p>
+    <div class="judge-tabs">
+      <button class="jt" id="tabBest" type="button">① Crown the Sublime <span class="done" id="bestDone"></span></button>
+      <button class="jt" id="tabWorst" type="button">② Crown the Troll <span class="done" id="worstDone"></span></button>
+    </div>
+    <div class="cards" id="judgeCards"></div>
+    <div class="btn-row" style="justify-content:center"><button class="btn solid" id="toFlag" disabled>Now hunt the machine →</button></div>
+    <div class="foot center">Tap the <b style="color:var(--gold)">best</b> name, then the <b style="color:var(--oxblood-lit)">worst</b>. Both ascend. The middle is forgotten.</div>
+  </section>
+
+  <!-- FLAG (per player) -->
+  <section class="screen" id="s-flag">
+    <div class="pass">
+      <div class="machine-line">The Flag &nbsp;·&nbsp; <span id="flagIdx">1</span> of <span id="flagTot">3</span></div>
+      <div class="to" id="flagTo">—</div>
+      <div class="turnpiece">Secretly tap the one name you believe the <span class="secret">machine</span> wrote. Catch it and you score. Get fooled and you don't.</div>
+    </div>
+    <div class="timerwrap flag-wrap" aria-hidden="true"><div class="timerbar flag" id="flagTimer"></div></div>
+    <div class="cards" id="flagCards"></div>
+  </section>
+
+  <!-- FLAG REVEAL -->
+  <section class="screen" id="s-flagrev">
+    <div class="eyebrow center">Rando Carlissian is unmasked</div>
+    <p class="piece center" id="revMachineName" style="color:var(--machine);font-size:clamp(22px,3.6vw,34px)">—</p>
+    <div class="center mini" id="revLine" style="margin-top:14px;font-size:13px"></div>
+    <div class="btn-row" style="justify-content:center"><button class="btn solid" id="toScore">To the ledger →</button></div>
+  </section>
+
+  <!-- SCOREBOARD -->
+  <section class="screen" id="s-score">
+    <div class="eyebrow">The ledger &nbsp;·&nbsp; Episode <span id="scoreRound">I</span> of <span id="scoreTot">V</span></div>
+    <h1 class="title" style="font-size:clamp(30px,6vw,54px)">The Ledger</h1>
+    <div class="ledger" id="ledger"></div>
+    <div class="btn-row"><button class="btn solid" id="nextRound">Next piece →</button></div>
+  </section>
+
+  <!-- FINALE -->
+  <section class="screen" id="s-final">
+    <div class="eyebrow center">The show closes &nbsp;·&nbsp; the crowns are struck</div>
+    <div id="titles" style="margin-top:14px"></div>
+
+    <div class="rule"></div>
+    <div class="label-mono center" style="margin-bottom:14px">The Podium &nbsp;—&nbsp; everyone takes a step</div>
+    <div id="podium"></div>
+    <div class="mini center" style="color:#928d9e;margin-top:2px">Gold is the Sublime. Silver is the Cigar — the human who never crowned but kept watching the smoke clear. Bronze is the Troll. The middle was never the loss.</div>
+
+    <div class="rule"></div>
+    <div class="label-mono center" style="margin-bottom:14px">The Distribution &nbsp;—&nbsp; the awards never land evenly</div>
+    <div class="ti83" id="ti83"></div>
+
+    <div class="rule"></div>
+    <div class="label-mono" style="margin-bottom:6px">The Score Sheet &nbsp;—&nbsp; base × speed, summed; every point shows its work</div>
+    <div class="sheet" id="sheet"></div>
+
+    <div class="rule"></div>
+    <div class="label-mono center" style="margin-bottom:14px">The Gallery &nbsp;—&nbsp; tonight's collection</div>
+    <div class="gallery" id="gallery"></div>
+
+    <p class="benediction center" id="benediction">—</p>
+    <div class="mini center" style="margin-top:10px;color:#928d9e">Screenshot this wall — the night's shareable artifact.</div>
+
+    <div class="rule"></div>
+    <div class="label-mono center" style="margin-bottom:8px">End Credits</div>
+    <div class="credits" id="credits"></div>
+    <div class="btn-row" style="justify-content:center"><button class="btn ghost" id="skipCredits">Skip the credits →</button></div>
+
+    <div id="rematchArea">
+      <div class="mini center" id="rematchPrompt" style="color:#928d9e;margin-bottom:8px">Same crew, same chapters — fresh secrets. A rematch needs everyone.</div>
+      <div class="btn-row" style="justify-content:center">
+        <button class="btn solid" id="rematch">Rematch — same crew</button>
+        <button class="btn ghost" id="newcrew">New crew</button>
+        <button class="btn ghost" id="toVault">The Vault →</button>
+      </div>
+    </div>
+    <div class="foot center"><span class="law">Only Humans Can Score.</span> The machine painted every piece and guessed against every one. It never told you what a single one was worth.</div>
+  </section>
+
+  <!-- THE VAULT -->
+  <section class="screen" id="s-vault">
+    <div class="eyebrow center">The Vault &nbsp;·&nbsp; the permanent collection<sup>*</sup></div>
+    <div class="mini center" style="color:#6c6678;margin:2px auto 0;max-width:44ch"><sup>*</sup> as permanent as this browser — it lives on your device; clear your data and the gallery resets.</div>
+    <div id="vaultNotice" class="mini center" style="color:#928d9e;margin:0 auto 18px;max-width:46ch;line-height:1.6"></div>
+    <div class="label-mono" style="margin-bottom:8px">All-Time High Scores</div>
+    <div class="ledger" id="vaultScores"></div>
+    <div class="rule"></div>
+    <div class="label-mono center" style="margin-bottom:14px">The Works &nbsp;—&nbsp; everything the machine has painted</div>
+    <div class="gallery" id="vaultWorks"></div>
+    <div class="btn-row" style="justify-content:center">
+      <button class="btn ghost" id="vaultBack">← Back</button>
+      <button class="btn ghost" id="vaultClear">Clear the Vault</button>
+    </div>
+    <div class="foot center">Your Vault lives on this device, under your control — a personal keepsake, kept separate from the anonymous research record. Clear it anytime.</div>
+  </section>
+
+</div>
+
+<script src="play.js" defer></script>
+<script src="music.js" defer></script>
+<script src="narration.js" defer></script>
+</body>
+</html>

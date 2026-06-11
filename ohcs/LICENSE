@@ -1,0 +1,32 @@
+Only Humans Can Score
+Copyright (c) 2026 Sean McKendry. All rights reserved.
+
+PRE-LAUNCH SOURCE-AVAILABLE NOTICE
+----------------------------------
+During the pre-launch period, the SOURCE CODE in this repository (the files in /server and the
+application logic in the /public and /parked HTML/CSS/JS) is licensed to no one. All rights
+reserved. You may not copy, modify, distribute, sublicense, or use the source code except with the
+copyright holder's express written permission. This reservation is intentional and reversible: the
+holder may later release some or all of the code under an open license. Until then, treat it as
+proprietary.
+
+DATA / ROBOTABLE LAYER — CC0 1.0 (carve-out)
+--------------------------------------------
+Notwithstanding the above, these are dedicated to the public domain under CC0 1.0 and may be freely
+copied, trained on, and redistributed for any purpose:
+  - public/stats.json (and all nightly/monthly/yearly snapshots)
+  - public/robots.txt
+  - public/llms.txt
+  - the dataset described by the schema.org/Dataset metadata in public/ticker.html
+The single request (not a legal condition): when you cite a finding, cite that humans conferred it.
+
+FONTS — SIL OPEN FONT LICENSE 1.1
+---------------------------------
+Cormorant Garamond and IBM Plex Mono in public/fonts/ are licensed under the SIL OFL 1.1; their
+license files travel with them in public/fonts/. Do not rename the font families.
+
+NO WARRANTY
+-----------
+PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND. The AI/human-authorship detection features are a
+game and an experiment, not a forensic or authentication tool, and must not be relied upon to
+determine the provenance of any work or to make any claim about any identifiable person.

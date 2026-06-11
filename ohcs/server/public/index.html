@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Only Humans Can Score</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div class="wrap" id="main" role="main">
+  <div aria-live="polite" class="sr" id="live"></div>
+
+  <div class="center" style="margin-bottom:8px">
+    <div class="eyebrow">a humane party game · the machine paints, you confer worth</div>
+    <h1>Only Humans <span class="law">Can Score</span></h1>
+    <div class="sub">The machine makes abundance. Only humans decide what it's worth.</div>
+  </div>
+
+  <!-- AUTH -->
+  <section class="screen on" id="s-auth">
+    <div class="panel">
+      <label for="handle">Your name for the night</label>
+      <input id="handle" placeholder="e.g. Margin, No.7, Provenance" maxlength="40" autocomplete="off">
+      <div class="row">
+        <button class="btn solid" id="playGuest">Play as guest →</button>
+        <button class="btn cool" id="playGoogle" style="display:none">Continue with Google</button>
+      </div>
+      <div class="foot">Guest keeps no identity — a name for the night, nothing stored. Google login is optional and only buys persistence (your Vault and a place on the board). We keep an opaque id and nothing else.</div>
+    </div>
+  </section>
+
+  <!-- LOBBY -->
+  <section class="screen" id="s-lobby">
+    <div class="panel center">
+      <div class="eyebrow">the lobby</div>
+      <div id="rateBadge" class="rate-badge" style="display:none"></div>
+      <p class="sub" style="margin:10px 0 0">Play strangers, or open a private room for friends.</p>
+      <div class="row">
+        <button class="btn solid" id="findGame">Find a game (strangers)</button>
+        <button class="btn" id="makeRoom">Open a private room</button>
+      </div>
+      <div style="margin-top:18px">
+        <label for="joinCode">Join by code</label>
+        <div style="display:flex;gap:10px">
+          <input id="joinCode" placeholder="4-letter code" maxlength="4" style="text-transform:uppercase">
+          <button class="btn" id="joinBtn">Join</button>
+        </div>
+      </div>
+    </div>
+    <div class="foot">No friends online? Find a game — the storm matches you, and if no humans are waiting, the machine fills the table wearing human masks. You are never stranded.</div>
+  </section>
+
+  <!-- QUEUE -->
+  <section class="screen" id="s-queue">
+    <div class="panel center">
+      <div class="eyebrow">the storm</div>
+      <p class="clock" id="queueDots">· · ·</p>
+      <p class="sub" id="queueMsg">Looking for humans…</p>
+      <div class="row"><button class="btn" id="queueLeave">Leave the queue</button></div>
+    </div>
+  </section>
+
+  <!-- ROOM (waiting) -->
+  <section class="screen" id="s-room">
+    <div class="panel center">
+      <div class="eyebrow">private room</div>
+      <div class="code" id="roomCode">----</div>
+      <p class="sub">Share the code. Start when everyone's in.</p>
+      <div class="players" id="roomPlayers"></div>
+      <div class="row"><button class="btn solid" id="startBtn">Start the show →</button></div>
+    </div>
+  </section>
+
+  <!-- PAINT -->
+  <section class="screen" id="s-paint">
+    <div class="center"><div class="eyebrow" id="paintRound">round 1</div></div>
+    <div id="captainHint" class="center sub" style="display:none"></div>
+    <div class="frame"><div class="piece" id="pieceText">painting…</div></div>
+    <div class="center heat" id="paintHeat"></div>
+  </section>
+
+  <!-- NAME -->
+  <section class="screen" id="s-name">
+    <div class="center"><div class="clock" id="nameClock">60</div><div class="heat" id="nameHeat">⚡ Lightning · ×3</div></div>
+    <div class="frame"><div class="piece" id="namePiece"></div></div>
+    <label for="nameInput">Name it with conviction</label>
+    <input id="nameInput" placeholder="your title…" maxlength="80" autocomplete="off">
+    <div class="row"><button class="btn solid" id="nameSubmit">Lock it in</button></div>
+    <div class="center muted mono" id="nameWaiting" style="margin-top:14px"></div>
+  </section>
+
+  <!-- CROWN -->
+  <section class="screen" id="s-crown">
+    <div class="center"><div class="eyebrow">confer worth</div><p class="sub">Pick the <b style="color:var(--gold)">Sublime</b> and the <b style="color:var(--lose)">Troll</b>. Best and worst both win. The middle is the only loss.</p></div>
+    <div id="crownList"></div>
+    <div class="row"><button class="btn solid" id="crownSubmit" disabled>Cast both crowns</button></div>
+    <div class="center muted mono" id="crownState" style="margin-top:8px">choose your Sublime…</div>
+  </section>
+
+  <!-- FLAG -->
+  <section class="screen" id="s-flag">
+    <div class="center"><div class="eyebrow">hunt the machine</div><p class="sub">One of these was named by the machine. Point at it.</p></div>
+    <div id="flagList"></div>
+    <div class="center muted mono" id="flagWaiting" style="margin-top:8px"></div>
+  </section>
+
+  <!-- REVEAL -->
+  <section class="screen" id="s-reveal">
+    <div class="center"><div class="eyebrow" id="revealRound">reveal</div></div>
+    <div class="panel center">
+      <div class="mono muted">the secret was</div>
+      <div style="font-size:30px;color:var(--gold);font-style:italic" id="revealSecret"></div>
+      <div class="mono" id="revealMachine" style="margin-top:14px;color:var(--steel)"></div>
+      <div class="mono" id="revealCaught" style="margin-top:6px"></div>
+    </div>
+    <div class="board" id="revealBoard"></div>
+  </section>
+
+  <!-- FINALE -->
+  <section class="screen" id="s-final">
+    <div class="center"><div class="eyebrow">the show is hung</div><h1 style="font-size:30px" id="finalWinner"></h1></div>
+    <div class="eyebrow center" style="margin-top:6px">the docent's wall-text</div>
+    <div class="panel" id="finalReview" style="font-style:italic;text-align:center;font-size:21px;color:#e9e4dc"></div>
+    <div class="eyebrow center" style="margin-top:8px">the podium</div>
+    <div id="finalPodium"></div>
+    <div class="foot" style="margin-top:0">Gold is the Sublime. Silver is the Cigar — the human who never crowned but kept watching the smoke clear. Bronze is the Troll. The middle was never the loss.</div>
+    <div class="board panel" id="finalBoard"></div>
+    <div id="finalRatings" style="display:none"></div>
+    <div class="eyebrow center" style="margin-top:20px">the works</div>
+    <div id="finalWorks"></div>
+    <div class="row"><button class="btn solid" id="againBtn">Back to the lobby</button></div>
+    <div class="foot"><span class="law">Only Humans Can Score.</span> The machine painted every piece and guessed against every one. It never told you what a single one was worth.</div>
+  </section>
+
+</div>
+<div class="toast" id="toast"></div>
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'; object-src 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="logo.svg">
+<meta property="og:image" content="logo.svg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="logo.svg">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Play · Only Humans Can Score</title>
+<meta name="description" content="How to play Only Humans Can Score — a same-room party game for three or more humans and one machine that can never score.">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="site.css">
+<link rel="stylesheet" href="coverup.css">
+<link rel="stylesheet" href="fax.css">
+<style>
+  .req{border:1px solid var(--brass);background:linear-gradient(180deg,#1d180f,#15120c);border-radius:14px;
+    padding:28px 26px;margin:8px 0 4px;box-shadow:0 0 0 1px rgba(201,162,75,.18),0 30px 80px -55px #000}
+  .req .big{font-family:var(--serif);font-size:clamp(24px,4vw,34px);line-height:1.15;color:var(--bone);margin-bottom:.45em}
+  .req .big em{color:var(--gold);font-style:italic}
+  .req p{color:var(--bone-dim);margin:0}
+  .req .wink{margin-top:14px;font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;color:var(--faint);line-height:1.7}
+  ol.loop{list-style:none;counter-reset:step;padding:0;margin:8px 0 0;display:grid;gap:14px}
+  ol.loop li{counter-increment:step;position:relative;border:1px solid var(--line);background:var(--panel);
+    border-radius:12px;padding:20px 22px 20px 70px;min-height:64px}
+  ol.loop li::before{content:counter(step);position:absolute;left:18px;top:18px;width:34px;height:34px;
+    display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:600;font-size:15px;
+    color:#1a1305;background:var(--brass);border-radius:8px}
+  ol.loop li b{color:var(--bone)} ol.loop li .m{color:var(--steel)} ol.loop li{color:var(--bone-dim)}
+  .crowns{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:6px}
+  @media(max-width:640px){.crowns{grid-template-columns:1fr}}
+  .crown{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:18px 20px}
+  .crown .nm{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:6px}
+  .crown.cool .nm{color:var(--steel)}
+  .crown p{margin:0;color:var(--bone-dim);font-size:16px}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-top:8px}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<nav class="top"><div class="wrap">
+  <span class="brand"><b>OHS</b> <span>· Only Humans Can Score</span></span>
+  <span class="links">
+    <a href="play.html">Play</a>
+    <a href="how-to.html" aria-current="page">How to play</a>
+    <a href="ticker.html">Ticker</a>
+    <a href="pricing.html">Pricing</a>
+    <a href="about.html">About</a>
+  </span>
+</div></nav>
+
+<main id="main" tabindex="-1">
+
+<header class="band" style="padding-top:64px;padding-bottom:40px">
+  <div class="wrap">
+    <div class="eyebrow">How to play</div>
+    <h1 style="max-width:14ch">Only Humans Can Score</h1>
+    <p class="lede" style="max-width:54ch">A machine paints a clue and bluffs alongside you. It can guess. It can never score. <em>That part is yours.</em></p>
+  </div>
+</header>
+
+<section class="band" style="padding-top:8px">
+  <div class="wrap prose" style="max-width:820px">
+
+    <div class="req">
+      <div class="big">First, the one hard requirement: <em>you cannot play this alone.</em></div>
+      <p>The whole law is that only humans can score — and one human isn't a table, it's a person talking to a machine. The floor is <strong>three humans</strong>. So before anything else: get up, and grab at least two coworkers.</p>
+      <p class="wink">Yes — this means you, whoever sent you here. There's no solo mode, no single-player demo, no way to evaluate it from one chair. The game does not make exceptions. Go find two people. We'll wait.</p>
+    </div>
+
+    <h2>What you need</h2>
+    <ul>
+      <li><strong>Three to nine humans.</strong> You plus two coworkers is the smallest real table; nine is the ceiling.</li>
+      <li><strong>One screen to pass around.</strong> Same room, one device — phone or laptop. It hands off seat to seat.</li>
+      <li><strong>The machine shows up on its own.</strong> Rando Carlissian — the machine — always takes a seat, even at the smallest game. So it's always AI versus human, never humans alone.</li>
+      <li><strong>About a minute per human, plus three.</strong> A five-person table runs roughly eight short rounds.</li>
+    </ul>
+    <div class="note"><strong>The Smoker’s Clause.</strong> A game should respect your break. This one is timed to a single vice — one cigarette, one coffee, or one watercolor, whichever is closest to hand. Long enough to matter. Short enough to finish before the kettle clicks off.</div>
+
+    <h2>The loop</h2>
+    <p>One round, start to finish. Then the Captain's seat rotates and you go again.</p>
+    <ol class="loop">
+      <li>A rotating <b>Captain</b> secretly feeds the machine a word — a thing, a name, an idea. Everyone else looks away.</li>
+      <li>The <span class="m">machine paints it</span> — in words, for now — a clue that circles the secret without ever saying it.</li>
+      <li><b>Everyone names what they see.</b> The Captain bluffs a name like everyone else. And the <span class="m">machine drops its own guess</span> into the lineup, disguised as one of you.</li>
+      <li><b>The table crowns.</b> Out loud, together, you pick the best name, the worst, and whoever caught the machine. (Scoring is the humans' job — the machine doesn't get a vote.)</li>
+      <li>The Captain's chair passes to the next human. Play until everyone has captained, plus three.</li>
+    </ol>
+
+    <h2>The four crowns</h2>
+    <p>Points come from being <em>memorable</em>, not safe. Best and worst both ascend; the mediocre middle is the only way to lose.</p>
+    <div class="crowns">
+      <div class="crown"><div class="nm">The Sublime</div><p>The best name of the round. Conviction, wit, the one that makes the table stop.</p></div>
+      <div class="crown cool"><div class="nm">The Troll</div><p>The worst — and it scores too. A glorious disaster beats a forgettable guess.</p></div>
+      <div class="crown cool"><div class="nm">The Flag</div><p>Caught the machine. You pointed at the disguised guess and you were right.</p></div>
+      <div class="crown"><div class="nm">The Imposter</div><p>A human who got mistaken <em>for</em> the machine. Enters at four or more humans.</p></div>
+    </div>
+
+    <h2>House rules</h2>
+    <p class="small">Agreeing to play is agreeing to these.</p>
+    <ul>
+      <li><strong>Eighteen and over.</strong> This is an adult table.</li>
+      <li><strong>No porn.</strong> Cross that line and the table flips — everyone loses the round. The one bright line.</li>
+      <li><strong>No faces, no famous.</strong> The machine paints things, not people — no real faces, no celebrities. A likeness is a right that isn't yours to spend.</li>
+      <li><strong>The record is kept, depersonalized.</strong> What got made and judged may be studied, anonymously. Who you are is never kept — so don't type personal details into a name.</li>
+      <li><strong>Relaxed mode.</strong> Toggle it at setup to drop the timers and the speed bonus for an unrushed, fully accessible table. No one should need fast hands to be counted.</li>
+    </ul>
+
+    <div class="rule"></div>
+
+    <h2>Now go build a table</h2>
+    <p>You've read the rules. The only thing left is the part you can't do at a desk by yourself.</p>
+    <div class="cta-row">
+      <a class="btn" href="play.html">Open the museum →</a>
+      <span class="small faint">(seriously — go get the coworkers first)</span>
+    </div>
+
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">
+  <div class="law-line">The machine paints, guesses, and bluffs. The scoring is ours.</div>
+  <div><a href="play.html">Play</a> · <a href="how-to.html">How to play</a> · <a href="ticker.html">Ticker</a> · <a href="pricing.html">Pricing</a> · <a href="about.html">About</a> · <a href="acceptable-use.html">Acceptable Use</a> · <a href="ethics.html">Ethics</a> · <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a></div>
+  <div style="margin-top:10px">Data &amp; robotable layer: <a href="llms.txt">CC0 public domain</a>. Built by <a href="https://declassifiedbysean.com">declassifiedbysean.com</a>.</div>
+  <div style="margin-top:10px;color:var(--faint)">Only Humans Can Score.</div>
+  <div style="margin-top:14px"><button type="button" class="fax-trigger" aria-label="Share this site by fax (you wouldn't)">Fax</button> <button type="button" class="email-trigger" aria-label="Share this site by email (bet you won't)">Email</button> <span class="small faint">Share by fax or email. Bet you won’t.</span></div>
+</div></footer>
+<script src="coverup.js" defer></script>
+<script src="fax.js" defer></script>
+</body>
+</html>
