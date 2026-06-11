@@ -1,0 +1,16 @@
+# Pretty URLs (rewrite, keep the path) — mirrors the old netlify.toml redirects.
+/act1          /declassified-act1.html      200
+/act2          /declassified-act2-v3.html   200
+/act3          /declassified-act3.html      200
+/act4          /declassified-act4.html      200
+/act5          /declassified-act5.html      200
+/record-forge  /record-forge-s6.html        200
+/glossary      /glossary.html               200
+/dossier       /dossier.html                200
+/press         /press.html                  200
+/about         /about.html                  200
+/contact       /contact.html                200
+/privacy       /privacy.html                200
+/disclaimer    /disclaimer.html             200
+# Unmatched -> custom 404
+/*             /404.html                     404
