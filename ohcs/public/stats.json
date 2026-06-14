@@ -1,0 +1,11 @@
+{
+  "generatedAt": null,
+  "tz": "America/New_York",
+  "schemaVersion": 1,
+  "sample": true,
+  "note": "Awaiting first nightly run. On launch day, regenerate at 00:01 ET with real timestamp and empty values; keep sample:true until the first real game feeds the corpus. Buckets and rates only — never per-game rows.",
+  "totals": { "games": 0, "rounds": 0, "works": 0, "humans": 0 },
+  "global": { "catchRate": null, "walkFreeRate": null, "looperRate": null,
+    "crownShare": { "sublime": null, "troll": null, "cigar": null, "flag": null, "looper": null } },
+  "history": [], "models": [], "leaderboard": []
+}

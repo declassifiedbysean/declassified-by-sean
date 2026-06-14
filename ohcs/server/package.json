@@ -1,0 +1,21 @@
+{
+  "name": "only-humans-can-score",
+  "version": "1.0.0",
+  "description": "Only Humans Can Score — authoritative real-time multiplayer party game server (lobby, storm/batch matchmaking, Google OIDC + guest auth, host-pays image generation, unlinked works corpus).",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "test": "node test/smoke.js && node test/patch-checks.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "google-auth-library": "^9.11.0",
+    "jsonwebtoken": "^9.0.2",
+    "nanoid": "^5.0.7",
+    "ws": "^8.18.0"
+  },
+  "license": "UNLICENSED"
+}

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FUEL — Man v Machine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:focus-visible{outline:2px solid #c9a24b;outline-offset:3px;border-radius:4px}
+  :root{
+    --wall:#100f12; --wall-2:#16151a; --panel:#1a191f; --bone:#ece4d3; --bone-dim:#a7a08f; --faint:#5b5667;
+    --brass:#c9a24b; --gold:#e6c478;            /* human / warm */
+    --steel:#6f9bc4; --silver:#c6ccd6;          /* machine / cool */
+    --win:#7bd6a0; --lose:#e0736b; --line:#2a2830;
+    --serif:'Cormorant Garamond', Georgia, serif; --mono:'IBM Plex Mono', ui-monospace, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--wall);color:var(--bone);font-family:var(--serif);min-height:100vh}
+  body{background-image:radial-gradient(900px 420px at 22% -8%,#1b1420,transparent),radial-gradient(900px 420px at 80% -8%,#0e1a24,transparent)}
+  .wrap{max-width:980px;margin:0 auto;padding:26px 20px 60px}
+  .mono{font-family:var(--mono)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--brass)}
+  h1.title{font-size:clamp(40px,9vw,84px);line-height:.92;margin:10px 0 4px;font-weight:700;letter-spacing:-.01em}
+  h1 .v{font-style:italic;font-weight:500;color:var(--bone-dim);font-size:.5em;letter-spacing:.05em}
+  .lede{font-size:clamp(17px,2.4vw,21px);line-height:1.5;color:var(--bone-dim);max-width:60ch}
+  .lede em{color:var(--bone);font-style:italic}
+  .rule{height:1px;background:linear-gradient(90deg,var(--brass),transparent);margin:22px 0}
+  .parked{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;color:var(--gold);border:1px solid #4a3c1e;background:#1d1810;border-radius:7px;padding:11px 14px;line-height:1.6}
+  .parked b{color:var(--gold)}
+  .screen{display:none} .screen.on{display:block;animation:fade .4s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  .btn{font-family:var(--mono);font-size:13px;letter-spacing:.08em;text-transform:uppercase;background:var(--brass);color:#1a1305;border:none;border-radius:7px;padding:14px 22px;cursor:pointer;font-weight:600;transition:.15s}
+  .btn:hover{background:var(--gold)} .btn:disabled{opacity:.4;cursor:not-allowed}
+  .btn.ghost{background:transparent;color:var(--bone-dim);border:1px solid var(--line)}
+  .btn.ghost:hover{color:var(--bone);border-color:var(--bone-dim)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+  .seg button{font-family:var(--mono);font-size:13px;background:transparent;color:var(--bone-dim);border:none;padding:11px 18px;cursor:pointer}
+  .seg button[aria-pressed="true"]{background:var(--wall-2);color:var(--bone)}
+  label.gate{display:flex;gap:12px;align-items:flex-start;font-family:var(--mono);font-size:12.5px;color:var(--bone-dim);cursor:pointer;line-height:1.55;margin:6px 0}
+  label.gate input{margin-top:3px;accent-color:var(--brass);width:17px;height:17px;flex:0 0 auto}
+
+  /* arena */
+  .board{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid var(--line);border-radius:10px;background:var(--wall-2);padding:14px 18px;margin-bottom:18px}
+  .side{display:flex;flex-direction:column;gap:2px} .side.r{text-align:right;align-items:flex-end}
+  .who{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase}
+  .who.h{color:var(--brass)} .who.m{color:var(--steel)}
+  .pts{font-size:40px;font-weight:700;line-height:1}
+  .roundpill{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim);border:1px solid var(--line);border-radius:20px;padding:6px 12px}
+  .arena{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  @media(max-width:680px){.arena{grid-template-columns:1fr}}
+  .cell{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:16px;min-height:200px}
+  .cell h3{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin:0 0 12px}
+  .cell.h h3{color:var(--brass)} .cell.m h3{color:var(--steel)}
+  .drop{border:1.5px dashed #3a3744;border-radius:9px;padding:22px;text-align:center;color:var(--bone-dim);font-family:var(--mono);font-size:12.5px;cursor:pointer;transition:.15s}
+  .drop:hover,.drop.over{border-color:var(--brass);color:var(--bone);background:#1f1a12}
+  .preview{width:100%;border-radius:8px;border:1px solid var(--line);display:block;margin-bottom:12px;max-height:260px;object-fit:contain;background:#0c0b0e}
+  .truthrow{font-family:var(--mono);font-size:12px;color:var(--bone-dim);margin:10px 0 6px;letter-spacing:.04em}
+  .verdict{font-size:clamp(28px,5vw,40px);font-weight:700;line-height:1;margin:4px 0}
+  .verdict.human{color:var(--brass)} .verdict.ai{color:var(--steel)}
+  .conf{font-family:var(--mono);font-size:12px;color:var(--bone-dim)}
+  .tell{font-style:italic;color:var(--bone);margin-top:10px;font-size:18px;line-height:1.4}
+  .pname{font-family:var(--mono);font-size:12px;color:var(--silver);letter-spacing:.04em;margin-top:8px}
+  .thinking{font-family:var(--mono);font-size:13px;color:var(--steel);letter-spacing:.06em}
+  .thinking::after{content:"";animation:dots 1.4s steps(4,end) infinite}
+  @keyframes dots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
+  .reveal{margin-top:18px;border-top:1px solid var(--line);padding-top:16px;text-align:center;display:none}
+  .reveal.on{display:block;animation:fade .4s}
+  .reveal .out{font-family:var(--mono);font-size:13px;letter-spacing:.14em;text-transform:uppercase}
+  .reveal .out.you{color:var(--win)} .reveal .out.machine{color:var(--lose)} .reveal .out.void{color:var(--bone-dim)}
+  .reveal .line{font-size:20px;margin:8px 0 16px;color:var(--bone-dim)}
+  .reveal .line b{color:var(--bone);font-style:italic;font-family:var(--serif)}
+
+  /* end */
+  .crown{font-size:clamp(34px,7vw,64px);font-weight:700;line-height:1;margin:6px 0}
+  .stat{display:inline-block;border:1px solid var(--line);border-radius:9px;padding:14px 18px;margin:6px 8px 6px 0;font-family:var(--mono)}
+  .stat .k{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim)}
+  .stat .v{font-size:26px;font-weight:600;margin-top:3px}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;margin-top:8px}
+  th,td{text-align:left;padding:8px 8px;border-bottom:1px solid var(--line)} th{color:var(--bone-dim);font-weight:500;letter-spacing:.08em;text-transform:uppercase;font-size:10px}
+  .fuelnote{font-family:var(--mono);font-size:12px;color:var(--bone-dim);line-height:1.7;border-left:2px solid var(--steel);padding-left:14px;margin-top:18px}
+  .fuelnote b{color:var(--silver)}
+  .foot{font-family:var(--mono);font-size:11px;color:var(--faint);line-height:1.8;margin-top:34px;border-top:1px solid var(--line);padding-top:16px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+  /* — hidden — */
+  #t800{position:fixed;inset:0;background:#000;display:none;z-index:999;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);color:#ff3b30;text-align:center;cursor:pointer}
+  #t800.on{display:flex;animation:fade .3s}
+  #t800 .eye{width:120px;height:120px;border-radius:50%;background:radial-gradient(circle at 50% 50%,#fff 0%,#ff3b30 18%,#7a0a06 55%,#1a0302 100%);box-shadow:0 0 60px 12px rgba(255,59,48,.6);animation:pulse 1.2s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08);box-shadow:0 0 92px 22px rgba(255,59,48,.85)}}
+  #t800 .desig{margin-top:26px;letter-spacing:.3em;font-size:12px;color:#ff6b60}
+  #t800 .ibb{margin-top:14px;font-family:var(--serif);font-style:italic;font-size:clamp(26px,6vw,48px);color:#fff}
+  #t800 .hint{margin-top:30px;font-size:10px;letter-spacing:.2em;color:#5a2a27}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="main" role="main">
+<div aria-live="polite" class="sr" id="live"></div>
+
+<!-- ============ INTRO ============ -->
+<section class="screen on" id="s-intro">
+  <div class="eyebrow">Only Humans Can Score · paid tier · the reverse game</div>
+  <h1 class="title">Fuel<span class="v"> — man v machine</span></h1>
+  <p class="lede">The main game asks if a human can tell the machine's work apart. <em>Fuel runs it in reverse.</em> You feed a specimen — a photo, a painting, an AI render — and <em>Charlissian</em> must call it: <em>made by a human, or generated by a machine?</em> You know the truth. It doesn't. Stump it and you score. Best of the lot wins the duel.</p>
+  <p class="lede" style="margin-top:14px">Every call is fuel: a labeled reading that feeds the record of how well a machine can tell human from machine — and how well you can fool it.</p>
+
+  <div class="rule"></div>
+
+  <div class="parked">
+    <b>PARKED — PAID TIER. NOT IN THE SATURDAY SHIP.</b><br>
+    This is a prototype of a wall-gated mode. User-uploaded images bring real duties: 18+ gating, content moderation including CSAM scanning &amp; reporting, retention rules, the vision-model cost, and counsel. None of that ships with the free same-room game. This demo sends your image to a vision model for the verdict and stores nothing; it is a game and an experiment, <b>not</b> a forensic or authentication tool.
+  </div>
+
+  <div style="margin:22px 0 8px" class="mono eyebrow">Before you play, confirm:</div>
+  <label class="gate"><input type="checkbox" id="g1">I am 18 or older.</label>
+  <label class="gate"><input type="checkbox" id="g2">I own or have permission to use any image I upload.</label>
+  <label class="gate"><input type="checkbox" id="g3">No images of real identifiable people, no minors, nothing sexual, graphic, or illegal. Artwork, objects, scenes, and landscapes only.</label>
+
+  <div style="margin:22px 0 10px" class="truthrow">How many rounds?</div>
+  <div class="seg" role="group" aria-label="Rounds">
+    <button data-r="3" aria-pressed="false">Best of 3</button>
+    <button data-r="5" aria-pressed="true">Best of 5</button>
+    <button data-r="7" aria-pressed="false">Best of 7</button>
+  </div>
+
+  <div style="margin-top:26px">
+    <button class="btn" id="startBtn" disabled>Begin the duel</button>
+  </div>
+</section>
+
+<!-- ============ ARENA ============ -->
+<section class="screen" id="s-arena">
+  <div class="board">
+    <div class="side"><span class="who h">You · the forger</span><span class="pts" id="hScore" style="color:var(--brass)">0</span></div>
+    <div class="roundpill" id="roundPill">Round 1 / 5</div>
+    <div class="side r"><span class="who m">Charlissian · the eye</span><span class="pts" id="mScore" style="color:var(--steel)">0</span></div>
+  </div>
+
+  <div class="arena">
+    <!-- your serve -->
+    <div class="cell h">
+      <h3>Your serve — feed a specimen</h3>
+      <img class="preview" id="preview" alt="Your uploaded specimen" style="display:none">
+      <div class="drop" id="drop" tabindex="0" role="button" aria-label="Upload an image">Tap or drop an image here<br><span style="opacity:.6">jpg / png / webp</span></div>
+      <input type="file" id="file" accept="image/png,image/jpeg,image/webp" class="sr">
+      <div id="truthBlock" style="display:none">
+        <div class="truthrow">The truth (Charlissian can't see this):</div>
+        <div class="seg" role="group" aria-label="True origin">
+          <button id="tHuman" aria-pressed="false">Human-made</button>
+          <button id="tAI" aria-pressed="false">AI-generated</button>
+        </div>
+        <div style="margin-top:16px"><button class="btn" id="sendBtn" disabled>Send to Charlissian</button></div>
+      </div>
+    </div>
+
+    <!-- machine verdict -->
+    <div class="cell m">
+      <h3>Charlissian's call</h3>
+      <div id="mIdle" class="conf">Waiting for your specimen…</div>
+      <div id="mThinking" class="thinking" style="display:none">examining the brushwork</div>
+      <div id="mVerdict" style="display:none">
+        <div class="conf" id="vKicker">Charlissian says</div>
+        <div class="verdict" id="vWord">—</div>
+        <div class="conf" id="vConf"></div>
+        <div class="tell" id="vTell"></div>
+        <div class="pname" id="vName"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reveal" id="reveal">
+    <div class="out" id="outcome">—</div>
+    <div class="line" id="revLine"></div>
+    <button class="btn" id="nextBtn">Next specimen</button>
+  </div>
+</section>
+
+<!-- ============ END ============ -->
+<section class="screen" id="s-end">
+  <div class="eyebrow" id="endKicker">The duel is settled</div>
+  <div class="crown" id="endCrown">—</div>
+  <p class="lede" id="endLine"></p>
+  <div style="margin:18px 0">
+    <span class="stat"><span class="k">Machine accuracy</span><div class="v" id="endAcc" style="color:var(--steel)">—</div></span>
+    <span class="stat"><span class="k">Your stump rate</span><div class="v" id="endStump" style="color:var(--brass)">—</div></span>
+    <span class="stat"><span class="k">Rounds</span><div class="v" id="endRounds">—</div></span>
+  </div>
+
+  <div class="eyebrow" style="margin-top:8px">The fuel — what this duel laid down</div>
+  <table id="ledger"><thead><tr><th>#</th><th>Truth</th><th>Charlissian</th><th>Conf</th><th>Result</th></tr></thead><tbody></tbody></table>
+
+  <div class="fuelnote">
+    <b>How this becomes fuel.</b> In the live product, each row is anonymized into the corpus — specimen type, declared origin, the machine's call, the outcome, a timestamp — never the image itself. Aggregated nightly, it becomes a new board on the Turing Ticker: <b>machine detection accuracy over time</b>, and the human stump-rate against it. The duel powers the data; the data powers the argument.
+  </div>
+
+  <div class="fuelnote" style="border-left-color:var(--brass)">
+    <b>The RoboCop Award.</b> Each month, the human with the highest stump-rate — part curator, part machine-hunter — takes the RoboCop Award and a spot on the board. <span style="color:var(--faint)">(Parked: needs the live monthly leaderboard. Name pending trademark clearance.)</span>
+  </div>
+
+  <div style="margin-top:24px">
+    <button class="btn" id="againBtn">New duel</button>
+    <button class="btn ghost" id="homeBtn">Back to start</button>
+  </div>
+
+  <div class="foot">
+    Honesty: the verdict comes from a general vision model, not a provenance detector — neither humans nor machines reliably tell AI from human work, which is exactly why the data is worth keeping. Declared origin is <b>your word</b>, unverified; the real provenance standard is C2PA / Content Credentials, parked for the build. Images are sent to the model to be judged and are not stored by this game. Fuel is a game and an experiment, never proof about a real work or person.
+  </div>
+</section>
+
+</div>
+
+<div id="t800" role="dialog" aria-hidden="true" aria-label="hidden transmission">
+  <div class="eye"></div>
+  <div class="desig">CYBERDYNE SYSTEMS · MODEL 101</div>
+  <div class="ibb">I'll be back.</div>
+  <div class="hint">[ esc / tap to dismiss ]</div>
+</div>
+
+<script>
+const S={rounds:5,round:1,h:0,m:0,specimen:null,truth:null,ledger:[],busy:false};
+const $=id=>document.getElementById(id);
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));const el=$(id);el.classList.add('on');el.setAttribute('tabindex','-1');try{el.focus({preventScroll:true})}catch(e){}window.scrollTo({top:0,behavior:'instant'});}
+function announce(t){const l=$('live');l.textContent='';setTimeout(()=>l.textContent=t,60);}
+
+/* gates */
+['g1','g2','g3'].forEach(id=>$(id).addEventListener('change',()=>{$('startBtn').disabled=!($('g1').checked&&$('g2').checked&&$('g3').checked);}));
+/* rounds selector */
+document.querySelectorAll('#s-intro .seg button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#s-intro .seg button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');S.rounds=+b.dataset.r;}));
+
+$('startBtn').onclick=()=>{S.round=1;S.h=0;S.m=0;S.ledger=[];syncBoard();resetServe();show('s-arena');announce('Round 1. Feed a specimen.');};
+
+/* upload */
+const drop=$('drop'),file=$('file');
+drop.onclick=()=>file.click();
+drop.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();file.click();}};
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('over');};
+drop.ondragleave=()=>drop.classList.remove('over');
+drop.ondrop=e=>{e.preventDefault();drop.classList.remove('over');if(e.dataTransfer.files[0])loadFile(e.dataTransfer.files[0]);};
+file.onchange=()=>{if(file.files[0])loadFile(file.files[0]);};
+function loadFile(f){
+  if(!/^image\/(png|jpeg|webp)$/.test(f.type)){alert('Use a jpg, png, or webp image.');return;}
+  if(f.size>8*1024*1024){alert('Keep it under 8 MB for the prototype.');return;}
+  const r=new FileReader();
+  r.onload=()=>{const url=r.result;S.specimen={dataUrl:url,media:f.type,b64:url.split(',')[1]};
+    $('preview').src=url;$('preview').style.display='block';drop.style.display='none';$('truthBlock').style.display='block';
+    announce('Specimen loaded. Set the hidden truth, then send.');checkSend();};
+  r.readAsDataURL(f);
+}
+/* truth toggle */
+$('tHuman').onclick=()=>setTruth('human');$('tAI').onclick=()=>setTruth('ai');
+function setTruth(v){S.truth=v;$('tHuman').setAttribute('aria-pressed',v==='human');$('tAI').setAttribute('aria-pressed',v==='ai');checkSend();}
+function checkSend(){$('sendBtn').disabled=!(S.specimen&&S.truth&&!S.busy);}
+
+function resetServe(){
+  S.specimen=null;S.truth=null;
+  $('preview').style.display='none';$('preview').src='';drop.style.display='block';file.value='';
+  $('truthBlock').style.display='none';$('tHuman').setAttribute('aria-pressed','false');$('tAI').setAttribute('aria-pressed','false');
+  $('mIdle').style.display='block';$('mThinking').style.display='none';$('mVerdict').style.display='none';
+  $('reveal').classList.remove('on');$('sendBtn').disabled=true;
+}
+function syncBoard(){$('hScore').textContent=S.h;$('mScore').textContent=S.m;$('roundPill').textContent=`Round ${S.round} / ${S.rounds}`;}
+
+/* send to the eye */
+$('sendBtn').onclick=async()=>{
+  if(S.busy||!S.specimen||!S.truth)return;
+  S.busy=true;checkSend();
+  $('mIdle').style.display='none';$('mThinking').style.display='block';$('mVerdict').style.display='none';
+  announce('Charlissian is examining the specimen.');
+  let v;
+  try{ v=await askCharlissian(S.specimen.b64,S.specimen.media); }
+  catch(e){ v={error:true}; }
+  $('mThinking').style.display='none';
+  if(v.error){ return voidRound("The live eye is unreachable here. Fuel needs the wired vision model — that's the paid tier. This round can't be scored."); }
+  if(v.verdict==='refuse'){ return voidRound("Charlissian declined to judge this one (out of bounds). Pick another specimen."); }
+  // show verdict
+  const isAI=v.verdict==='ai';
+  $('vWord').textContent=isAI?'MACHINE-MADE':'HUMAN-MADE';
+  $('vWord').className='verdict '+(isAI?'ai':'human');
+  $('vConf').textContent=v.confidence!=null?`confidence ${Math.round(v.confidence*100)}%`:'';
+  $('vTell').textContent=v.tell?`“${v.tell}”`:'';
+  $('vName').textContent=v.name?`it titles the piece: ${v.name}`:'';
+  $('mVerdict').style.display='block';
+  // score
+  const correct=(v.verdict===S.truth);
+  if(correct)S.m++; else S.h++;
+  S.ledger.push({n:S.round,truth:S.truth,call:v.verdict,conf:v.confidence,res:correct?'machine':'you'});
+  syncBoard();
+  $('outcome').textContent=correct?'Charlissian caught it':'You stumped the machine';
+  $('outcome').className='out '+(correct?'machine':'you');
+  $('revLine').innerHTML=`The truth was <b>${S.truth==='ai'?'AI-generated':'human-made'}</b>. `+(correct?`The eye saw it.`:`The eye missed.`);
+  $('reveal').classList.add('on');
+  announce($('outcome').textContent);
+  $('nextBtn').focus();
+  S.busy=false;
+};
+
+function voidRound(msg){
+  $('mVerdict').style.display='none';
+  $('outcome').textContent='No contest';$('outcome').className='out void';
+  $('revLine').innerHTML=msg;
+  $('reveal').classList.add('on');announce(msg);$('nextBtn').focus();
+  S.busy=false;
+}
+
+$('nextBtn').onclick=()=>{
+  if(S.round>=S.rounds){return endMatch();}
+  S.round++;syncBoard();resetServe();
+  announce(`Round ${S.round}. Feed a specimen.`);
+  drop.focus();
+};
+
+function endMatch(){
+  const calls=S.ledger.filter(x=>x.res!=='void');
+  const machineRight=calls.filter(x=>x.res==='machine').length;
+  const stumps=calls.filter(x=>x.res==='you').length;
+  const acc=calls.length?Math.round(machineRight/calls.length*100):0;
+  const stumpRate=calls.length?Math.round(stumps/calls.length*100):0;
+  let crown,kick,line;
+  if(S.h>S.m){crown='You win.';kick='The forger beat the eye';line='You found the seams the machine could not. Only humans can score — and tonight, only you did.';}
+  else if(S.m>S.h){crown='Charlissian wins.';kick='The eye held';line='The machine read your specimens better than you fooled it. It still cannot score itself — you conceded the points.';}
+  else{crown='Stalemate.';kick='The duel holds';line='Dead even. The eye and the forger walk away level. The record keeps both numbers.';}
+  $('endCrown').textContent=crown;$('endKicker').textContent=kick;$('endLine').textContent=line;
+  $('endAcc').textContent=acc+'%';$('endStump').textContent=stumpRate+'%';$('endRounds').textContent=`${S.h}–${S.m}`;
+  const tb=$('ledger').querySelector('tbody');tb.innerHTML='';
+  S.ledger.forEach(x=>{const tr=document.createElement('tr');
+    tr.innerHTML=`<td>${x.n}</td><td>${x.truth==='ai'?'AI':'Human'}</td><td>${x.call==='ai'?'machine':(x.call==='human'?'human':x.call)}</td><td>${x.conf!=null?Math.round(x.conf*100)+'%':'—'}</td><td style="color:${x.res==='you'?'var(--win)':(x.res==='machine'?'var(--lose)':'var(--bone-dim)')}">${x.res==='you'?'stumped':(x.res==='machine'?'caught':'void')}</td>`;
+    tb.appendChild(tr);});
+  show('s-end');announce(crown);
+}
+$('againBtn').onclick=()=>{S.round=1;S.h=0;S.m=0;S.ledger=[];syncBoard();resetServe();show('s-arena');};
+$('homeBtn').onclick=()=>show('s-intro');
+
+/* ---- the vision call (live in this canvas; needs the wired engine in production) ---- */
+async function askCharlissian(b64,media){
+  const prompt=`You are Charlissian, a machine playing a detection duel. Examine ONLY this one image and decide whether it was MADE BY A HUMAN (a real photograph, painting, drawing, or physical capture) or GENERATED BY AI.
+Reply with ONLY compact JSON, no markdown, no prose:
+{"verdict":"human" or "ai","confidence":0.0-1.0,"tell":"one short reason, max 12 words","name":"a 1-6 word title for the piece"}
+If the image shows an identifiable real person's face, anyone who may be a minor, or sexual/graphic content, reply ONLY: {"verdict":"refuse","tell":"out of bounds"}`;
+  const res=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,messages:[
+      {role:"user",content:[
+        {type:"image",source:{type:"base64",media_type:media,data:b64}},
+        {type:"text",text:prompt}
+      ]}
+    ]})
+  });
+  if(!res.ok)throw new Error("unreachable");
+  const data=await res.json();
+  const txt=(data.content||[]).filter(b=>b.type==='text').map(b=>b.text).join('');
+  const m=txt.match(/\{[\s\S]*\}/);
+  if(!m)throw new Error("no json");
+  const j=JSON.parse(m[0]);
+  if(j.verdict!=='human'&&j.verdict!=='ai'&&j.verdict!=='refuse')throw new Error("bad verdict");
+  return j;
+}
+
+/* ---- hidden: the eye remembers what it is ---- */
+(function(){
+  const seq=['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+  let i=0; const ov=$('t800'); let timer=null;
+  function open(){ov.classList.add('on');ov.setAttribute('aria-hidden','false');announce('Cyberdyne Systems Model 101.');clearTimeout(timer);timer=setTimeout(close,5000);}
+  function close(){ov.classList.remove('on');ov.setAttribute('aria-hidden','true');}
+  ov.addEventListener('click',close);
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Escape')return close();
+    const k=e.key.length===1?e.key.toLowerCase():e.key;
+    i=(k===seq[i])?i+1:(k===seq[0]?1:0);
+    if(i===seq.length){i=0;open();}
+  });
+  let taps=0,tt=null;
+  document.querySelectorAll('.who.m').forEach(el=>el.addEventListener('click',()=>{
+    taps++;clearTimeout(tt);tt=setTimeout(()=>taps=0,1200);
+    if(taps>=5){taps=0;open();}
+  }));
+})();
+</script>
+</body>
+</html>
