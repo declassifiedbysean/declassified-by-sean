@@ -63,9 +63,15 @@
       '<p style="opacity:.8">— Sean. Now go read the record, then go vote.</p>');
   }
 
+  // ── DAVID PAKMAN: a shoutout to sourced, independent commentary ──
+  function pakman() {
+    toast('🎙 <b>DAVID PAKMAN EDITION</b> — independent, sourced, unbothered.<br>Cite like him: claim, evidence, on the record. The opposite of a hot take.', '#0a142e', '#eaf0ff', '#3c5ca8');
+  }
+
   var EGGS = [
     { re: /(usa|patriots)$/, fn: usa },
     { re: /(whitehouse|1600pennsylvania|1600penn)$/, fn: whitehouse },
+    { re: /(davidpakman|pakman)$/, fn: pakman },
     { re: /voteblue$/, fn: voteblue }
   ];
   document.addEventListener('keydown', function (e) {
