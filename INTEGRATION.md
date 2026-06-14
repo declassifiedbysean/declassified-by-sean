@@ -32,7 +32,8 @@ python3 tools/build-site.py
 ```
 
 That regenerates the homepage game cards, the footer Games list on every page
-that carries the markers, and **appends the `/act6` Netlify redirect**
+that carries the markers, and **appends the `/act6` pretty-URL redirect to both
+`_redirects` (Cloudflare Pages — the live deploy) and `netlify.toml`**
 automatically. Commit. Done — no HTML cloning, no hand-edited lists.
 
 `status` values: `"live"` (default, no badge) · `"new"` (green badge) ·
@@ -80,7 +81,7 @@ work unchanged — migrate them opportunistically, not wholesale.
 | File | Role |
 |---|---|
 | `games.json` | The registry — the only file you edit to add/retire a game |
-| `tools/build-site.py` | Renders marker regions + syncs Netlify redirects |
+| `tools/build-site.py` | Renders marker regions + syncs `_redirects` (Cloudflare) and `netlify.toml` redirects |
 | `assets/site.css` | Shared design system |
 | `assets/site.js` | Runtime nav/footer shell + registry helper |
 | `INTEGRATION.md` | This guide |
