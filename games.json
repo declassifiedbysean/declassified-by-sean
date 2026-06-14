@@ -85,6 +85,7 @@
   "resources": [
     { "label": "Glossary", "href": "glossary.html", "blurb": "Every pattern, scale, and term — the Phillips Pattern Library and the Bogost Citation Scale, defined." },
     { "label": "Dossier", "href": "dossier.html", "blurb": "The visual image archive." },
+    { "label": "Lesson Mode", "href": "charlie-kirk.html", "blurb": "How the Record works — the fact-checking engine shown in the open. The empty dossier is the point: no claim on assertion alone." },
     { "label": "About", "href": "about.html" },
     { "label": "Press Kit", "href": "press.html" },
     { "label": "Contact", "href": "contact.html" }
