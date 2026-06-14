@@ -87,6 +87,7 @@
     { "label": "Dossier", "href": "dossier.html", "blurb": "The visual image archive." },
     { "label": "Lesson Mode", "href": "charlie-kirk.html", "blurb": "How the Record works — the fact-checking engine shown in the open. The empty dossier is the point: no claim on assertion alone." },
     { "label": "Current Events: The Epstein Files", "href": "epstein.html", "blurb": "Lesson Mode, applied to a live story: how to read the actual primary documents without getting played — and why named ≠ accused ≠ guilty." },
+    { "label": "Current Events: Project 2025", "href": "project2025.html", "blurb": "Lesson Mode: it's a public 900-page document. Where to find it, how to read it, and how to cite the page instead of the meme — from either side." },
     { "label": "About", "href": "about.html" },
     { "label": "Press Kit", "href": "press.html" },
     { "label": "Contact", "href": "contact.html" }
