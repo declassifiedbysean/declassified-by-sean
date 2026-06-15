@@ -77,13 +77,29 @@
     toast('📋 <b>DEDICATION — Elizabeth Warren.</b> “I have a plan for that.” A teacher who reads the fine print and shows the math. <br>Agree or not, the habit is the lesson: cite it, source it, do the homework. — Sean’s opinion, on Sean’s site.', '#0a142e', '#eaf0ff', '#3c5ca8');
   }
 
+  // ── Bernie Sanders: a dedication (owner's opinion) ──
+  function bernie() {
+    toast('🧤 <b>DEDICATION — Bernie Sanders.</b> Same mittens, same message, for forty years: consistency is its own kind of receipt. <br>Agree or not, he shows his work and never reads the room for permission. — Sean’s opinion, on Sean’s site.', '#0a142e', '#eaf0ff', '#3c5ca8');
+  }
+  // ── Barack Obama: a playful note (owner's opinion) ──
+  function barack() {
+    toast('🎤 <b>HEY BARACK — call me, I’ll write you a good speech.</b> (You won’t need it; you’re you.) <br>The audacity of hope wasn’t a slogan, it was a thesis: cite the dream, then do the homework. — Sean’s opinion, on Sean’s site.', '#0a142e', '#eaf0ff', '#3c5ca8');
+  }
+  // ── "TDS": reclaim the slur as literacy (owner's opinion) ──
+  function tds() {
+    toast('🧠 <b>“TDS”?</b> — I’ve got it so bad I built a six-act fact-check archive. Sue me. <br>Here’s what the label is built to dodge: caring about the documented record isn’t a syndrome — it’s literacy. Call it what you like; the citations are still there. — Sean, on Sean’s site.', '#16130a', '#f0e6c8', '#8a6f2e');
+  }
+
   var EGGS = [
     { re: /(usa|patriots)$/, fn: usa },
     { re: /(whitehouse|1600pennsylvania|1600penn)$/, fn: whitehouse },
     { re: /(davidpakman|pakman)$/, fn: pakman },
     { re: /voteblue$/, fn: voteblue },
-    { re: /aoc$/, fn: aoc },
-    { re: /(warren|elizabethwarren)$/, fn: warren }
+    { re: /(aoc|alexandriaocasiocortez|ocasiocortez)$/, fn: aoc },
+    { re: /(warren|elizabethwarren)$/, fn: warren },
+    { re: /(bernie|berniesanders|sanders)$/, fn: bernie },
+    { re: /(barack|obama|callmebarack)$/, fn: barack },
+    { re: /tds$/, fn: tds }
   ];
   document.addEventListener('keydown', function (e) {
     if (!e.key || e.key.length !== 1 || e.metaKey || e.ctrlKey || e.altKey) return;
