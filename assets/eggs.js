@@ -68,11 +68,22 @@
     toast('🎙 <b>DAVID PAKMAN EDITION</b> — independent, sourced, unbothered.<br>Cite like him: claim, evidence, on the record. The opposite of a hot take.', '#0a142e', '#eaf0ff', '#3c5ca8');
   }
 
+  // ── AOC: a dedication (the owner's opinion, on the owner's partisan site) ──
+  function aoc() {
+    toast('🌹 <b>DEDICATION — AOC.</b> Alexandria Ocasio-Cortez: receipts over vibes, works the room she came from, makes the complicated plain. <br>Whatever you think of the politics, that’s a clinic in showing your work. — Sean’s opinion, on Sean’s site.', '#0a142e', '#eaf0ff', '#3c5ca8');
+  }
+  // ── Elizabeth Warren: a dedication (owner's opinion) ──
+  function warren() {
+    toast('📋 <b>DEDICATION — Elizabeth Warren.</b> “I have a plan for that.” A teacher who reads the fine print and shows the math. <br>Agree or not, the habit is the lesson: cite it, source it, do the homework. — Sean’s opinion, on Sean’s site.', '#0a142e', '#eaf0ff', '#3c5ca8');
+  }
+
   var EGGS = [
     { re: /(usa|patriots)$/, fn: usa },
     { re: /(whitehouse|1600pennsylvania|1600penn)$/, fn: whitehouse },
     { re: /(davidpakman|pakman)$/, fn: pakman },
-    { re: /voteblue$/, fn: voteblue }
+    { re: /voteblue$/, fn: voteblue },
+    { re: /aoc$/, fn: aoc },
+    { re: /(warren|elizabethwarren)$/, fn: warren }
   ];
   document.addEventListener('keydown', function (e) {
     if (!e.key || e.key.length !== 1 || e.metaKey || e.ctrlKey || e.altKey) return;
