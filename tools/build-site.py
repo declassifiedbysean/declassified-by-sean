@@ -84,7 +84,20 @@ def main():
             n=n.replace('[[redirects]]\n  from = "/*"', block+'[[redirects]]\n  from = "/*"',1)
             added.append(r)
     if added: open(nf,'w',encoding='utf-8').write(n)
+    # sync Cloudflare _redirects for games — Pages serves this file, not netlify.toml,
+    # so the live deploy is now the one that reads it. Insert before the /* 404 catch-all.
+    cf=os.path.join(ROOT,'_redirects'); cadded=[]
+    if os.path.exists(cf):
+        c=open(cf,encoding='utf-8').read()
+        for g in REG['games']:
+            r=g.get('redirect')
+            if r and not re.search(r'(?m)^\s*'+re.escape(r)+r'\s', c):
+                line=f'{r:<14} /{g["href"]:<27} 200\n'
+                c=re.sub(r'(?m)^(/\*\s)', line+r'\1', c, count=1)
+                cadded.append(r)
+        if cadded: open(cf,'w',encoding='utf-8').write(c)
     print('regions rendered in:', ', '.join(changed) or '(none)')
-    print('redirects added:', ', '.join(added) or '(none)')
+    print('netlify redirects added:', ', '.join(added) or '(none)')
+    print('cloudflare redirects added:', ', '.join(cadded) or '(none)')
 
 if __name__=='__main__': main()
