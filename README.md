@@ -48,6 +48,7 @@ No account required. Free to play. Works on any device.
 ```
 index.html              — Main hub, all acts
 about.html              — About the platform and founder
+hire.html               — Consulting services: insurance, web dev, research, sales
 press.html              — Full media kit and press FAQ
 contact.html            — Contact page
 privacy.html            — Privacy policy
