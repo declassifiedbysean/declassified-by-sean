@@ -10,7 +10,13 @@ It rewrites only the content between marker comments:
     <!-- BEGIN:RESOURCES -->...<!-- END:RESOURCES -->
     <!-- BEGIN:FOOTER -->...<!-- END:FOOTER -->
     <!-- BEGIN:NAV -->...<!-- END:NAV -->
+    <!-- BEGIN:SEO -->...<!-- END:SEO -->   (auto-inserted before </head>)
 Everything outside the markers is yours; the tool never touches it.
+
+The SEO region derives canonical URL, Open Graph + Twitter card tags, and
+JSON-LD structured data from each page's own <title> and meta description —
+edit those and rerun; never hand-edit the generated tags. The share image
+lives at assets/og-card.png (source: tools/og-card-source.html).
 Add a game = one entry in games.json + rerun. It also syncs netlify.toml
 redirects for any game with a "redirect" field.
 """
@@ -60,6 +66,48 @@ def footer_html():
             f'</div><div class="meta">{e(REG["site"]["name"])} by {e(REG["site"]["author"])} · '
             f'Fact-Checking Game Series · {e(REG["site"]["tagline"])}</div></div></footer>')
 
+def seo_html(page, text):
+    site = REG['site']; base = site['url'].rstrip('/')
+    m = re.search(r'<title>(.*?)</title>', text, re.S)
+    title = html.unescape(m.group(1).strip()) if m else site['name']
+    m = re.search(r'<meta name="description" content="([^"]*)"', text)
+    desc = html.unescape(m.group(1)) if m else site['tagline']
+    url, img = f'{base}/{page}', f'{base}/assets/og-card.png'
+    lines = [
+        f'<link rel="canonical" href="{url}">',
+        '<meta property="og:type" content="website">',
+        f'<meta property="og:site_name" content="{e(site["name"])}">',
+        f'<meta property="og:title" content="{e(title)}">',
+        f'<meta property="og:description" content="{e(desc)}">',
+        f'<meta property="og:url" content="{url}">',
+        f'<meta property="og:image" content="{img}">',
+        '<meta property="og:image:width" content="1200">',
+        '<meta property="og:image:height" content="630">',
+        f'<meta property="og:image:alt" content="{e(site["name"])} — {e(site["tagline"])}">',
+        '<meta name="twitter:card" content="summary_large_image">',
+        f'<meta name="twitter:title" content="{e(title)}">',
+        f'<meta name="twitter:description" content="{e(desc)}">',
+        f'<meta name="twitter:image" content="{img}">',
+    ]
+    game = next((g for g in REG['games'] if g['href'] == page), None)
+    if game:
+        ld = {'@context': 'https://schema.org', '@type': 'VideoGame',
+              'name': f"{site['name']} — {game['act']}: {game['title']}",
+              'url': url, 'image': img, 'description': game['blurb'],
+              'genre': 'Educational', 'gamePlatform': 'Web Browser',
+              'playMode': 'SinglePlayer', 'isAccessibleForFree': True,
+              'author': {'@type': 'Person', 'name': site['author']}}
+    elif page == 'index.html':
+        ld = {'@context': 'https://schema.org', '@type': 'WebSite',
+              'name': site['name'], 'url': base, 'description': site['tagline'],
+              'author': {'@type': 'Person', 'name': site['author']}}
+    else:
+        ld = None
+    if ld:
+        lines.append('<script type="application/ld+json">'
+                     + json.dumps(ld, ensure_ascii=False) + '</script>')
+    return '\n'.join(lines)
+
 def splice(text, region, body):
     pat=re.compile(r'(<!-- BEGIN:'+region+r' -->).*?(<!-- END:'+region+r' -->)', re.S)
     if not pat.search(text): return text, False
@@ -70,8 +118,11 @@ def main():
     for path in glob.glob(os.path.join(ROOT,'*.html')):
         page=os.path.basename(path)
         t=open(path,encoding='utf-8').read(); orig=t; hit=False
+        if page!='404.html' and '<!-- BEGIN:SEO -->' not in t and '</head>' in t:
+            t=t.replace('</head>','<!-- BEGIN:SEO -->\n<!-- END:SEO -->\n</head>',1)
         for region, body in (('GAMES',games_html()),('RESOURCES',resources_html()),
-                             ('NAV',nav_html(page)),('FOOTER',footer_html())):
+                             ('NAV',nav_html(page)),('FOOTER',footer_html()),
+                             ('SEO',seo_html(page,t))):
             t,h=splice(t,region,body); hit=hit or h
         if hit and t!=orig:
             open(path,'w',encoding='utf-8').write(t); changed.append(page)

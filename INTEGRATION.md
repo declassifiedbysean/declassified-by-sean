@@ -90,3 +90,32 @@ work unchanged — migrate them opportunistically, not wholesale.
 - Footer "Games" list was missing **Act III** on every page that carried it.
 - `netlify.toml` had **no `/act3` redirect** (page existed, short URL 404'd);
   `/dossier` had none either. The builder now syncs these from the registry.
+
+
+---
+
+## The Knock + Discord community hub
+
+The site has a doorbell. Every page shows a **🚪 Knock** button (assets/knock.js).
+A player taps it, optionally leaves a line, and the knock is delivered in real time
+to the Discord community server via a Cloudflare Pages Function (functions/api/knock.js).
+After knocking, the player sees a **"Come play a game with me →"** button that
+invites them into the Discord. Discord IS the login — accounts, identity,
+screen-share for playing together, all free, while the site stays no-signup.
+
+### Wiring it up (one time, ~5 minutes, free)
+
+1. **Create the Discord server** (in the Discord app): add channels like
+   `#welcome`, `#knocks`, `#play-together`, `#the-record`.
+2. **Create the webhook**: `#knocks` channel → Settings → Integrations →
+   Webhooks → New Webhook → Copy Webhook URL.
+3. **Set the secret**: Cloudflare dashboard → Pages → declassified-by-sean →
+   Settings → Variables and Secrets → add secret `KNOCK_WEBHOOK` = webhook URL.
+   (Never commit this URL to the repo.)
+4. **Publish the invite**: Discord → Invite → set to never expire → paste the
+   invite URL into `games.json` → `site.discord`. Commit. The widget picks it
+   up automatically.
+
+Until steps 3–4 are done the widget still works — it just tells players the
+bell isn't wired yet. Abuse guards: honeypot field, 10-minute per-browser
+cooldown, 280-char notes, control characters stripped, @mentions disabled.
