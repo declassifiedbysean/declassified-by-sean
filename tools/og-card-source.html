@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { width:1200px; height:630px; overflow:hidden;
+    background:#00274C; color:#FFCB05;
+    font-family:'Courier New', Courier, monospace;
+    position:relative; }
+  /* scanline texture */
+  body::before { content:''; position:absolute; inset:0;
+    background:repeating-linear-gradient(0deg, rgba(255,255,255,.025) 0 1px, transparent 1px 4px); }
+  .frame { position:absolute; inset:26px; border:3px solid #FFCB05; }
+  .frame::after { content:''; position:absolute; inset:6px; border:1px solid rgba(255,203,5,.45); }
+  .inner { position:absolute; inset:90px 80px; display:flex; flex-direction:column;
+    justify-content:center; align-items:center; text-align:center; gap:24px; }
+  .stamp { border:2px solid #FFCB05; padding:8px 22px; letter-spacing:.45em;
+    font-size:20px; font-weight:bold; text-transform:uppercase; }
+  h1 { font-size:100px; letter-spacing:.06em; font-weight:bold;
+    text-shadow:4px 4px 0 rgba(0,0,0,.55); }
+  h1 .folder { font-size:80px; vertical-align:middle; margin-right:16px; }
+  .tag { color:#fff; font-size:28px; letter-spacing:.04em; max-width:880px; line-height:1.4; }
+  .meta { color:rgba(255,203,5,.85); font-size:19px; letter-spacing:.16em; text-transform:uppercase; }
+  .corner { position:absolute; font-size:18px; letter-spacing:.3em; color:rgba(255,255,255,.6); white-space:nowrap; }
+  .tl { top:18px; left:26px; } .tr { top:18px; right:26px; }
+  .bl { bottom:18px; left:26px; } .br { bottom:18px; right:26px; }
+</style></head>
+<body>
+  <div class="frame">
+    <span class="corner tl">FILE 2015–2026</span>
+    <span class="corner tr">61 CLAIMS</span>
+    <span class="corner bl">DECLASSIFIEDBYSEAN.COM</span>
+    <span class="corner br">FREE · NO SIGNUP</span>
+  </div>
+  <div class="inner">
+    <span class="stamp">Field Intelligence</span>
+    <h1><span class="folder">📁</span>DECLASSIFIED</h1>
+    <p class="tag">Fact-check the record. The walk from headline to source, made playable.</p>
+    <p class="meta">Six acts · Primary sources · The record is the arbiter</p>
+  </div>
+</body></html>
