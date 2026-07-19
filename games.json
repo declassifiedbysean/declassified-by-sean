@@ -29,6 +29,10 @@
       "href": "press.html"
     },
     {
+      "label": "Hire Me",
+      "href": "hire.html"
+    },
+    {
       "label": "Contact",
       "href": "contact.html"
     }
@@ -115,6 +119,11 @@
     {
       "label": "About",
       "href": "about.html"
+    },
+    {
+      "label": "Hire Me — Consulting",
+      "href": "hire.html",
+      "blurb": "Insurance (licensed P&C, all 50 states + D.C.), web development, primary-source research, and sales consulting. This site is the portfolio."
     },
     {
       "label": "Press Kit",
