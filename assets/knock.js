@@ -13,13 +13,10 @@
   var LS_KEY = 'declassified_last_knock';
 
   var css =
-    '#dk-btn{position:fixed;right:14px;bottom:14px;z-index:99990;background:#00274C;color:#FFCB05;' +
-    'border:2px solid #FFCB05;border-radius:50%;width:44px;height:44px;padding:0;font-size:20px;line-height:1;' +
-    'cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.4);opacity:0;pointer-events:none;transform:translateY(8px);' +
-    'transition:opacity .4s,transform .4s;}' +
-    '#dk-btn.dk-show{opacity:.6;pointer-events:auto;transform:none;}' +
-    '#dk-btn.dk-show:hover,#dk-btn.dk-show:focus{opacity:1;background:#FFCB05;color:#00274C;}' +
-    '#dk-panel{position:fixed;right:18px;bottom:74px;z-index:99991;width:min(320px,calc(100vw - 36px));' +
+    '#dk-btn{position:fixed;right:10px;bottom:6px;z-index:99990;background:none;border:0;padding:4px;' +
+    'font-size:18px;line-height:1;cursor:pointer;opacity:.22;filter:grayscale(35%);transition:opacity .3s;}' +
+    '#dk-btn:hover,#dk-btn:focus{opacity:1;filter:none;}' +
+    '#dk-panel{position:fixed;right:14px;bottom:40px;z-index:99991;width:min(320px,calc(100vw - 36px));' +
     'background:#00274C;color:#F0EAD2;border:2px solid #FFCB05;border-radius:10px;padding:16px;' +
     'font-family:"Share Tech Mono",monospace;font-size:13px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.55);}' +
     '#dk-panel h4{margin:0 0 8px;color:#FFCB05;font-size:14px;letter-spacing:.12em;text-transform:uppercase;}' +
@@ -33,8 +30,8 @@
     'border-radius:6px;padding:8px 12px;text-decoration:none;font-weight:bold;letter-spacing:.05em;}' +
     '#dk-hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;}' +
     '@media (max-width:600px){#dk-panel textarea{font-size:16px;}' +
-    '#dk-btn{right:12px;bottom:calc(76px + env(safe-area-inset-bottom));}' +
-    '#dk-panel{right:12px;bottom:calc(132px + env(safe-area-inset-bottom));}}';
+    '#dk-btn{right:8px;bottom:calc(4px + env(safe-area-inset-bottom));}' +
+    '#dk-panel{right:12px;bottom:calc(48px + env(safe-area-inset-bottom));}}';
 
   function el(tag, attrs, html) {
     var e = document.createElement(tag);
@@ -49,14 +46,7 @@
     document.head.appendChild(style);
 
     var btn = el('button', { id: 'dk-btn', type: 'button', 'aria-label': 'Knock — let Sean know you played', title: 'Knock — let Sean know you played' }, '🚪');
-    document.body.appendChild(btn);
-    // stay invisible until the visitor has actually engaged: scrolled a bit, or 20s on page
-    var shown = false;
-    function reveal() { if (!shown) { shown = true; btn.classList.add('dk-show'); } }
-    window.addEventListener('scroll', function () { if (window.scrollY > 400) reveal(); }, { passive: true });
-    // game pages swap screens in place and barely scroll — reveal on first interaction instead
-    window.addEventListener('pointerdown', function first() { window.removeEventListener('pointerdown', first); setTimeout(reveal, 1200); });
-    setTimeout(reveal, 20000);
+    document.body.appendChild(btn); // the egg: a faint door at the edge of the page, for those who notice
     var panel = null;
 
     function close() { if (panel) { panel.remove(); panel = null; } }
