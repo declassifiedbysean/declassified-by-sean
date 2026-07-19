@@ -13,11 +13,10 @@
   var LS_KEY = 'declassified_last_knock';
 
   var css =
-    '#dk-btn{position:fixed;right:18px;bottom:18px;z-index:99990;background:#00274C;color:#FFCB05;' +
-    'border:2px solid #FFCB05;border-radius:999px;padding:10px 18px;font-family:"Share Tech Mono",monospace;' +
-    'font-size:14px;letter-spacing:.08em;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.45);}' +
-    '#dk-btn:hover{background:#FFCB05;color:#00274C;}' +
-    '#dk-panel{position:fixed;right:18px;bottom:74px;z-index:99991;width:min(320px,calc(100vw - 36px));' +
+    '#dk-btn{position:fixed;right:10px;bottom:6px;z-index:99990;background:none;border:0;padding:4px;' +
+    'font-size:18px;line-height:1;cursor:pointer;opacity:.22;filter:grayscale(35%);transition:opacity .3s;}' +
+    '#dk-btn:hover,#dk-btn:focus{opacity:1;filter:none;}' +
+    '#dk-panel{position:fixed;right:14px;bottom:40px;z-index:99991;width:min(320px,calc(100vw - 36px));' +
     'background:#00274C;color:#F0EAD2;border:2px solid #FFCB05;border-radius:10px;padding:16px;' +
     'font-family:"Share Tech Mono",monospace;font-size:13px;line-height:1.5;box-shadow:0 8px 24px rgba(0,0,0,.55);}' +
     '#dk-panel h4{margin:0 0 8px;color:#FFCB05;font-size:14px;letter-spacing:.12em;text-transform:uppercase;}' +
@@ -31,8 +30,8 @@
     'border-radius:6px;padding:8px 12px;text-decoration:none;font-weight:bold;letter-spacing:.05em;}' +
     '#dk-hp{position:absolute;left:-9999px;opacity:0;height:0;overflow:hidden;}' +
     '@media (max-width:600px){#dk-panel textarea{font-size:16px;}' +
-    '#dk-btn{right:12px;bottom:calc(12px + env(safe-area-inset-bottom));}' +
-    '#dk-panel{right:12px;bottom:calc(68px + env(safe-area-inset-bottom));}}';
+    '#dk-btn{right:8px;bottom:calc(4px + env(safe-area-inset-bottom));}' +
+    '#dk-panel{right:12px;bottom:calc(48px + env(safe-area-inset-bottom));}}';
 
   function el(tag, attrs, html) {
     var e = document.createElement(tag);
@@ -46,8 +45,8 @@
     style.textContent = css;
     document.head.appendChild(style);
 
-    var btn = el('button', { id: 'dk-btn', type: 'button', 'aria-label': 'Knock — let Sean know you played' }, '🚪 Knock');
-    document.body.appendChild(btn);
+    var btn = el('button', { id: 'dk-btn', type: 'button', 'aria-label': 'Knock — let Sean know you played', title: 'Knock — let Sean know you played' }, '🚪');
+    document.body.appendChild(btn); // the egg: a faint door at the edge of the page, for those who notice
     var panel = null;
 
     function close() { if (panel) { panel.remove(); panel = null; } }
