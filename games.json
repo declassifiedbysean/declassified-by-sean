@@ -4,15 +4,34 @@
     "name": "DECLASSIFIED",
     "author": "Sean McKendry",
     "tagline": "Fact-check the record. The walk from headline to source, made playable.",
-    "url": "https://declassifiedbysean.com"
+    "url": "https://declassifiedbysean.com",
+    "discord": ""
   },
   "nav": [
-    { "label": "Home", "href": "index.html" },
-    { "label": "About", "href": "about.html" },
-    { "label": "Glossary", "href": "glossary.html" },
-    { "label": "Dossier", "href": "dossier.html" },
-    { "label": "Press", "href": "press.html" },
-    { "label": "Contact", "href": "contact.html" }
+    {
+      "label": "Home",
+      "href": "index.html"
+    },
+    {
+      "label": "About",
+      "href": "about.html"
+    },
+    {
+      "label": "Glossary",
+      "href": "glossary.html"
+    },
+    {
+      "label": "Dossier",
+      "href": "dossier.html"
+    },
+    {
+      "label": "Press",
+      "href": "press.html"
+    },
+    {
+      "label": "Contact",
+      "href": "contact.html"
+    }
   ],
   "games": [
     {
@@ -83,14 +102,37 @@
     }
   ],
   "resources": [
-    { "label": "Glossary", "href": "glossary.html", "blurb": "Every pattern, scale, and term — the Phillips Pattern Library and the Bogost Citation Scale, defined." },
-    { "label": "Dossier", "href": "dossier.html", "blurb": "The visual image archive." },
-    { "label": "About", "href": "about.html" },
-    { "label": "Press Kit", "href": "press.html" },
-    { "label": "Contact", "href": "contact.html" }
+    {
+      "label": "Glossary",
+      "href": "glossary.html",
+      "blurb": "Every pattern, scale, and term — the Phillips Pattern Library and the Bogost Citation Scale, defined."
+    },
+    {
+      "label": "Dossier",
+      "href": "dossier.html",
+      "blurb": "The visual image archive."
+    },
+    {
+      "label": "About",
+      "href": "about.html"
+    },
+    {
+      "label": "Press Kit",
+      "href": "press.html"
+    },
+    {
+      "label": "Contact",
+      "href": "contact.html"
+    }
   ],
   "legal": [
-    { "label": "Disclaimer", "href": "disclaimer.html" },
-    { "label": "Privacy", "href": "privacy.html" }
+    {
+      "label": "Disclaimer",
+      "href": "disclaimer.html"
+    },
+    {
+      "label": "Privacy",
+      "href": "privacy.html"
+    }
   ]
 }
