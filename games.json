@@ -85,6 +85,9 @@
   "resources": [
     { "label": "Glossary", "href": "glossary.html", "blurb": "Every pattern, scale, and term — the Phillips Pattern Library and the Bogost Citation Scale, defined." },
     { "label": "Dossier", "href": "dossier.html", "blurb": "The visual image archive." },
+    { "label": "The Case File", "href": "mckendry-v-pnc.html", "blurb": "McKendry v. PNC Bank, N.A. (1:26-cv-00330, W.D. Mich.) — the pro se federal civil rights case behind Record Forge. Caption, allegations, and the statutes in play." },
+    { "label": "Petition for Clearance", "href": "petition-for-clearance.html", "blurb": "The adjudicative file on a dangerously honest subject. Satire — the machine drafts the petition; only humans grant the clearance." },
+    { "label": "The Perfect Spy Who Isn't Yet", "href": "the-perfect-spy-who-isnt-yet.html", "blurb": "A field assessment: the perfect spy is the one who can't lie, can't be turned, can't be bought. Passed on now — the future will laugh. Satire." },
     { "label": "About", "href": "about.html" },
     { "label": "Press Kit", "href": "press.html" },
     { "label": "Contact", "href": "contact.html" }
