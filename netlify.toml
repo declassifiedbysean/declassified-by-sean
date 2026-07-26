@@ -72,6 +72,11 @@
   status = 200
 
 [[redirects]]
+  from = "/overshadowing"
+  to = "/overshadowing.html"
+  status = 200
+
+[[redirects]]
   from = "/*"
   to = "/404.html"
   status = 404
