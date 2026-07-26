@@ -13,5 +13,6 @@
 /privacy       /privacy.html                200
 /disclaimer    /disclaimer.html             200
 /case          /mckendry-v-pnc.html         200
+/overshadowing /overshadowing.html          200
 # Unmatched -> custom 404
 /*             /404.html                     404
